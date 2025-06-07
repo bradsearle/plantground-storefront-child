@@ -1,0 +1,8 @@
+# Ignore build output (optional if you deploy it)
+dist/
+
+# Ignore local editor/system files
+.DS_Store
+*.log
+*.zip
+node_modules/
