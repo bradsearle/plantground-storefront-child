@@ -1,0 +1,30 @@
+// abstracts (variables, mixins, functions, placeholders)
+@use "abstracts/variables";
+@use "abstracts/mixins";
+@use "abstracts/functions";
+@use "abstracts/placeholders";
+
+// base styles (reset, typography, base)
+@use "vendors/normalize";
+@use "base/reset";
+@use "base/typography";
+@use "base/base";
+
+// layout (header, footer, grid)
+@use "layout/header";
+@use "layout/footer";
+@use "layout/grid";
+
+// components (buttons, cards)
+@use "components/buttons";
+@use "components/cards";
+
+// pages (home page)
+@use "pages/home";
+
+// themes (default theme)
+@use "themes/default";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
