@@ -16,39 +16,104 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="bg-white shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <!-- Site Title -->
-        <div class="text-xl font-bold">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:opacity-80">
-                Plantground
-            </a>
-        </div>
 
-        <!-- Navigation -->
-        <nav class="hidden md:flex space-x-6 text-sm font-medium">
-            <?php
-            wp_nav_menu([
-                'theme_location' => 'primary',
-                'container' => false,
-                'items_wrap' => '%3$s',
-                'depth' => 1,
-                'fallback_cb' => false,
-                'walker' => new Walker_Nav_Menu(),
-            ]);
-            ?>
-        </nav>
 
-        <!-- Cart Icon -->
-        <?php if ( class_exists('WooCommerce') ) : ?>
-            <div class="relative">
-                <a href="<?php echo wc_get_cart_url(); ?>" class="flex items-center gap-1">
-                    🛒
-                    <span class="text-sm">
-                        <?php echo WC()->cart->get_cart_contents_count(); ?>
-                    </span>
-                </a>
-            </div>
-        <?php endif; ?>
-    </div>
-</header>
+
+<header id="masthead" role="banner" style="<?php storefront_header_styles(); ?>">
+
+
+
+
+
+
+
+			<style>
+				/* Define fade-in and fade-out animations */
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+					}
+
+					to {
+						opacity: 1;
+					}
+				}
+
+				@keyframes fadeOut {
+					from {
+						opacity: 1;
+					}
+
+					to {
+						opacity: 0;
+					}
+				}
+
+				/* Styling for the paragraphs */
+				.header__bgtop p {
+					opacity: 0;
+					transition: opacity 2s ease;
+				}
+
+				/* Classes to trigger fade-in and fade-out */
+				.fade-in {
+					animation: fadeIn 3s ease forwards;
+					display: block;
+
+				}
+
+				.fade-out {
+					animation: fadeOut 3s ease forwards;
+					display: block;
+				}
+			</style>
+
+
+			<nav>
+				<!-- <div class="header__bgclose">test</div> -->
+
+
+
+				<div class="header__bgtop">
+					<p id="paragraph1" class="header__notice">free shipping on orders over $80</p>
+					<p id="paragraph2" class="header__notice">...Tuesday Date Here</p>
+
+
+				</div>
+
+				<div class="container">
+
+					<div class="header__wrap homepage__animation">
+
+						<div class="header__logo">
+							<a href="<?php echo home_url(); ?>"><span>Plant</span>Ground</a>
+						</div>
+						<div class="header__container-end">
+
+							<div class="header__account">
+
+
+
+							</div>
+
+							<div class="header__cart">
+								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping-bag.svg" class="header__img cfw-side-cart-open-trigger" />
+
+
+								<span class="header__count-rnd">
+									<span id="cart-count"></span>
+
+
+								</span>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</nav>
+
+
+
+=
+		</header><!-- #masthead -->

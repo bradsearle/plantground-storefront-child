@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "watch": "vite build --watch",
+    "watch": "onchange 'src/**/*' -- vite build",
     "tw:init": "tailwindcss init -p"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
     "@tailwindcss/cli": "^4.1.8",
     "@tailwindcss/postcss": "^4.1.8",
     "autoprefixer": "^10.4.21",
+    "onchange": "^7.1.0",
     "postcss": "^8.5.4",
     "sass": "^1.89.1",
     "tailwindcss": "^4.1.8",

@@ -1,0 +1,230 @@
+@use "../abstracts/variables" as *; // or `as vars;` and then use vars.$light-grey-color
+
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error,
+.woocommerce-noreviews,
+p.no-comments {
+  margin-top: 100px !important;
+}
+
+ul.columns-3,
+ul.columns-4 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding-inline-start: 0;
+  list-style: none;
+  gap: 4px;
+  margin: 0 0.5rem !important;
+
+  img {
+    max-width: 73%;
+    height: auto;
+    margin: auto;
+    display: flex;
+    border-radius: 8px;
+  }
+
+  &::before,
+  &::after {
+    content: unset !important;
+  }
+}
+
+.woocommerce-LoopProduct-link {
+  background-color: $light-grey-color;
+  margin-bottom: 85px;
+  border-radius: 8px;
+}
+
+.product {
+  &__container {
+    border-radius: 8px;
+    padding: 0;
+    grid-column: span 3 !important;
+    width: 100% !important;
+    margin-bottom: 8px !important;
+
+    img {
+      margin-bottom: 82px;
+      padding: 0;
+    }
+
+    h2 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #686868;
+      margin: 0 !important;
+      position: absolute;
+      bottom: -22px;
+      left: 10%;
+      right: 10%;
+      height: 95px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .price {
+      font-size: 1em;
+      font-weight: 400 !important;
+      background-color: #fff !important;
+      margin-top: 28px !important;
+      position: absolute;
+    }
+
+    .products ul li {
+      margin-bottom: 0;
+    }
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #686868;
+    margin-top: 6px;
+    position: absolute;
+  }
+
+  &__shipping {
+    font-size: 0.75em;
+    font-style: italic;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #dfdfdf;
+    background-color: #fff;
+    color: #aeadad;
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    border-radius: 30px;
+    height: 22px;
+    width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.product__shipping-img {
+  width: 17px;
+  display: inline-flex !important;
+  padding: 0 !important;
+  margin: 0 4px -2px 0 !important;
+  color: #fff;
+}
+
+.plantground__sort {
+  float: right;
+}
+
+ul.products li.product .button {
+  display: none !important;
+}
+
+ul.products li.product img,
+ul.products .wc-block-grid__product img,
+.wc-block-grid__products li.product img,
+.wc-block-grid__products .wc-block-grid__product img {
+  margin: 0 !important;
+}
+
+// Responsive
+@media (min-width: 1900px) {
+  .product__container {
+    grid-column: span 3 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  ul.columns-3,
+  ul.columns-4 {
+    margin: 0 4px !important;
+
+    img {
+      max-width: 100% !important;
+    }
+  }
+
+  .product__container {
+    grid-column: span 6 !important;
+    padding: 0;
+
+    img {
+      padding: 0;
+    }
+
+    h2 {
+      margin: 0 !important;
+      bottom: 20px;
+      height: 50px;
+    }
+
+    .price {
+      font-size: 0.8em;
+      font-weight: 400 !important;
+      background-color: #fff !important;
+      color: $text-color !important;
+      position: absolute;
+      bottom: 22px;
+      padding-left: 8px;
+    }
+  }
+
+  .product__shipping {
+    font-size: 0.75em;
+    position: absolute;
+    bottom: 0;
+    color: #999;
+    font-weight: 600;
+    text-align: left;
+    font-style: italic;
+  }
+}
+
+@media (max-width: 600px) {
+  .product__container {
+    grid-column: span 12 !important;
+  }
+
+  ul.columns-3,
+  ul.columns-4 {
+    img {
+      max-width: 80%;
+    }
+  }
+}
+
+@media (max-width: 496px) {
+  .product__container {
+    padding: 0;
+
+    img {
+      padding: 0;
+    }
+
+    h2 {
+      height: 50px;
+    }
+
+    .price {
+      bottom: 0;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
+  .product__container {
+    grid-column: span 6 !important;
+  }
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+.products li.product__container {
+  opacity: 0; // default before fade-in
+}

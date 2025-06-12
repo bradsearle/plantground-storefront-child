@@ -5,62 +5,45 @@
 
 // Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets() {
-    $theme_version = wp_get_theme()->get('Version');
+    $style_path = get_stylesheet_directory() . '/dist/style.css';
+    $script_path = get_stylesheet_directory() . '/dist/main.js';
 
-    // Enqueue compiled CSS from dist/style.css
+    $style_version = file_exists($style_path) ? filemtime($style_path) : wp_get_theme()->get('Version');
+    $script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
+
     wp_enqueue_style(
         'plantground-child-style',
         get_stylesheet_directory_uri() . '/dist/style.css',
-        array(), // No dependencies
-        $theme_version
+        array(),
+        $style_version
     );
 
-    // Enqueue compiled JS from dist/main.js, depends on jQuery, load in footer
     wp_enqueue_script(
         'plantground-child-main-js',
         get_stylesheet_directory_uri() . '/dist/main.js',
         array('jquery'),
-        $theme_version,
+        $script_version,
         true
     );
 }
 add_action('wp_enqueue_scripts', 'plantground_child_enqueue_assets');
 
 
-// Remove Storefront header actions on after_setup_theme to ensure hooks exist
-add_action('after_setup_theme', function() {
-    remove_all_actions('storefront_header');
-});
 
-
-
-// Custom header
-function plantground_custom_header() {
-    echo '<!-- Custom header running -->'; // Debug comment to confirm function runs
-    ?>
-    <header style="background: #f8fafc; padding: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <!-- Site Title -->
-            <div style="font-weight: 700; font-size: 1.25rem;">
-                <a href="<?php echo esc_url(home_url('/')); ?>" style="text-decoration: none; color: #333;">
-                    Plantground
-                </a>
-            </div>
-
-            <!-- Navigation -->
-            <nav>
-                <ul style="list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0;">
-                    <li><a href="#" style="text-decoration: none; color: #666;">Test Link 1</a></li>
-                    <li><a href="#" style="text-decoration: none; color: #666;">Test Link 2</a></li>
-                    <li><a href="#" style="text-decoration: none; color: #666;">Test Link 3</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <?php
+// Remove Storefront header and add custom header
+function plantground_override_storefront_header() {
+    remove_all_actions('storefront_header'); // Remove original Storefront header
+    add_action('storefront_header', 'plantground_custom_header', 10); // Add your custom header
 }
-add_action('storefront_header', 'plantground_custom_header', 10);
+add_action('after_setup_theme', 'plantground_override_storefront_header');
 
-add_action('init', function() {
-    remove_all_actions('storefront_header');
-});
+
+
+function my_enqueue_scripts() {
+    if ( is_front_page() ) {
+        // Enqueue plugin CSS or JS here
+        wp_enqueue_script('woof-js', plugin_dir_url(__FILE__) . 'path/to/woof.js', array('jquery'), null, true);
+        wp_enqueue_style('woof-css', plugin_dir_url(__FILE__) . 'path/to/woof.css');
+    }
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_scripts');

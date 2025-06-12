@@ -1,0 +1,68 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass mixins.
+// -----------------------------------------------------------------------------
+
+@mixin container($top: 0, $bottom: 0) {
+  max-width: 1152px;
+  width: 100%;
+  position: relative;
+  margin: $top auto $bottom auto;
+  box-sizing: border-box;
+  padding: 0 40px;
+
+  @media (min-width: 576px) {
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
+
+  @media (min-width: 990px) {
+    max-width: 100%;
+  }
+  @media (min-width: 1900px) {
+  }
+
+  @media (min-width: 1280px) {
+    width: 100%;
+    max-width: 120rem;
+  }
+
+  @media (min-width: 1600px) {
+    width: 100%;
+    max-width: 190rem;
+  }
+  @media (max-width: 960px) {
+    padding: 0 16px;
+  }
+}
+
+@mixin animation-delay {
+  animation: fadein 900ms;
+  animation-delay: 1.1s;
+  -moz-animation: fadein 800ms; /* Firefox */
+  -moz-animation-delay: 1.1s;
+  -webkit-animation: fadein 800ms; /* Safari and Chrome */
+  -webkit-animation-delay: 1.1s;
+  -o-animation: fadein 1200ms; /* Opera */
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+@mixin default-btn($top: 0, $bottom: 0) {
+  background-color: #333333;
+  font-weight: 500 !important;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 0.8em !important;
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+  height: 63px;
+  justify-content: center;
+}

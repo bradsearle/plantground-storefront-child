@@ -1,8 +1,9 @@
 // abstracts (variables, mixins, functions, placeholders)
-@use "abstracts/variables";
+@use "abstracts/variables" as *;
 @use "abstracts/mixins";
 @use "abstracts/functions";
 @use "abstracts/placeholders";
+@use "abstracts/overrides";
 
 // base styles (reset, typography, base)
 @use "vendors/normalize";
@@ -18,6 +19,7 @@
 // components (buttons, cards)
 @use "components/buttons";
 @use "components/cards";
+@use "components/product-grid";
 
 // pages (home page)
 @use "pages/home";

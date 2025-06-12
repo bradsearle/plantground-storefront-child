@@ -16,9 +16,17 @@ export default defineConfig({
       },
     },
   },
-  // Disable the default behavior of serving an HTML page
-  // (only needed if you run dev server, build is fine with rollupOptions input)
-  // server: {
-  //   open: false,
-  // },
+  resolve: {
+    alias: {
+      "@sass": path.resolve(__dirname, "src/sass"),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Automatically include variables file in every scss file
+        additionalData: `@use '@sass/abstracts/variables' as *;\n`,
+      },
+    },
+  },
 });
