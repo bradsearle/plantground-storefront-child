@@ -47,3 +47,14 @@ function my_enqueue_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
+
+
+
+add_action('wp_footer', function() {
+    echo '<div style="display:none">cache-test-'.time().'</div>';
+});
+
+
+// Move add to cart + quantity under the price on single product page
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11 );

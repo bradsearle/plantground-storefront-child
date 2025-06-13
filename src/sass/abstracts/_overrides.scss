@@ -1,5 +1,15 @@
 .home .entry-title,
 .home .page-title,
-.home h1.entry-title {
+.home h1.entry-title .woocommerce-products-header__title {
   display: none !important;
+}
+
+.storefront-product-pagination {
+  display: none !important;
+}
+.edit-link {
+  display: none;
+}
+.product_meta {
+  display: none;
 }

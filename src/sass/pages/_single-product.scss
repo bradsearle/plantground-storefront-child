@@ -1,0 +1,6 @@
+@use "../abstracts/variables" as *; // or `as vars;` and then use vars.$light-grey-color
+
+#single-product-wrapper {
+  background-color: $light-grey-color !important;
+  padding: 0 50px;
+}
