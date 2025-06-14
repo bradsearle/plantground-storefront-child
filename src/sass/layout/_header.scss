@@ -1,0 +1,8 @@
+header {
+  &.header-hidden {
+    transform: translateY(-100%);
+  }
+  &.header-visible {
+    transform: translateY(0);
+  }
+}

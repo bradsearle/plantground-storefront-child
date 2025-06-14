@@ -50,9 +50,6 @@ add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
 
 
-add_action('wp_footer', function() {
-    echo '<div style="display:none">cache-test-'.time().'</div>';
-});
 
 
 // Move add to cart + quantity under the price on single product page
