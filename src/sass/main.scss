@@ -28,6 +28,9 @@
 // themes (default theme)
 @use "themes/default";
 
+// vendors (default theme)
+@use "vendors/woocommerce";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
