@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "watch": "onchange 'src/**/*' -- vite build",
+    "build": "vite build",
     "tw:init": "tailwindcss init -p"
   },
   "keywords": [],
@@ -13,12 +14,12 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.8",
-    "@tailwindcss/postcss": "^4.1.8",
+    "@tailwindcss/postcss": "^4.1.10",
     "autoprefixer": "^10.4.21",
     "onchange": "^7.1.0",
-    "postcss": "^8.5.4",
+    "postcss": "^8.5.6",
     "sass": "^1.89.1",
-    "tailwindcss": "^4.1.8",
+    "tailwindcss": "^4.1.10",
     "vite": "^6.3.5"
   },
   "repository": {
@@ -30,6 +31,7 @@
   },
   "homepage": "https://github.com/bradsearle/plantground-storefront-child#readme",
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
     "braces": "^3.0.3",
     "browserslist": "^4.25.0",
     "caniuse-lite": "^1.0.30001721",

@@ -1,3 +1,5 @@
+<br><br><br><br><br>
+
 <?php if (is_shop() || is_product_category()): ?>
   <div id="plantground-filters">
     <label class="toggle-switch">

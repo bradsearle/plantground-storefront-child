@@ -1,40 +1,34 @@
-// abstracts (variables, mixins, functions, placeholders)
+// 1. Abstracts
 @use "abstracts/variables" as *;
 @use "abstracts/mixins";
 @use "abstracts/functions";
 @use "abstracts/placeholders";
 @use "abstracts/overrides";
 
-// base styles (reset, typography, base)
+// 2. Vendors (must come before base styles if needed)
 @use "vendors/normalize";
+@use "vendors/woocommerce";
+
+// 3. Base
 @use "base/reset";
 @use "base/typography";
 @use "base/base";
 
-// layout (header, footer, grid)
+// 4. Layout
 @use "layout/header";
 @use "layout/footer";
 @use "layout/grid";
 
-// components (buttons, cards)
+// 5. Components
 @use "components/buttons";
 @use "components/cards";
 @use "components/product-grid";
 
-// pages (home page)
+// 6. Pages
 @use "pages/home";
 @use "pages/single-product";
 
-// themes (default theme)
+// 7. Themes
 @use "themes/default";
 
-// vendors (default theme)
-@use "vendors/woocommerce";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-#main-header {
-  display: none;
-}
+// 8. Custom CSS (last)

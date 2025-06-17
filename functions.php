@@ -5,19 +5,21 @@
 
 // Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets() {
-    $style_path = get_stylesheet_directory() . '/dist/style.css';
+    $style_path = get_stylesheet_directory() . '/dist/main.css';
     $script_path = get_stylesheet_directory() . '/dist/main.js';
 
     $style_version = file_exists($style_path) ? filemtime($style_path) : wp_get_theme()->get('Version');
     $script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
+    // Enqueue compiled main Sass
     wp_enqueue_style(
         'plantground-child-style',
-        get_stylesheet_directory_uri() . '/dist/style.css',
+        get_stylesheet_directory_uri() . '/dist/main.css',
         array(),
         $style_version
     );
 
+    // Enqueue compiled main JS
     wp_enqueue_script(
         'plantground-child-main-js',
         get_stylesheet_directory_uri() . '/dist/main.js',
@@ -25,81 +27,67 @@ function plantground_child_enqueue_assets() {
         $script_version,
         true
     );
+
+    // Localize script for AJAX endpoint
+    wp_localize_script('plantground-child-main-js', 'plantground_ajax', array(
+        'ajax_url' => admin_url('admin-ajax.php')
+    ));
 }
 add_action('wp_enqueue_scripts', 'plantground_child_enqueue_assets');
 
-
-
-// Remove Storefront header and add custom header
+// Remove Storefront default header and add custom one
 function plantground_override_storefront_header() {
-    remove_all_actions('storefront_header'); // Remove original Storefront header
-    add_action('storefront_header', 'plantground_custom_header', 10); // Add your custom header
+    remove_all_actions('storefront_header');
+    add_action('storefront_header', 'plantground_custom_header', 10);
 }
 add_action('after_setup_theme', 'plantground_override_storefront_header');
 
-
-
+// Optionally load plugin assets only on homepage
 function my_enqueue_scripts() {
-    if ( is_front_page() ) {
-        // Enqueue plugin CSS or JS here
+    if (is_front_page()) {
         wp_enqueue_script('woof-js', plugin_dir_url(__FILE__) . 'path/to/woof.js', array('jquery'), null, true);
         wp_enqueue_style('woof-css', plugin_dir_url(__FILE__) . 'path/to/woof.css');
     }
 }
 add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
+// Move "Add to cart" under the price on the single product page
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11);
 
-
-
-
-// Move add to cart + quantity under the price on single product page
-remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11 );
-
-
-function plantground_enqueue_assets() {
-    // Enqueue main compiled JS (assumes you’re using Vite)
-    wp_enqueue_script('plantground-main', get_stylesheet_directory_uri() . '/dist/assets/main.js', [], null, true);
-  
-    wp_localize_script('plantground-main', 'plantground_ajax', [
-      'ajax_url' => admin_url('admin-ajax.php')
-    ]);
-  }
-  add_action('wp_enqueue_scripts', 'plantground_enqueue_assets');
-  
-
-  add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products');
+// AJAX handler for product filtering
+add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products');
 add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products');
 
 function plantground_filter_products() {
-  $categories = json_decode(stripslashes($_POST['categories'] ?? ''), true);
+    $categories = json_decode(stripslashes($_POST['categories'] ?? ''), true);
 
-  $args = [
-    'post_type' => 'product',
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'tax_query' => []
-  ];
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'tax_query'      => array(),
+    );
 
-  if (!empty($categories)) {
-    $args['tax_query'][] = [
-      'taxonomy' => 'product_cat',
-      'field'    => 'slug',
-      'terms'    => $categories,
-      'operator' => 'IN',
-    ];
-  }
-
-  $query = new WP_Query($args);
-
-  if ($query->have_posts()) {
-    while ($query->have_posts()) {
-      $query->the_post();
-      wc_get_template_part('content', 'product');
+    if (!empty($categories)) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $categories,
+            'operator' => 'IN',
+        );
     }
-  } else {
-    echo '<p>No products found.</p>';
-  }
 
-  wp_die();
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            wc_get_template_part('content', 'product');
+        }
+    } else {
+        echo '<p>No products found.</p>';
+    }
+
+    wp_die();
 }

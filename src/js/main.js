@@ -1,10 +1,17 @@
-import "../sass/main.scss";
+// main.js
+
+import "../sass/main.scss"; // includes Tailwind via @import
+// DO NOT import tailwind.scss separately here if it's already in main.scss
 
 function fadeInProducts() {
-  const products = document.querySelectorAll(".products li.product");
+  const products = document.querySelectorAll(".product__container.card");
+
+  console.log("Fading in", products.length, "products"); // Debug line
+
   products.forEach((product, index) => {
     product.style.opacity = 0;
     product.style.transition = "opacity 0.5s ease-in-out";
+
     setTimeout(() => {
       product.style.opacity = 1;
     }, index * 150);
@@ -26,19 +33,21 @@ function fetchProducts(categories) {
       const productContainer = document.querySelector(
         ".woocommerce ul.products"
       );
-
       if (productContainer) {
         productContainer.innerHTML = html;
         fadeInProducts();
       }
     })
-    .catch(console.error);
+    .catch((error) => {
+      console.error("Product fetch error:", error);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   fadeInProducts();
 
   const toggles = document.querySelectorAll(".category-toggle");
+
   toggles.forEach((toggle) => {
     toggle.addEventListener("change", () => {
       const checkedCategories = Array.from(toggles)
