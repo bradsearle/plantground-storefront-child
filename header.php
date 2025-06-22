@@ -29,8 +29,8 @@
       <!-- Left: Hamburger + Logo -->
       <div class="flex items-center space-x-4">
         <!-- Hamburger -->
-        <button id="menu-toggle" class="md:hidden text-gray-800 focus:outline-none">
-          <svg id="hamburger-icon" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <button id="menu-toggle" class="md:hidden text-gray-800 bg-transparent hover:bg-transparent focus:outline-none p-2 rounded">
+        <svg id="hamburger-icon" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
           <svg id="close-icon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
