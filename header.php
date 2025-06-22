@@ -45,7 +45,7 @@
       </div>
 
       <!-- Right: Desktop Cart -->
-      <div class="hidden md:flex items-center text-gray-700 select-none z-50">🛒</div>
+      <div class=" md:flex items-center text-gray-700 select-none z-50">🛒</div>
 
       <!-- Mobile Centered Logo -->
       <div class="absolute inset-0 flex justify-center items-center md:hidden pointer-events-none select-none z-0">
