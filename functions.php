@@ -3,20 +3,30 @@
  * Plantground Storefront Child Theme functions and definitions
  */
 
-// Enqueue child theme styles and scripts
+// Enqueue child theme styles and scripts including Tailwind CSS
 function plantground_child_enqueue_assets() {
-    $style_path = get_stylesheet_directory() . '/dist/main.css';
+    $main_style_path = get_stylesheet_directory() . '/dist/main.css';
+    $tailwind_style_path = get_stylesheet_directory() . '/dist/tailwind.css';
     $script_path = get_stylesheet_directory() . '/dist/main.js';
 
-    $style_version = file_exists($style_path) ? filemtime($style_path) : wp_get_theme()->get('Version');
+    $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');
+    $tailwind_style_version = file_exists($tailwind_style_path) ? filemtime($tailwind_style_path) : wp_get_theme()->get('Version');
     $script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
-    // Enqueue compiled main Sass
+    // Enqueue compiled main Sass CSS
     wp_enqueue_style(
         'plantground-child-style',
         get_stylesheet_directory_uri() . '/dist/main.css',
         array(),
-        $style_version
+        $main_style_version
+    );
+
+    // Enqueue compiled Tailwind CSS
+    wp_enqueue_style(
+        'plantground-tailwind-style',
+        get_stylesheet_directory_uri() . '/dist/tailwind.css',
+        array(),
+        $tailwind_style_version
     );
 
     // Enqueue compiled main JS
