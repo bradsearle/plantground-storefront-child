@@ -36,7 +36,11 @@ ul.columns-4 {
   margin-bottom: 85px;
   border-radius: 8px;
 }
-
+.product__container {
+  span.onsale {
+    display: none;
+  }
+}
 .product {
   &__container {
     border-radius: 8px;
