@@ -17,8 +17,6 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-
-
-<?php
-// Your main template continues....
-?>
+<header class="site-header">
+  <?php get_template_part( 'partials/nav' ); ?>
+</header>
