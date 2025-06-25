@@ -31,6 +31,9 @@ do_action( 'woocommerce_before_main_content' );
 
 <div class="site-main">  <!-- Added wrapper here -->
 
+<br>
+<br><br><br><br><br><br><br>
+
   <?php if ( is_shop() || is_product_category() ) : ?>
     <div id="plantground-filters">
       <label class="toggle-switch">

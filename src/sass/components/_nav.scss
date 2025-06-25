@@ -1,37 +1,88 @@
-.nav {
-  &__grid {
+/* === Shared Hidden Class === */
+.nav--hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* === Info Bar === */
+.nav__info-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: #000;
+  color: white;
+  font-size: 0.7rem;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 1000;
+  transform: translateY(0);
+  opacity: 1 !important;
+  transition: transform 0.3s ease-out;
+
+  &.nav--hidden {
+    transform: translateY(-100%);
   }
-  &__flex {
-  }
-  &__logo {
+
+  &.nav--visible {
+    transform: translateY(0);
   }
 }
 
-.nav__grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-}
-
-.nav__logo {
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
+/* === Main Nav Bar === */
 .nav__flex {
+  position: fixed;
+  top: 20px; // default to below info-bar
+  left: 0;
+  right: 0;
+  background-color: white;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* align all items to the top */
-  padding: 1rem;
+  align-items: flex-start;
+  z-index: 999;
+  transition: top 0.3s ease-in-out, transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+
+  &.nav--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  &.nav--visible-scrollup {
+    top: 0; // shift up to top
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &.nav--visible-top {
+    top: 20px; // below info-bar
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
+/* === Burger Button === */
 .menu__btn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1601;
   display: none;
 }
 
 @media (max-width: 768px) {
-  .nav__grid {
-    display: flex;
-    justify-content: space-between;
+  .nav {
+    &__grid {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .nav__flex {
+    padding: 0 1rem;
+    height: auto;
+    align-items: center;
   }
 
   .menu__btn {
@@ -45,13 +96,18 @@
     cursor: pointer;
     display: flex;
     padding: 0;
+    transition: background-color 0.3s ease;
   }
 
-  /* Directly size the SVG to avoid extra space */
+  .menu:hover {
+    background-color: transparent !important;
+  }
+
   .menu svg {
     width: 28px;
     height: 28px;
-    display: block; /* removes any inline spacing */
+    display: block;
+    pointer-events: none; /* prevent svg itself from receiving hover */
   }
 
   .line {
@@ -64,34 +120,88 @@
 
   .line1 {
     stroke-dasharray: 60 207;
-    stroke-width: 6;
   }
 
   .line2 {
     stroke-dasharray: 60 60;
-    stroke-width: 6;
   }
 
   .line3 {
     stroke-dasharray: 60 207;
-    stroke-width: 6;
   }
 
   .opened .line1 {
     stroke-dasharray: 90 207;
     stroke-dashoffset: -134;
-    stroke-width: 6;
   }
 
   .opened .line2 {
     stroke-dasharray: 1 60;
     stroke-dashoffset: -30;
-    stroke-width: 6;
   }
 
   .opened .line3 {
     stroke-dasharray: 90 207;
     stroke-dashoffset: -134;
-    stroke-width: 6;
+  }
+
+  .nav__logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: #000;
+    }
+  }
+
+  .nav__cart {
+    margin-left: auto;
+  }
+}
+
+/* === Nav Grid and Logo (Desktop) === */
+.nav {
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: #000;
+    }
+  }
+
+  &__info-bar {
+    background-color: #000;
+    font-size: 0.7rem;
+    text-align: center;
+    text-transform: uppercase;
+    height: 20px;
+    color: #fff;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
   }
 }

@@ -22,7 +22,7 @@ ul.columns-4 {
     height: auto;
     margin: auto;
     display: flex;
-    border-radius: 8px;
+    // border-radius: 8px;
   }
 
   &::before,
@@ -34,7 +34,7 @@ ul.columns-4 {
 .woocommerce-LoopProduct-link {
   background-color: $light-grey-color;
   margin-bottom: 85px;
-  border-radius: 8px;
+  // border-radius: 8px;
 }
 .product__container {
   span.onsale {
@@ -43,7 +43,7 @@ ul.columns-4 {
 }
 .product {
   &__container {
-    border-radius: 8px;
+    // border-radius: 8px;
     padding: 0;
     grid-column: span 3 !important;
     width: 100% !important;
@@ -101,7 +101,7 @@ ul.columns-4 {
     position: absolute;
     top: 22px;
     right: 22px;
-    border-radius: 30px;
+    // border-radius: 30px;
     height: 22px;
     width: 45px;
     display: flex;
