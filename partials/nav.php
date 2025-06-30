@@ -41,13 +41,11 @@
    onclick="event.preventDefault();"
 >
   <div class="nav__cart">
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bar-code.svg" class="header__img" />
-
     <svg class="cart-icon" width="24" height="24" ...>...</svg>
-
     <span id="cart-count" class="cart-count <?php echo WC()->cart->get_cart_contents_count() == 0 ? 'hidden' : ''; ?>">
       <?php echo WC()->cart->get_cart_contents_count(); ?>
     </span>
+    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bar-code.svg" class="header__img" />
   </div>
 </a>
 

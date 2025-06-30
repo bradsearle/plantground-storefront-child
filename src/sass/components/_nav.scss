@@ -1,9 +1,8 @@
 /* === Shared Hidden Class === */
 .nav--hidden {
   transform: translateY(-100%);
-  opacity: 0;
   pointer-events: none;
-  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+  transition: transform 0.3s ease-in;
 }
 
 /* === Info Bar === */
@@ -22,18 +21,18 @@
   text-transform: uppercase;
   z-index: 1000;
   transform: translateY(0);
-  opacity: 1;
-  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
-  will-change: transform, opacity;
+  opacity: 1; /* keep visible, no fade */
+  transition: transform 0.25s ease-out; /* quicker ease, no opacity */
+  will-change: transform;
 
   &.nav--hidden {
     transform: translateY(-100%);
-    opacity: 0;
+    /* opacity removed */
   }
 
   &.nav--visible {
     transform: translateY(0);
-    opacity: 1;
+    /* opacity removed */
   }
 }
 
@@ -97,18 +96,23 @@
     }
 
     &__logo {
-      padding: 20px;
       display: block;
     }
   }
 
   .nav__flex {
+    position: relative; // changed from fixed to relative
     padding: 0 1rem;
     height: auto;
     align-items: center;
+    justify-content: center; // center children by default
   }
 
   .menu__btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1601;
     display: flex;
     align-items: flex-start;
   }
@@ -169,12 +173,14 @@
   }
 
   .nav__logo {
-    position: absolute;
+    position: fixed;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.3rem;
     font-weight: 700;
     opacity: 1 !important;
+    z-index: 1600;
 
     a {
       color: #000;
@@ -187,7 +193,11 @@
   }
 
   .nav__cart {
-    margin-left: auto;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    z-index: 1600;
   }
 }
 
@@ -253,6 +263,7 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
