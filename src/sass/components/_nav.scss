@@ -2,6 +2,8 @@
 .nav--hidden {
   transform: translateY(-100%);
   opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
 }
 
 /* === Info Bar === */
@@ -14,19 +16,30 @@
   background-color: #000;
   color: white;
   font-size: 0.7rem;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
   text-transform: uppercase;
   z-index: 1000;
   transform: translateY(0);
-  opacity: 1 !important;
-  transition: transform 0.3s ease-out;
+  opacity: 1;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  will-change: transform, opacity;
 
   &.nav--hidden {
     transform: translateY(-100%);
+    opacity: 0;
   }
 
   &.nav--visible {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.nav {
+  &__logo {
+    display: block;
   }
 }
 
@@ -41,8 +54,11 @@
   justify-content: space-between;
   align-items: flex-start;
   z-index: 999;
-  transition: top 0.3s ease-in-out, transform 0.3s ease-in-out,
-    opacity 0.3s ease-in-out;
+  transform: translateY(0);
+  opacity: 1;
+  transition: top 0.3s ease-in-out, transform 0.4s ease-in-out,
+    opacity 0.4s ease-in-out;
+  will-change: transform, opacity;
 
   &.nav--hidden {
     transform: translateY(-100%);
@@ -50,15 +66,17 @@
   }
 
   &.nav--visible-scrollup {
-    top: 0; // shift up to top
+    top: 0;
     transform: translateY(0);
     opacity: 1;
+    transition-timing-function: ease-out;
   }
 
   &.nav--visible-top {
-    top: 20px; // below info-bar
+    top: 20px;
     transform: translateY(0);
     opacity: 1;
+    transition-timing-function: ease-in;
   }
 }
 
@@ -76,6 +94,11 @@
     &__grid {
       display: flex;
       justify-content: space-between;
+    }
+
+    &__logo {
+      padding: 20px;
+      display: block;
     }
   }
 
@@ -100,14 +123,14 @@
   }
 
   .menu:hover {
-    background-color: transparent !important;
+    background-color: #ccc;
   }
 
   .menu svg {
     width: 28px;
     height: 28px;
     display: block;
-    pointer-events: none; /* prevent svg itself from receiving hover */
+    pointer-events: none;
   }
 
   .line {
@@ -151,6 +174,7 @@
     transform: translateX(-50%);
     font-size: 1.3rem;
     font-weight: 700;
+    opacity: 1 !important;
 
     a {
       color: #000;
@@ -178,11 +202,17 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    padding: 22px;
+  }
+
+  &__cart {
+    display: flex;
   }
 
   &__logo {
     font-size: 1.3rem;
     font-weight: 700;
+    opacity: 1 !important;
 
     a {
       color: #000;
@@ -199,9 +229,37 @@
     font-size: 0.7rem;
     text-align: center;
     text-transform: uppercase;
-    height: 20px;
+    height: 22px;
     color: #fff;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
+    display: flex;
+    justify-self: center;
+  }
+}
+
+.menu:hover {
+  background-color: #fff;
+}
+
+.cart-link {
+  position: relative;
+  display: flex;
+
+  .cart-count {
+    background-color: #000;
+    color: #fff;
+    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .hidden {
+    display: none;
   }
 }

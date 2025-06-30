@@ -30,51 +30,27 @@
     plantground
   </a>
 
-  <div class="nav__cart">cart</div>
+
+</div>
+
+<a href="#"
+   class="cart-link cfw-side-cart-open-trigger"
+   title="View your shopping cart"
+   role="button"
+   aria-label="Open shopping cart"
+   onclick="event.preventDefault();"
+>
+  <div class="nav__cart">
+    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bar-code.svg" class="header__img" />
+
+    <svg class="cart-icon" width="24" height="24" ...>...</svg>
+
+    <span id="cart-count" class="cart-count <?php echo WC()->cart->get_cart_contents_count() == 0 ? 'hidden' : ''; ?>">
+      <?php echo WC()->cart->get_cart_contents_count(); ?>
+    </span>
+  </div>
+</a>
+
+</div>
 </nav>
 
-
-<script>
- document.addEventListener('DOMContentLoaded', function () {
-  const nav = document.querySelector('.nav__flex');
-  const infoBar = document.querySelector('.nav__info-bar');
-
-  let lastScrollTop = window.scrollY;
-  const scrollDownHideThreshold = 100;
-  const scrollUpShowThreshold = 20;
-
-  window.addEventListener('scroll', function () {
-    const currentScroll = window.scrollY;
-    const scrollDelta = currentScroll - lastScrollTop;
-
-    // === SCROLL DOWN ===
-    if (scrollDelta > 0 && currentScroll > scrollDownHideThreshold) {
-      nav.classList.remove('nav--visible-top', 'nav--visible-scrollup');
-      nav.classList.add('nav--hidden');
-
-      infoBar.classList.add('nav--hidden');
-    }
-
-    // === SCROLL UP ANYWHERE (not at top) ===
-    else if (scrollDelta < 0 && currentScroll > 0) {
-      nav.classList.remove('nav--hidden', 'nav--visible-top');
-      nav.classList.add('nav--visible-scrollup');
-
-      infoBar.classList.add('nav--hidden');
-    }
-
-    // === SCROLL TO TOP ===
-    else if (currentScroll === 0) {
-      nav.classList.remove('nav--hidden', 'nav--visible-scrollup');
-      nav.classList.add('nav--visible-top');
-
-      infoBar.classList.remove('nav--hidden');
-    }
-
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-  });
-});
-
-
-
-</script>

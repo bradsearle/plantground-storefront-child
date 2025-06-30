@@ -58,3 +58,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const stickyBar = document.querySelector(".storefront-sticky-add-to-cart");
+  if (stickyBar) {
+    stickyBar.remove();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const nav = document.querySelector(".nav__flex");
+  const infoBar = document.querySelector(".nav__info-bar");
+
+  let lastScrollTop = window.scrollY;
+  const scrollDownHideThreshold = 140;
+  const scrollUpShowThreshold = 300;
+
+  window.addEventListener("scroll", function () {
+    const currentScroll = window.scrollY;
+    const scrollDelta = currentScroll - lastScrollTop;
+
+    // === SCROLL DOWN ===
+    if (scrollDelta > 0 && currentScroll > scrollDownHideThreshold) {
+      nav.classList.remove("nav--visible-top", "nav--visible-scrollup");
+      nav.classList.add("nav--hidden");
+
+      infoBar.classList.add("nav--hidden");
+      infoBar.classList.remove("nav--visible");
+    }
+
+    // === SCROLL UP ANYWHERE (not at top) ===
+    else if (scrollDelta < 0 && currentScroll > 0) {
+      nav.classList.remove("nav--hidden", "nav--visible-top");
+      nav.classList.add("nav--visible-scrollup");
+
+      infoBar.classList.add("nav--hidden");
+      infoBar.classList.remove("nav--visible");
+    }
+
+    // === SCROLL TO TOP ===
+    else if (currentScroll === 0) {
+      nav.classList.remove("nav--hidden", "nav--visible-scrollup");
+      nav.classList.add("nav--visible-top");
+
+      infoBar.classList.remove("nav--hidden");
+      infoBar.classList.add("nav--visible"); // <-- Added this line
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  });
+});

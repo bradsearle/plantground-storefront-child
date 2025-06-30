@@ -102,3 +102,19 @@ function plantground_filter_products() {
     wp_die();
 }
 remove_action( 'woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10 );
+
+
+function plantground_cart_count_fragment( $fragments ) {
+    ob_start();
+    $count = WC()->cart->get_cart_contents_count();
+    ?>
+    <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
+        <?php echo esc_html( $count ); ?>
+    </span>
+    <?php
+    $fragments['#cart-count'] = ob_get_clean();
+    return $fragments;
+}
+add_filter( 'woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment' );
+
+
