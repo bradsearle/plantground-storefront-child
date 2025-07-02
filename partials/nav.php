@@ -26,29 +26,31 @@
     </button>
   </div>
 
-  <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nav__logo">
+  <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
     plantground
   </a>
+  
+  <?php
+  $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+  ?>
+
+  <a href="#"
+     class="cart-link cfw-side-cart-open-trigger"
+     title="View your shopping cart"
+     role="button"
+     aria-label="Open shopping cart"
+     onclick="event.preventDefault();"
+  >
+  
+    <div class="nav__cart">
+      
+
+      <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
+  (<?php echo $count; ?>)
+</span>
 
 
-</div>
-
-<a href="#"
-   class="cart-link cfw-side-cart-open-trigger"
-   title="View your shopping cart"
-   role="button"
-   aria-label="Open shopping cart"
-   onclick="event.preventDefault();"
->
-  <div class="nav__cart">
-    <svg class="cart-icon" width="24" height="24" ...>...</svg>
-    <span id="cart-count" class="cart-count <?php echo WC()->cart->get_cart_contents_count() == 0 ? 'hidden' : ''; ?>">
-      <?php echo WC()->cart->get_cart_contents_count(); ?>
-    </span>
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bar-code.svg" class="header__img" />
-  </div>
-</a>
-
-</div>
+      <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg" class="header__img" />
+    </div>
+  </a>
 </nav>
-

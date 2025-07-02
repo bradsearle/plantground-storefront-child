@@ -16,7 +16,6 @@ defined('ABSPATH') || exit;
  */
 class WC_Twenty_Nineteen
 {
-
     /**
      * Theme init.
      */

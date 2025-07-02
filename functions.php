@@ -4,7 +4,8 @@
  */
 
 // Enqueue child theme styles and scripts including Tailwind CSS
-function plantground_child_enqueue_assets() {
+function plantground_child_enqueue_assets()
+{
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
     $tailwind_style_path = get_stylesheet_directory() . '/dist/tailwind.css';
     $script_path = get_stylesheet_directory() . '/dist/main.js';
@@ -46,14 +47,16 @@ function plantground_child_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'plantground_child_enqueue_assets');
 
 // Remove Storefront default header and add custom one
-function plantground_override_storefront_header() {
+function plantground_override_storefront_header()
+{
     remove_all_actions('storefront_header');
     add_action('storefront_header', 'plantground_custom_header', 10);
 }
 add_action('after_setup_theme', 'plantground_override_storefront_header');
 
 // Optionally load plugin assets only on homepage
-function my_enqueue_scripts() {
+function my_enqueue_scripts()
+{
     if (is_front_page()) {
         wp_enqueue_script('woof-js', plugin_dir_url(__FILE__) . 'path/to/woof.js', array('jquery'), null, true);
         wp_enqueue_style('woof-css', plugin_dir_url(__FILE__) . 'path/to/woof.css');
@@ -69,7 +72,8 @@ add_action('woocommerce_single_product_summary', 'woocommerce_template_single_ad
 add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products');
 add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products');
 
-function plantground_filter_products() {
+function plantground_filter_products()
+{
     $categories = json_decode(stripslashes($_POST['categories'] ?? ''), true);
 
     $args = array(
@@ -101,20 +105,40 @@ function plantground_filter_products() {
 
     wp_die();
 }
-remove_action( 'woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10 );
+remove_action('woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10);
 
 
-function plantground_cart_count_fragment( $fragments ) {
+function plantground_cart_count_fragment($fragments)
+{
     ob_start();
     $count = WC()->cart->get_cart_contents_count();
     ?>
     <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-        <?php echo esc_html( $count ); ?>
+        <?php echo esc_html($count); ?>
     </span>
     <?php
     $fragments['#cart-count'] = ob_get_clean();
     return $fragments;
 }
-add_filter( 'woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment' );
+add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
 
 
+add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
+
+function plantground_custom_cart_fragment($fragments)
+{
+    ob_start();
+    $count = WC()->cart->get_cart_contents_count();
+    ?>
+    <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
+        <?php echo $count > 0 ? '(' . $count . ')' : ''; ?>
+    </span>
+    <?php
+    $fragments['#cart-count'] = ob_get_clean();
+    return $fragments;
+}
+
+add_action( 'init', function() {
+    remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+  });
+  

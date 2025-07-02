@@ -7,7 +7,9 @@
     "dev": "vite",
     "watch": "onchange 'src/**/*' -- vite build",
     "build": "vite build",
-    "tw:init": "tailwindcss init -p"
+    "tw:init": "tailwindcss init -p",
+    "format": "prettier --write '**/*.{js,json,css,scss,html,md}'",
+    "lint:css": "stylelint '**/*.{css,scss}' --fix"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +20,11 @@
     "autoprefixer": "^10.4.21",
     "onchange": "^7.1.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "sass": "^1.89.1",
+    "stylelint": "^16.21.0",
+    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-scss": "^6.12.1",
     "tailwindcss": "^4.1.10",
     "vite": "^6.3.5"
   },
