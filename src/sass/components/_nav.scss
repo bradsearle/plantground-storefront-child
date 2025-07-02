@@ -11,41 +11,49 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 20px;
+  height: 30px;
   background-color: #000;
   color: white;
   font-size: 0.7rem;
-  justify-content: center;
-  align-items: center;
-  display: flex;
   text-transform: uppercase;
   z-index: 1000;
-  transform: translateY(0);
-  opacity: 1; /* keep visible, no fade */
-  transition: transform 0.25s ease-out; /* quicker ease, no opacity */
-  will-change: transform;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
 
   &.nav--hidden {
     transform: translateY(-100%);
-    /* opacity removed */
   }
 
   &.nav--visible {
     transform: translateY(0);
-    /* opacity removed */
   }
-}
 
-.nav {
-  &__logo {
-    display: block;
+  &__message {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    will-change: opacity;
+    white-space: nowrap;
+
+    &.visible {
+      opacity: 1;
+      position: relative;
+    }
+
+    &.hidden {
+      opacity: 0;
+      position: absolute;
+    }
   }
 }
 
 /* === Main Nav Bar === */
 .nav__flex {
   position: fixed;
-  top: 20px; // default to below info-bar
+  top: 30px; // matches height of info bar
   left: 0;
   right: 0;
   background-color: white;
@@ -74,7 +82,7 @@
   }
 
   &.nav--visible-top {
-    top: 20px;
+    top: 30px;
     transform: translateY(0);
     opacity: 1;
     transition-timing-function: ease-in;
@@ -90,118 +98,57 @@
   display: none;
 }
 
-@media (max-width: 768px) {
-  .nav {
-    &__grid {
-      display: flex;
-      justify-content: space-between;
-    }
+.menu {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+  transition: background-color 0.3s ease;
 
-    &__logo {
-      display: block;
-    }
-  }
-
-  .nav__flex {
-    position: relative; // changed from fixed to relative
-    padding: 0 1rem;
-    height: auto;
-    align-items: center;
-    justify-content: center; // center children by default
-  }
-
-  .menu__btn {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 1601;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .menu {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    padding: 0;
-    transition: background-color 0.3s ease;
-  }
-
-  .menu:hover {
+  &:hover {
     background-color: #ccc;
   }
 
-  .menu svg {
+  svg {
     width: 28px;
     height: 28px;
     display: block;
     pointer-events: none;
   }
+}
 
-  .line {
-    fill: none;
-    stroke: black;
-    stroke-width: 6;
-    transition:
-      stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+/* === Burger Icon Animation === */
+.line {
+  fill: none;
+  stroke: black;
+  stroke-width: 6;
+  transition:
+    stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  .line1 {
-    stroke-dasharray: 60 207;
-  }
+.line1 {
+  stroke-dasharray: 60 207;
+}
+.line2 {
+  stroke-dasharray: 60 60;
+}
+.line3 {
+  stroke-dasharray: 60 207;
+}
 
-  .line2 {
-    stroke-dasharray: 60 60;
-  }
-
-  .line3 {
-    stroke-dasharray: 60 207;
-  }
-
-  .opened .line1 {
-    stroke-dasharray: 90 207;
-    stroke-dashoffset: -134;
-  }
-
-  .opened .line2 {
-    stroke-dasharray: 1 60;
-    stroke-dashoffset: -30;
-  }
-
-  .opened .line3 {
-    stroke-dasharray: 90 207;
-    stroke-dashoffset: -134;
-  }
-
-  .nav__logo {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.3rem;
-    font-weight: 700;
-    opacity: 1 !important;
-    z-index: 1600;
-
-    a {
-      color: #000;
-      text-decoration: none;
-    }
-
-    &:visited {
-      color: #000;
-    }
-  }
-
-  .nav__cart {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    display: flex;
-    z-index: 1600;
-  }
+.opened .line1 {
+  stroke-dasharray: 90 207;
+  stroke-dashoffset: -134;
+}
+.opened .line2 {
+  stroke-dasharray: 1 60;
+  stroke-dashoffset: -30;
+}
+.opened .line3 {
+  stroke-dasharray: 90 207;
+  stroke-dashoffset: -134;
 }
 
 /* === Nav Grid and Logo (Desktop) === */
@@ -226,36 +173,23 @@
     font-size: 1.3rem;
     font-weight: 700;
     opacity: 1 !important;
+    color: #000;
 
     a {
       color: #000;
       text-decoration: none;
-    }
 
-    &:visited {
-      color: #000;
+      &:visited {
+        color: #000;
+      }
+      &:link {
+        color: #000;
+      }
     }
-  }
-
-  &__info-bar {
-    background-color: #000;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    text-align: center;
-    text-transform: uppercase;
-    height: 30px;
-    color: #fff;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    display: flex;
-    justify-self: center;
   }
 }
 
-.menu:hover {
-  background-color: #fff;
-}
-
+/* === Cart Count === */
 .cart-link {
   position: relative;
   display: flex;
@@ -273,4 +207,58 @@
   .hidden {
     display: none;
   }
+}
+
+/* === Mobile Overrides === */
+@media (max-width: 768px) {
+  .nav__grid {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav__logo {
+    display: block;
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+    font-weight: 700;
+    opacity: 1 !important;
+    z-index: 1600;
+
+    a {
+      color: #000;
+      text-decoration: none;
+
+      &:visited {
+        color: #000;
+      }
+    }
+  }
+
+  .nav__flex {
+    position: relative;
+    padding: 0 1rem;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu__btn {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .nav__cart {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    z-index: 1600;
+  }
+}
+
+.menu:hover {
+  background-color: #fff;
 }

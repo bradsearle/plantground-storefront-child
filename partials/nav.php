@@ -1,4 +1,9 @@
-<div class="nav__info-bar">testing</div>
+<div class="nav__info-bar">
+  <span class="info-bar__message visible" id="message-1">Free shipping over $80</span>
+  <span class="info-bar__message hidden" id="message-2">
+    Orders in Sunday ship Tuesday the <span id="ship-date"></span>
+  </span>
+</div>
 
 <nav class="nav__flex">
   <div class="menu__btn">
@@ -54,3 +59,37 @@
     </div>
   </a>
 </nav>
+
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const msg1 = document.getElementById('message-1');
+  const msg2 = document.getElementById('message-2');
+  const shipDateSpan = document.getElementById('ship-date');
+
+  // Calculate Tuesday after the most recent Sunday
+  const now = new Date();
+  const day = now.getDay(); // Sunday = 0
+  const sunday = new Date(now);
+  sunday.setDate(now.getDate() - day);
+  const nextTuesday = new Date(sunday);
+  nextTuesday.setDate(sunday.getDate() + 2);
+  shipDateSpan.textContent = nextTuesday.getDate();
+
+  // Start the fade-in/out message loop
+  let showingFirst = true;
+  setInterval(() => {
+    if (showingFirst) {
+      msg1.classList.replace('visible', 'hidden');
+      msg2.classList.replace('hidden', 'visible');
+    } else {
+      msg2.classList.replace('visible', 'hidden');
+      msg1.classList.replace('hidden', 'visible');
+    }
+    showingFirst = !showingFirst;
+  }, 10000); // switch every 10 seconds
+});
+
+</script>
+
