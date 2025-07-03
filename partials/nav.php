@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const msg2 = document.getElementById('message-2');
   const shipDateSpan = document.querySelector('.ship-date');
 
-  const now = new Date();
+  // Month names array for display
   const monthNames = [
     "January", "February", "March",
     "April", "May", "June",
@@ -71,56 +71,63 @@ document.addEventListener('DOMContentLoaded', () => {
     "October", "November", "December"
   ];
 
-  // Calculate next Tuesday after today
-  const dayOfWeek = now.getDay(); // Sunday=0
-  const daysUntilTuesday = (9 - dayOfWeek) % 7 || 7;
+  // Calculate next Tuesday after today (or next week if today is Tuesday)
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // Sunday=0, Monday=1, ..., Saturday=6
+  const daysUntilTuesday = ((9 - dayOfWeek) % 7) || 7;
   const nextTuesday = new Date(now);
   nextTuesday.setDate(now.getDate() + daysUntilTuesday);
 
-  // Month and day of next Tuesday
+  // Set ship date content with month and day wrapped in ship-date span
   shipDateSpan.textContent = `${monthNames[nextTuesday.getMonth()]} ${nextTuesday.getDate()}`;
 
-  // Initially hide both messages
+  // Initially hide both messages (opacity 0)
   msg1.classList.add('hidden');
   msg1.classList.remove('visible');
   msg2.classList.add('hidden');
   msg2.classList.remove('visible');
 
-  // Fade in first message after 2 seconds
+  const fadeDuration = 700; // must match CSS opacity transition duration
+
+  // Fade in first message with 2 seconds delay and fade transition
   setTimeout(() => {
     msg1.classList.remove('hidden');
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       msg1.classList.add('visible');
-    });
+    }, 50);
   }, 2000);
 
   let showingFirst = true;
-  const fadeDuration = 700;
 
   function fadeMessages() {
     const current = showingFirst ? msg1 : msg2;
     const next = showingFirst ? msg2 : msg1;
 
+    // Fade out current message
     current.classList.remove('visible');
 
+    // After fadeDuration, hide current and fade in next
     setTimeout(() => {
       current.classList.add('hidden');
       next.classList.remove('hidden');
 
-      requestAnimationFrame(() => {
+      // Slight delay before fade-in for smooth transition
+      setTimeout(() => {
         next.classList.add('visible');
-      });
+      }, 100);
 
       showingFirst = !showingFirst;
     }, fadeDuration);
   }
 
+  // Start cycling messages after initial fade-in completes
   setTimeout(() => {
-    setInterval(fadeMessages, 10000);
+    setInterval(fadeMessages, 4000);
   }, 2000 + fadeDuration);
 
-  // Scroll behavior (unchanged)
+  // Scroll detection for showing/hiding info bar
   let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
   window.addEventListener('scroll', () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -138,4 +145,5 @@ document.addEventListener('DOMContentLoaded', () => {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   });
 });
+
 </script>

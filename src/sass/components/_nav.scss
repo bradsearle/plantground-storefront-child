@@ -70,6 +70,7 @@
   right: 0;
   background-color: white;
   display: flex;
+  padding: 22px 22px;
   justify-content: space-between;
   align-items: flex-start;
   z-index: 999;
@@ -84,7 +85,7 @@
 
 .nav__flex.nav--hidden {
   transform: translateY(-100%);
-  opacity: 0;
+  opacity: 1;
 }
 
 .nav__flex.nav--visible-scrollup {
