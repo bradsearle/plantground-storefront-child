@@ -1,9 +1,10 @@
 <div class="nav__info-bar">
-  <span class="info-bar__message visible" id="message-1">Free shipping over $80</span>
-  <span class="info-bar__message hidden" id="message-2">
-    Orders in Sunday ship Tuesday the <span id="ship-date"></span>
+  <span class="nav__info-bar__message visible" id="message-1">Free shipping over $80</span>
+  <span class="nav__info-bar__message hidden" id="message-2">
+    Orders in by Sunday ship <span class="ship-date">July 1</span>
   </span>
 </div>
+
 
 <nav class="nav__flex">
   <div class="menu__btn">
@@ -46,50 +47,95 @@
      aria-label="Open shopping cart"
      onclick="event.preventDefault();"
   >
-  
     <div class="nav__cart">
-      
-
       <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-  (<?php echo $count; ?>)
-</span>
-
-
+        (<?php echo $count; ?>)
+      </span>
       <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg" class="header__img" />
     </div>
   </a>
 </nav>
 
-
-
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const infoBar = document.querySelector('.nav__info-bar');
   const msg1 = document.getElementById('message-1');
   const msg2 = document.getElementById('message-2');
-  const shipDateSpan = document.getElementById('ship-date');
+  const shipDateSpan = document.querySelector('.ship-date');
 
-  // Calculate Tuesday after the most recent Sunday
   const now = new Date();
-  const day = now.getDay(); // Sunday = 0
-  const sunday = new Date(now);
-  sunday.setDate(now.getDate() - day);
-  const nextTuesday = new Date(sunday);
-  nextTuesday.setDate(sunday.getDate() + 2);
-  shipDateSpan.textContent = nextTuesday.getDate();
+  const monthNames = [
+    "January", "February", "March",
+    "April", "May", "June",
+    "July", "August", "September",
+    "October", "November", "December"
+  ];
 
-  // Start the fade-in/out message loop
+  // Calculate next Tuesday after today
+  const dayOfWeek = now.getDay(); // Sunday=0
+  const daysUntilTuesday = (9 - dayOfWeek) % 7 || 7;
+  const nextTuesday = new Date(now);
+  nextTuesday.setDate(now.getDate() + daysUntilTuesday);
+
+  // Month and day of next Tuesday
+  shipDateSpan.textContent = `${monthNames[nextTuesday.getMonth()]} ${nextTuesday.getDate()}`;
+
+  // Initially hide both messages
+  msg1.classList.add('hidden');
+  msg1.classList.remove('visible');
+  msg2.classList.add('hidden');
+  msg2.classList.remove('visible');
+
+  // Fade in first message after 2 seconds
+  setTimeout(() => {
+    msg1.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      msg1.classList.add('visible');
+    });
+  }, 2000);
+
   let showingFirst = true;
-  setInterval(() => {
-    if (showingFirst) {
-      msg1.classList.replace('visible', 'hidden');
-      msg2.classList.replace('hidden', 'visible');
+  const fadeDuration = 700;
+
+  function fadeMessages() {
+    const current = showingFirst ? msg1 : msg2;
+    const next = showingFirst ? msg2 : msg1;
+
+    current.classList.remove('visible');
+
+    setTimeout(() => {
+      current.classList.add('hidden');
+      next.classList.remove('hidden');
+
+      requestAnimationFrame(() => {
+        next.classList.add('visible');
+      });
+
+      showingFirst = !showingFirst;
+    }, fadeDuration);
+  }
+
+  setTimeout(() => {
+    setInterval(fadeMessages, 10000);
+  }, 2000 + fadeDuration);
+
+  // Scroll behavior (unchanged)
+  let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop === 0) {
+      infoBar.classList.add('nav--visible');
+      infoBar.classList.remove('nav--hidden');
+    } else if (scrollTop > lastScrollTop) {
+      infoBar.classList.add('nav--hidden');
+      infoBar.classList.remove('nav--visible');
     } else {
-      msg2.classList.replace('visible', 'hidden');
-      msg1.classList.replace('hidden', 'visible');
+      infoBar.classList.add('nav--hidden');
+      infoBar.classList.remove('nav--visible');
     }
-    showingFirst = !showingFirst;
-  }, 10000); // switch every 10 seconds
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  });
 });
-
 </script>
-
