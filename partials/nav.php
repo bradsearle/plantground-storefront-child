@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start cycling messages after initial fade-in completes
   setTimeout(() => {
-    setInterval(fadeMessages, 4000);
-  }, 2000 + fadeDuration);
+    setInterval(fadeMessages, 6000);
+  }, 2020 + fadeDuration);
 
   // Scroll detection for showing/hiding info bar
   let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;

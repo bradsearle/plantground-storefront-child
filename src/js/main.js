@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const infoBar = document.querySelector('.nav__info-bar');
 
   let lastScrollTop = window.scrollY;
-  const scrollDownHideThreshold = 140;
-  const scrollUpShowThreshold = 300;
+  const scrollDownHideThreshold = 230;
+  const scrollUpShowThreshold = 230;
 
   window.addEventListener('scroll', function () {
     const currentScroll = window.scrollY;
