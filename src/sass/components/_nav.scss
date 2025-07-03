@@ -25,47 +25,47 @@
   transform: translateY(0);
   transition: transform 0.3s ease-out;
   pointer-events: auto;
-}
 
-.nav__info-bar.nav--hidden {
-  transform: translateY(-100%);
-  pointer-events: none;
-}
+  &.nav--hidden {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
 
-.nav__info-bar.nav--visible {
-  transform: translateY(0);
-  pointer-events: auto;
-}
+  &.nav--visible {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 
-.nav__info-bar__message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.7s ease-in-out;
-  will-change: opacity;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 1;
-}
+  &__message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+    will-change: opacity;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
 
-.nav__info-bar__message.visible {
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 10;
-}
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 10;
+    }
 
-.nav__info-bar__message.hidden {
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
 }
 
 /* === Main Nav Bar === */
 .nav__flex {
   position: fixed;
-  top: 30px; /* matches height of info bar */
+  top: 30px; // matches height of info bar
   left: 0;
   right: 0;
   background-color: white;
@@ -81,25 +81,25 @@
     transform 0.4s ease-in-out,
     opacity 0.4s ease-in-out;
   will-change: transform, opacity;
-}
 
-.nav__flex.nav--hidden {
-  transform: translateY(-100%);
-  opacity: 1;
-}
+  &.nav--hidden {
+    transform: translateY(calc(-100% - 30px)); // hides entire nav bar + info bar height
+    opacity: 0;
+  }
 
-.nav__flex.nav--visible-scrollup {
-  top: 0;
-  transform: translateY(0);
-  opacity: 1;
-  transition-timing-function: ease-out;
-}
+  &.nav--visible-scrollup {
+    top: 0;
+    transform: translateY(0);
+    opacity: 1;
+    transition-timing-function: ease-out;
+  }
 
-.nav__flex.nav--visible-top {
-  top: 30px;
-  transform: translateY(0);
-  opacity: 1;
-  transition-timing-function: ease-in;
+  &.nav--visible-top {
+    top: 30px;
+    transform: translateY(0);
+    opacity: 1;
+    transition-timing-function: ease-in;
+  }
 }
 
 /* === Burger Button === */
@@ -118,17 +118,17 @@
   display: flex;
   padding: 0;
   transition: background-color 0.3s ease;
-}
 
-.menu:hover {
-  background-color: #ccc;
-}
+  &:hover {
+    background-color: #ccc;
+  }
 
-.menu svg {
-  width: 28px;
-  height: 28px;
-  display: block;
-  pointer-events: none;
+  svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+    pointer-events: none;
+  }
 }
 
 /* === Burger Icon Animation === */
@@ -144,11 +144,9 @@
 .line1 {
   stroke-dasharray: 60 207;
 }
-
 .line2 {
   stroke-dasharray: 60 60;
 }
-
 .line3 {
   stroke-dasharray: 60 207;
 }
@@ -157,12 +155,10 @@
   stroke-dasharray: 90 207;
   stroke-dashoffset: -134;
 }
-
 .opened .line2 {
   stroke-dasharray: 1 60;
   stroke-dashoffset: -30;
 }
-
 .opened .line3 {
   stroke-dasharray: 90 207;
   stroke-dashoffset: -134;
@@ -190,33 +186,33 @@
   font-weight: 700;
   opacity: 1 !important;
   color: #000;
-}
 
-.nav__logo a,
-.nav__logo a:visited,
-.nav__logo a:link {
-  color: #000;
-  text-decoration: none;
+  a,
+  a:visited,
+  a:link {
+    color: #000;
+    text-decoration: none;
+  }
 }
 
 /* === Cart Count === */
 .cart-link {
   position: relative;
   display: flex;
-}
 
-.cart-count {
-  color: #000;
-  font-size: 13px;
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
+  .cart-count {
+    color: #000;
+    font-size: 13px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
 
-.hidden {
-  display: none;
+  .hidden {
+    display: none;
+  }
 }
 
 /* === Mobile Overrides === */
@@ -236,12 +232,12 @@
     font-weight: 700;
     opacity: 1 !important;
     z-index: 1600;
-  }
 
-  .nav__logo a,
-  .nav__logo a:visited {
-    color: #000;
-    text-decoration: none;
+    a,
+    a:visited {
+      color: #000;
+      text-decoration: none;
+    }
   }
 
   .nav__flex {
@@ -266,6 +262,7 @@
   }
 }
 
+/* === Ship Date Styling === */
 .ship-date {
-  color: #ff0; /* example gold */
+  color: #ff0; // example: gold text
 }
