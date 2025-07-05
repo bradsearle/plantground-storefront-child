@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
       nav.classList.add('nav--visible-top');
 
       infoBar.classList.remove('nav--hidden');
-      infoBar.classList.add('nav--visible'); // <-- Added this line
+      infoBar.classList.add('nav--visible'); // <-- Added this lin
     }
 
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
