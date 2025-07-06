@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
       infoBar.classList.remove('nav--visible');
     }
 
-    // === SCROLL TO TOP ===
+    // === SCROLL TO TOP ==
     else if (currentScroll === 0) {
       nav.classList.remove('nav--hidden', 'nav--visible-scrollup');
       nav.classList.add('nav--visible-top');
