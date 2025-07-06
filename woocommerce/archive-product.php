@@ -31,8 +31,16 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">  <!-- Added wrapper here -->
 
-<br>
-<br><br><br><br><br><br><br>
+
+<style>
+.homepage-hello{
+  height: ;
+}
+
+
+
+</style>
+<div class="homepage-hello">Keep Growin'</div>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div id="plantground-filters">
