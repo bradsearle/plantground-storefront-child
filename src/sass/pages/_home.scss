@@ -59,3 +59,42 @@
     align-items: flex-start;
   }
 }
+
+.hero {
+  position: relative;
+  height: 100vh;
+  padding: 4rem;
+  background: #fff;
+  overflow: visible;
+
+  &__text {
+    position: relative;
+    /* Text is fully visible, no transform */
+  }
+
+  &__title {
+    font-size: 7.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    display: flex;
+    gap: 1.5rem;
+    color: #111;
+  }
+
+  &__word {
+    transform: translateY(100%);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  &__mask-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8rem; /* full height of the text */
+    background: #fff;
+    z-index: 10;
+    pointer-events: none;
+  }
+}

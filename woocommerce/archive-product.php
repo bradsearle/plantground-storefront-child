@@ -31,17 +31,71 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">  <!-- Added wrapper here -->
 
-
 <style>
-.homepage-hello{
-  height: ;
-}
-
-
-
+ 
+  .hero {
+    height: auto;
+    display: block;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 100px;
+  }
+  .hero__mask {
+    overflow: hidden;
+    height: 5.5rem; /* tightly matches font size and line height */
+    width: max-content;
+  }
+  .hero__title {
+    font-size: 5.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    display: flex;
+    color: #111;
+  }
+  .hero__word {
+    display: inline-block;
+    transform: translateY(100%);
+    will-change: transform;
+    white-space: nowrap;
+  }
 </style>
-<div class="homepage-hello">Keep Growin'</div>
+</head>
+<body>
 
+<section class="hero">
+  <div class="hero__mask">
+    <h1 class="hero__title">
+      <span class="hero__word hero__word--first">CACTUS</span>
+      <span class="hero__word hero__word--second">SUCCULENTS</span>
+    </h1>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const tl = gsap.timeline();
+
+  const customEase = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // stylish and smooth
+
+  tl.to(".hero__word--first", {
+    y: 0,
+    opacity: 1,
+    duration: 1.2, // match the website's transition timing
+    ease: customEase,
+  }, 0); // no delay
+
+  tl.to(".hero__word--second", {
+    y: 0,
+    opacity: 1,
+    duration: 1.2,
+    ease: customEase,
+  }, 0.1); // subtle stagger for polish
+});
+
+</script>
   <?php if (is_shop() || is_product_category()) : ?>
     <div id="plantground-filters">
       <label class="toggle-switch">
