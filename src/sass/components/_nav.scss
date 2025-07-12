@@ -1,40 +1,20 @@
-/* === Shared Hidden Class === */
-.nav--hidden {
-  transform: translateY(-100%);
-  pointer-events: none;
-  transition: transform 0.4s ease-in;
-}
+/* ==== Completed nav.scss ==== */
 
-/* === Info Bar === */
 .nav__info-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   height: 30px;
-  background-color: #000;
-  color: white;
+  background: #000;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
   font-size: 11px;
   text-transform: uppercase;
-  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  font-family: 'Space Mono', monospace;
-  transform: translateY(0);
-  transition: transform 0.3s ease-out;
+  z-index: 1001; /* above nav__flex */
   pointer-events: auto;
-
-  &.nav--hidden {
-    transform: translateY(-100%);
-    pointer-events: none;
-  }
-
-  &.nav--visible {
-    transform: translateY(0);
-    pointer-events: auto;
-  }
+  transition: transform 0.3s ease;
+  transform: translateY(0);
 
   &__message {
     position: absolute;
@@ -43,7 +23,6 @@
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.7s ease-in-out;
-    will-change: opacity;
     white-space: nowrap;
     pointer-events: none;
     z-index: 1;
@@ -61,45 +40,24 @@
     }
   }
 }
+.nav__wrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 22px;
+}
 
-/* === Main Nav Bar === */
 .nav__flex {
   position: fixed;
-  top: 30px; // matches height of info bar
+  top: 0;
   left: 0;
-  right: 0;
-  background-color: white;
-  display: flex;
-  padding: 22px 22px;
-  justify-content: space-between;
-  align-items: flex-start;
-  z-index: 999;
-  transform: translateY(0);
-  opacity: 1;
-  transition:
-    top 0.3s ease-in-out,
-    transform 0.4s ease-in-out,
-    opacity 0.4s ease-in-out;
-  will-change: transform, opacity;
-
-  &.nav--hidden {
-    transform: translateY(calc(-100% - 30px)); // hides entire nav bar + info bar height
-    opacity: 1;
-  }
-
-  &.nav--visible-scrollup {
-    top: 0;
-    transform: translateY(0);
-    opacity: 1;
-    transition-timing-function: ease-out;
-  }
-
-  &.nav--visible-top {
-    top: 30px;
-    transform: translateY(0);
-    opacity: 1;
-    transition-timing-function: ease-in;
-  }
+  background-color: #fff;
+  width: 100%;
+  z-index: 10; /* Ensure it stays on top */
+  transform: translateY(0); /* Initial position */
+  transition: transform 0.5s ease; /* Optional smooth transition */
+}
+nav.hidden {
+  transform: translateY(-100%); /* Hide the navigation */
 }
 
 /* === Burger Button === */
@@ -178,13 +136,12 @@
 }
 
 .nav__cart {
-  display: flex;
+  display: inline-flex;
 }
 
 .nav__logo {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  opacity: 1 !important;
   color: #000;
 
   a,
@@ -198,7 +155,7 @@
 /* === Cart Count === */
 .cart-link {
   position: relative;
-  display: flex;
+  // display: flex;
 
   .cart-count {
     color: #000;
@@ -241,8 +198,6 @@
   }
 
   .nav__flex {
-    // position: relative;
-    // padding: 0 1rem;
     height: auto;
     align-items: center;
     justify-content: center;
@@ -264,5 +219,5 @@
 
 /* === Ship Date Styling === */
 .ship-date {
-  color: #ff0; // example: gold text
+  color: #ff0; // example gold color
 }

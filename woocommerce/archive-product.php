@@ -64,10 +64,10 @@ do_action('woocommerce_before_main_content');
 
 <section class="hero">
   <div class="hero__mask">
-    <h1 class="hero__title">
+    <!-- <h1 class="hero__title">
       <span class="hero__word hero__word--first">CACTUS</span>
       <span class="hero__word hero__word--second">SUCCULENTS</span>
-    </h1>
+    </h1> -->
   </div>
 </section>
 
@@ -90,8 +90,8 @@ window.addEventListener("DOMContentLoaded", () => {
   tl.to(".hero__word--second", {
     y: 0,
     opacity: 1,
-    duration: 1.2,
-    ease: customEase,
+    duration: 0.8,
+    ease: "back.inOut(1)",
   }, 0.1); // subtle stagger for polish
 });
 
