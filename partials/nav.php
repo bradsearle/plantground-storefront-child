@@ -1,7 +1,7 @@
 
 
 
-<!-- Info bar (scrolls away naturally for now) -->
+<!-- Info bar (scrolls away naturally for now') -->
 
 
 
