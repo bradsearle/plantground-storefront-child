@@ -142,3 +142,26 @@ add_action( 'init', function() {
     remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
   });
   
+
+  function plantground_enqueue_preloader_script() {
+  if ( is_front_page() ) {
+    // GSAP CDN
+    wp_enqueue_script(
+      'gsap',
+      'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+      array(),
+      '3.12.5',
+      true
+    );
+
+    // Preloader animation
+    wp_enqueue_script(
+      'plant-preloader',
+      get_stylesheet_directory_uri() . '/js/preloader.js',
+      array('gsap'),
+      null,
+      true
+    );
+  }
+}
+add_action('wp_enqueue_scripts', 'plantground_enqueue_preloader_script');

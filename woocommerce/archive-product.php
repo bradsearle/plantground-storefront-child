@@ -43,11 +43,11 @@ do_action('woocommerce_before_main_content');
   .hero__mask {
     overflow: hidden;
     height: 5.5rem; /* tightly matches font size and line height */
-    width: max-content;
+   
   }
   .hero__title {
-    font-size: 5.5rem;
-    font-weight: 700;
+    font-size: 3.5rem;
+    font-weight: 500;
     line-height: 1.1;
     display: flex;
     color: #111;
@@ -58,18 +58,20 @@ do_action('woocommerce_before_main_content');
     will-change: transform;
     white-space: nowrap;
   }
+  .hero__word--second{
+    display: flex;
+  }
 </style>
 </head>
 <body>
 
-<section class="hero">
+<!-- <section class="hero">
   <div class="hero__mask">
-    <!-- <h1 class="hero__title">
-      <span class="hero__word hero__word--first">CACTUS</span>
-      <span class="hero__word hero__word--second">SUCCULENTS</span>
-    </h1> -->
+    <h1 class="hero__title">
+      <span class="hero__word hero__word--first">Slinging uique cactus, succulents, and originals, mostly bare root, </span>
+     </h1>
   </div>
-</section>
+</section> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
@@ -83,14 +85,14 @@ window.addEventListener("DOMContentLoaded", () => {
   tl.to(".hero__word--first", {
     y: 0,
     opacity: 1,
-    duration: 1.2, // match the website's transition timing
+    duration: 1.1, // match the website's transition timing
     ease: customEase,
   }, 0); // no delay
 
   tl.to(".hero__word--second", {
     y: 0,
     opacity: 1,
-    duration: 0.8,
+    duration: 1.1,
     ease: "back.inOut(1)",
   }, 0.1); // subtle stagger for polish
 });
