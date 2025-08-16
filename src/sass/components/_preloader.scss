@@ -1,0 +1,78 @@
+/* src/css/preloader.scss */
+
+.pg-preloader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999; /* above everything */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 300ms ease;
+
+  /* In case JS fails, hide after 3s to avoid trapping */
+  @supports not (animation-name: none) {
+    animation: pg-preloader-fallback 3s forwards;
+  }
+}
+
+@keyframes pg-preloader-fallback {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.pg-preloader__inner {
+  position: relative;
+  width: min(60vw, 420px);
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.pg-preloader__logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: #fff; /* ensure logo is white */
+  transform-origin: 50% 50%;
+}
+
+/* Hidden state when we’ve finished */
+.pg-preloader.is-done {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Small nav logo: start hidden; JS will animate it in */
+.pg-nav-logo {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(-12px) scale(0.9);
+  transform-origin: center;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.pg-nav-logo.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .pg-preloader,
+  .pg-nav-logo {
+    transition: none !important;
+    animation: none !important;
+  }
+}
