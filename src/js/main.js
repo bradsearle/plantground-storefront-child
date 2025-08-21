@@ -1,16 +1,18 @@
-import '../sass/main.scss'; // includes Tailwind via @import
-// DO NOT import tailwind.scss separately here if it's already in main.scss
-// import menuBar from './info-bar.js';
+// src/js/main.js
 
+import '../sass/main.scss'; // includes Tailwind via @import
+import infoBar from './info-bar.js';
+import { simplePreloader } from './preloader'; // import your preloader function
+
+/* -----------------------------
+   Product fade-in + AJAX filter
+------------------------------*/
 function fadeInProducts() {
   const products = document.querySelectorAll('.product__container.card');
-
-  console.log('Fading in', products.length, 'products'); // Debug line
-
+  console.log('Fading in', products.length, 'products');
   products.forEach((product, index) => {
     product.style.opacity = 0;
     product.style.transition = 'opacity 0.5s ease-in-out';
-
     setTimeout(() => {
       product.style.opacity = 1;
     }, index * 150);
@@ -40,39 +42,41 @@ function fetchProducts(categories) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  fadeInProducts();
-
+function initCategoryFilters() {
   const toggles = document.querySelectorAll('.category-toggle');
+  if (!toggles.length) return;
 
   toggles.forEach((toggle) => {
     toggle.addEventListener('change', () => {
       const checkedCategories = Array.from(toggles)
-        .filter((toggle) => toggle.checked)
-        .map((toggle) => toggle.value);
-
+        .filter((t) => t.checked)
+        .map((t) => t.value);
       fetchProducts(checkedCategories);
     });
   });
-});
+}
 
-document.addEventListener('DOMContentLoaded', function () {
+/* -----------------------------
+   Remove Storefront sticky bar
+------------------------------*/
+function removeStickyBar() {
   const stickyBar = document.querySelector('.storefront-sticky-add-to-cart');
-  if (stickyBar) {
-    stickyBar.remove();
-  }
-});
+  if (stickyBar) stickyBar.remove();
+}
 
-import infoBar from './info-bar.js';
-
-infoBar();
-
-// src/js/main.js
-// import "../css/preloader.scss";
-import { runPreloader } from './preloader';
+/* -----------------------------
+   Boot
+------------------------------*/
+function init() {
+  fadeInProducts();
+  initCategoryFilters();
+  removeStickyBar();
+  infoBar();
+  simplePreloader(); // run your imported preloader
+}
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', runPreloader);
+  document.addEventListener('DOMContentLoaded', init);
 } else {
-  runPreloader();
+  init();
 }
