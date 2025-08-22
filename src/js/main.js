@@ -66,13 +66,3 @@ document.addEventListener('DOMContentLoaded', function () {
 import infoBar from './info-bar.js';
 
 infoBar();
-
-// src/js/main.js
-// import "../css/preloader.scss";
-import { runPreloader } from './preloader';
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', runPreloader);
-} else {
-  runPreloader();
-}

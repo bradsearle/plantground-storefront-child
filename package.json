@@ -48,7 +48,6 @@
     "escalade": "^3.2.0",
     "fill-range": "^7.1.1",
     "fraction.js": "^4.3.7",
-    "gsap": "^3.13.0",
     "immutable": "^5.1.2",
     "is-extglob": "^2.1.1",
     "is-glob": "^4.0.3",
