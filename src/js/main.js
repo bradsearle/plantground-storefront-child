@@ -1,18 +1,16 @@
-// src/js/main.js
-
 import '../sass/main.scss'; // includes Tailwind via @import
-import infoBar from './info-bar.js';
-import { simplePreloader } from './preloader'; // import your preloader function
+// DO NOT import tailwind.scss separately here if it's already in main.scss
+// import menuBar from './info-bar.js';
 
-/* -----------------------------
-   Product fade-in + AJAX filter
-------------------------------*/
 function fadeInProducts() {
   const products = document.querySelectorAll('.product__container.card');
-  console.log('Fading in', products.length, 'products');
+
+  console.log('Fading in', products.length, 'products'); // Debug line
+
   products.forEach((product, index) => {
     product.style.opacity = 0;
     product.style.transition = 'opacity 0.5s ease-in-out';
+
     setTimeout(() => {
       product.style.opacity = 1;
     }, index * 150);
@@ -42,41 +40,39 @@ function fetchProducts(categories) {
     });
 }
 
-function initCategoryFilters() {
+document.addEventListener('DOMContentLoaded', () => {
+  fadeInProducts();
+
   const toggles = document.querySelectorAll('.category-toggle');
-  if (!toggles.length) return;
 
   toggles.forEach((toggle) => {
     toggle.addEventListener('change', () => {
       const checkedCategories = Array.from(toggles)
-        .filter((t) => t.checked)
-        .map((t) => t.value);
+        .filter((toggle) => toggle.checked)
+        .map((toggle) => toggle.value);
+
       fetchProducts(checkedCategories);
     });
   });
-}
+});
 
-/* -----------------------------
-   Remove Storefront sticky bar
-------------------------------*/
-function removeStickyBar() {
+document.addEventListener('DOMContentLoaded', function () {
   const stickyBar = document.querySelector('.storefront-sticky-add-to-cart');
-  if (stickyBar) stickyBar.remove();
-}
+  if (stickyBar) {
+    stickyBar.remove();
+  }
+});
 
-/* -----------------------------
-   Boot
-------------------------------*/
-function init() {
-  fadeInProducts();
-  initCategoryFilters();
-  removeStickyBar();
-  infoBar();
-  simplePreloader(); // run your imported preloader
-}
+import infoBar from './info-bar.js';
+
+infoBar();
+
+// src/js/main.js
+// import "../css/preloader.scss";
+import { runPreloader } from './preloader';
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', runPreloader);
 } else {
-  init();
+  runPreloader();
 }
