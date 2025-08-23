@@ -1,6 +1,3 @@
-
-
-
 <!-- Info bar (scrolls away naturally for now') -->
 
 
@@ -23,10 +20,22 @@
 
   <?php $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0; ?>
 
-  <a href="#" class="cart-link cfw-side-cart-open-trigger" title="View your shopping cart" role="button" aria-label="Open shopping cart" onclick="event.preventDefault();">
+  <a href="#" 
+     class="cart-link cfw-side-cart-open-trigger" 
+     title="View your shopping cart" 
+     role="button" 
+     aria-label="Open shopping cart" 
+     onclick="event.preventDefault();">
     <div class="nav__cart">
-      <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">(<?php echo $count; ?>)</span>
-      <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg" class="header__img" />
+      <span 
+        id="cart-count" 
+        class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
+        (<?php echo $count; ?>)
+      </span>
+      <img 
+        src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg" 
+        class="header__img" 
+      />
     </div>
   </a>
   </div>

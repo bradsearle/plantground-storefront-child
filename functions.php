@@ -7,7 +7,7 @@
 function plantground_child_enqueue_assets()
 {
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
-    $tailwind_style_path = get_stylesheet_directory() . '/dist/tailwind.css';
+
     $script_path = get_stylesheet_directory() . '/dist/main.js';
 
     $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');

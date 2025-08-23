@@ -1,10 +1,8 @@
-import '../sass/main.scss'; // includes Tailwind via @import
-// DO NOT import tailwind.scss separately here if it's already in main.scss
-// import menuBar from './info-bar.js';
+import '../sass/main.scss';
+import { gsap } from 'gsap';
 
 function fadeInProducts() {
   const products = document.querySelectorAll('.product__container.card');
-
   console.log('Fading in', products.length, 'products'); // Debug line
 
   products.forEach((product, index) => {
@@ -44,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
   fadeInProducts();
 
   const toggles = document.querySelectorAll('.category-toggle');
-
   toggles.forEach((toggle) => {
     toggle.addEventListener('change', () => {
       const checkedCategories = Array.from(toggles)
@@ -64,5 +61,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 import infoBar from './info-bar.js';
-
 infoBar();

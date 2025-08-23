@@ -8,7 +8,6 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        tailwind: path.resolve(__dirname, 'src/sass/tailwind.scss'),
         main_scss: path.resolve(__dirname, 'src/sass/main.scss'),
         main_js: path.resolve(__dirname, 'src/js/main.js'),
       },
