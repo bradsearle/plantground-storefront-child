@@ -3,15 +3,13 @@
  * Plantground Storefront Child Theme functions and definitions
  */
 
-// Enqueue child theme styles and scripts including Tailwind CSS
+// Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets()
 {
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
-
     $script_path = get_stylesheet_directory() . '/dist/main.js';
 
     $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');
-    $tailwind_style_version = file_exists($tailwind_style_path) ? filemtime($tailwind_style_path) : wp_get_theme()->get('Version');
     $script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
     // Enqueue compiled main Sass CSS
@@ -20,14 +18,6 @@ function plantground_child_enqueue_assets()
         get_stylesheet_directory_uri() . '/dist/main.css',
         array(),
         $main_style_version
-    );
-
-    // Enqueue compiled Tailwind CSS
-    wp_enqueue_style(
-        'plantground-tailwind-style',
-        get_stylesheet_directory_uri() . '/dist/tailwind.css',
-        array(),
-        $tailwind_style_version
     );
 
     // Enqueue compiled main JS
@@ -107,7 +97,6 @@ function plantground_filter_products()
 }
 remove_action('woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10);
 
-
 function plantground_cart_count_fragment($fragments)
 {
     ob_start();
@@ -121,7 +110,6 @@ function plantground_cart_count_fragment($fragments)
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
-
 
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
 
@@ -138,30 +126,29 @@ function plantground_custom_cart_fragment($fragments)
     return $fragments;
 }
 
-add_action( 'init', function() {
-    remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
-  });
-  
+add_action('init', function() {
+    remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
+});
 
-  function plantground_enqueue_preloader_script() {
-  if ( is_front_page() ) {
-    // GSAP CDN
-    wp_enqueue_script(
-      'gsap',
-      'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
-      array(),
-      '3.12.5',
-      true
-    );
+function plantground_enqueue_preloader_script() {
+    if (is_front_page()) {
+        // GSAP CDN
+        wp_enqueue_script(
+            'gsap',
+            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+            array(),
+            '3.12.5',
+            true
+        );
 
-    // Preloader animation
-    wp_enqueue_script(
-      'plant-preloader',
-      get_stylesheet_directory_uri() . '/js/preloader.js',
-      array('gsap'),
-      null,
-      true
-    );
-  }
+        // Preloader animation
+        wp_enqueue_script(
+            'plant-preloader',
+            get_stylesheet_directory_uri() . '/js/preloader.js',
+            array('gsap'),
+            null,
+            true
+        );
+    }
 }
 add_action('wp_enqueue_scripts', 'plantground_enqueue_preloader_script');

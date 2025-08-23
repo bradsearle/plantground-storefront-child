@@ -44,28 +44,6 @@
  
 
     
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script>
-      gsap.registerPlugin(ScrollTrigger);
-
-      const nav = document.querySelector('nav');
-
-      let scrollTween = gsap
-        .from(nav, {
-          yPercent: -100,
-          paused: true,
-          duration: 0.2,
-        })
-        .progress(1);
-
-      ScrollTrigger.create({
-        start: 'top top',
-        end: 'max',
-        onUpdate: (self) => {
-          self.direction === -1 ? scrollTween.play() : scrollTween.reverse();
-        },
-      });
-    </script>
 
 <!-- Main nav -->
 
