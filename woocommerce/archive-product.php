@@ -71,9 +71,10 @@ do_action('woocommerce_before_main_content');
       <span class="hero__word hero__word--first">Slinging uique cactus, succulents, and originals, mostly bare root, </span>
      </h1>
   </div>
-</section> -->
+</section>  -->
+</br></br></br></br></br></br>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
 <script>
 
 
