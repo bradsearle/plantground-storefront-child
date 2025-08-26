@@ -7,10 +7,10 @@
 function plantground_child_enqueue_assets()
 {
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
-    $script_path = get_stylesheet_directory() . '/dist/main.js';
+    $script_path     = get_stylesheet_directory() . '/dist/main.js';
 
     $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');
-    $script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
+    $script_version     = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
     // Enqueue compiled main Sass CSS
     wp_enqueue_style(
@@ -20,7 +20,7 @@ function plantground_child_enqueue_assets()
         $main_style_version
     );
 
-    // Enqueue compiled main JS
+    // Enqueue compiled main JS (includes preloader, filters, nav, etc.)
     wp_enqueue_script(
         'plantground-child-main-js',
         get_stylesheet_directory_uri() . '/dist/main.js',
@@ -111,8 +111,6 @@ function plantground_cart_count_fragment($fragments)
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
 
-add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
-
 function plantground_custom_cart_fragment($fragments)
 {
     ob_start();
@@ -125,30 +123,9 @@ function plantground_custom_cart_fragment($fragments)
     $fragments['#cart-count'] = ob_get_clean();
     return $fragments;
 }
+add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
 
-add_action('init', function() {
+// Remove sort dropdown on shop loop
+add_action('init', function () {
     remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 });
-
-function plantground_enqueue_preloader_script() {
-    if (is_front_page()) {
-        // GSAP CDN
-        wp_enqueue_script(
-            'gsap',
-            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
-            array(),
-            '3.12.5',
-            true
-        );
-
-        // Preloader animation
-        wp_enqueue_script(
-            'plant-preloader',
-            get_stylesheet_directory_uri() . '/js/preloader.js',
-            array('gsap'),
-            null,
-            true
-        );
-    }
-}
-add_action('wp_enqueue_scripts', 'plantground_enqueue_preloader_script');

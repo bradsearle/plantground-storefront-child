@@ -1,0 +1,35 @@
+.pg-preloader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 22px;
+  pointer-events: none;
+}
+
+.pg-preloader__inner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.pg-preloader__logo {
+  max-width: 260px;
+  display: block;
+  opacity: 0; // start hidden
+}
+
+.pg-preloader__mask {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transform: translateY(100%); // start below logo
+}
+
+.pg-preloader.pg-preloader--done {
+  opacity: 0;
+  visibility: hidden;
+}
