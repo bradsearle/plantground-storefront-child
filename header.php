@@ -15,7 +15,7 @@
 
 
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class('pg-content-hidden'); ?>>
 <!-- Preloader Overlay -->
 <div id="pg-preloader" class="pg-preloader">
   <div class="pg-preloader__inner">

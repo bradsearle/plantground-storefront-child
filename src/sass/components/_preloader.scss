@@ -1,3 +1,4 @@
+/* === PRELOADER === */
 .pg-preloader {
   position: fixed;
   inset: 0;
@@ -32,4 +33,36 @@
 .pg-preloader.pg-preloader--done {
   opacity: 0;
   visibility: hidden;
+}
+
+/* === NAV LOGO REVEAL === */
+
+.nav-logo__inner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.nav-logo__img {
+  display: block;
+  opacity: 0; // hidden until GSAP sets visible
+}
+
+.nav-logo__mask {
+  position: absolute;
+  inset: 0;
+  background: #fff; // white page background
+  transform: translateY(0%); // start fully covering logo
+}
+
+/* Hide content until reveal */
+body.pg-content-hidden main,
+body.pg-content-hidden footer,
+body.pg-content-hidden .nav__info-bar {
+  opacity: 0;
+}
+
+/* Keep nav logo visible so it can animate */
+.nav-logo__img {
+  opacity: 0; // starts hidden
 }
