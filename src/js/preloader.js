@@ -5,9 +5,8 @@ export function initPreloader() {
   const navLogo = document.querySelector('.nav-logo__img');
   const navMask = document.querySelector('.nav-logo__mask');
 
-  // === NON-HOMEPAGE OR NO PRELOADER ===
+  // === NON-HOMEPAGE CASE ===
   if (!pre) {
-    // Ensure nav logo is visible and mask is gone
     if (navLogo && navMask) {
       gsap.set(navLogo, { opacity: 1 });
       gsap.set(navMask, { yPercent: -100 });
@@ -19,7 +18,7 @@ export function initPreloader() {
   const logo = pre?.querySelector('.pg-preloader__logo');
   const mask = pre?.querySelector('.pg-preloader__mask');
 
-  // === REFRESH / ALREADY SEEN ===
+  // === REFRESH CASE ===
   if (sessionStorage.getItem('pgPreloaderSeen')) {
     pre.remove();
 
@@ -31,8 +30,9 @@ export function initPreloader() {
     document.body.classList.remove('pg-content-hidden');
     gsap.to(['.nav__info-bar', 'main', 'footer'], {
       opacity: 1,
-      duration: 0.3,
+      duration: 0.4,
       ease: 'power1.out',
+      stagger: 0.15,
     });
     return;
   }
@@ -44,24 +44,35 @@ export function initPreloader() {
       onComplete: () => pre.remove(),
     });
 
-    // Hold + white logo fade in
-    tl.to({}, { duration: 0.6 });
-    tl.to(logo, { opacity: 1, duration: 0.9, ease: 'power2.out' });
-    tl.to({}, { duration: 0.8 });
+    // subtle hold before fade-in
+    tl.to({}, { duration: 0.4 });
 
-    // White logo masks out
-    tl.to(mask, { yPercent: -100, duration: 0.55, ease: 'power4.in' });
+    // smooth fade-in of white logo
+    tl.to(logo, { opacity: 1, duration: 1.3, ease: 'circ.out' });
 
-    // Black nav logo reveal + background fade start together
+    // immediately mask white logo away (fast + snappy)
+    tl.to(mask, { yPercent: -100, duration: 0.45, ease: 'power3.inOut' });
+
+    // black nav logo reveal + background fade start TOGETHER
     tl.set(navLogo, { opacity: 1 });
-    tl.fromTo(navMask, { yPercent: 0 }, { yPercent: -100, duration: 0.55, ease: 'power4.in' });
-    tl.to(pre, { opacity: 0, duration: 0.45, ease: 'power2.out' }, '<');
+    tl.fromTo(
+      navMask,
+      { yPercent: 0 },
+      { yPercent: -100, duration: 0.45, ease: 'power3.inOut' },
+      '<' // start at same time as background fade
+    );
+    tl.to(
+      pre,
+      { opacity: 0, duration: 0.5, ease: 'power2.out' },
+      '<' // synced with nav logo reveal
+    );
 
-    // Fade in content after
+    // staggered fade-in of page content
     tl.to(['.nav__info-bar', 'main', 'footer'], {
       opacity: 1,
       duration: 0.8,
       ease: 'power2.out',
+      stagger: 0.15,
     });
 
     tl.add(() => document.body.classList.remove('pg-content-hidden'));

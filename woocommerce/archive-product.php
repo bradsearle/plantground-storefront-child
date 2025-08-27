@@ -32,7 +32,6 @@ do_action('woocommerce_before_main_content');
 <div class="site-main">  <!-- Added wrapper here -->
 
 <style>
- 
   .hero {
     height: auto;
     display: block;
@@ -43,7 +42,6 @@ do_action('woocommerce_before_main_content');
   .hero__mask {
     overflow: hidden;
     height: 5.5rem; /* tightly matches font size and line height */
-   
   }
   .hero__title {
     font-size: 3.5rem;
@@ -58,68 +56,66 @@ do_action('woocommerce_before_main_content');
     will-change: transform;
     white-space: nowrap;
   }
-  .hero__word--second{
+  .hero__word--second {
     display: flex;
   }
 </style>
 </head>
 <body>
 
-<!-- <section class="hero">
+<!-- Hero section (optional, commented out)
+<section class="hero">
   <div class="hero__mask">
     <h1 class="hero__title">
-      <span class="hero__word hero__word--first">Slinging uique cactus, succulents, and originals, mostly bare root, </span>
-     </h1>
+      <span class="hero__word hero__word--first">Slinging unique cactus, succulents, and originals, mostly bare root,</span>
+    </h1>
   </div>
-</section>  -->
-</br></br></br></br></br></br>
-
+</section>
+-->
+<br><br><br><br><br><br>
 
 <script>
-
-
 window.addEventListener("DOMContentLoaded", () => {
   const tl = gsap.timeline();
-
-  const customEase = "cubic-bezier(0.215, 0.61, 0.355, 1)"; // stylish and smooth
+  const customEase = "cubic-bezier(0.215, 0.61, 0.355, 1)";
 
   tl.to(".hero__word--first", {
     y: 0,
     opacity: 1,
-    duration: 1.1, // match the website's transition timing
+    duration: 1.1,
     ease: customEase,
-  }, 0); // no delay
+  }, 0);
 
   tl.to(".hero__word--second", {
     y: 0,
     opacity: 1,
     duration: 1.1,
     ease: "back.inOut(1)",
-  }, 0.1); // subtle stagger for polish
+  }, 0.1);
 });
-
 </script>
-  <?php if (is_shop() || is_product_category()) : ?>
-    <div id="plantground-filters">
-      <label class="toggle-switch">
-        <input type="checkbox" value="cactus" class="category-toggle">
-        <span class="slider"></span>
-        <span class="toggle-label">Cactus</span>
-      </label>
 
-      <label class="toggle-switch">
-        <input type="checkbox" value="succulents" class="category-toggle">
-        <span class="slider"></span>
-        <span class="toggle-label">Succulents</span>
-      </label>
+<?php if (is_shop() || is_product_category()) : ?>
+  <div id="plantground-filters">
+    <label class="toggle-switch">
+      <input type="checkbox" value="cactus" class="category-toggle">
+      <span class="slider"></span>
+      <span class="toggle-label">Cactus</span>
+    </label>
 
-      <label class="toggle-switch">
-        <input type="checkbox" value="originals" class="category-toggle">
-        <span class="slider"></span>
-        <span class="toggle-label">Originals</span>
-      </label>
-    </div>
-  <?php endif; ?>
+    <label class="toggle-switch">
+      <input type="checkbox" value="succulents" class="category-toggle">
+      <span class="slider"></span>
+      <span class="toggle-label">Succulents</span>
+    </label>
+
+    <label class="toggle-switch">
+      <input type="checkbox" value="originals" class="category-toggle">
+      <span class="slider"></span>
+      <span class="toggle-label">Originals</span>
+    </label>
+  </div>
+<?php endif; ?>
 
 <?php
 /**
@@ -131,16 +127,20 @@ window.addEventListener("DOMContentLoaded", () => {
  */
 do_action('woocommerce_shop_loop_header');
 
-if (woocommerce_product_loop()) {
+/**
+ * Always show notices, result count, and sort dropdown (woocommerce_catalog_ordering).
+ * These are hooked into woocommerce_before_shop_loop.
+ */
+// Always show notices
+do_action('woocommerce_output_all_notices');
 
-    /**
-     * Hook: woocommerce_before_shop_loop.
-     *
-     * @hooked woocommerce_output_all_notices - 10
-     * @hooked woocommerce_result_count - 20
-     * @hooked woocommerce_catalog_ordering - 30
-     */
-    do_action('woocommerce_before_shop_loop');
+// Always show result count
+woocommerce_result_count();
+
+// Always show catalog ordering dropdown
+woocommerce_catalog_ordering();
+
+if (woocommerce_product_loop()) {
 
     woocommerce_product_loop_start();
 
@@ -165,6 +165,7 @@ if (woocommerce_product_loop()) {
      * @hooked woocommerce_pagination - 10
      */
     do_action('woocommerce_after_shop_loop');
+
 } else {
     /**
      * Hook: woocommerce_no_products_found.
@@ -177,7 +178,7 @@ if (woocommerce_product_loop()) {
 /**
  * Hook: woocommerce_after_main_content.
  *
- * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+ * @hooked woocommerce_output_content_wrapper_end - 10
  */
 do_action('woocommerce_after_main_content');
 

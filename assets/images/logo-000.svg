@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="143px" height="22px" viewBox="0 0 143 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="147px" height="25px" viewBox="0 0 147 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
     <title>Plantground</title>
     <desc>Created with Sketch.</desc>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Georgia-Bold, Georgia" font-size="22" font-weight="bold">
-        <g id="Plantground" transform="translate(0.000000, -3.000000)" fill="#000000">
-            <text>
-                <tspan x="0" y="20">Plantground</tspan>
-            </text>
-        </g>
+    <g id="Plantground" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="Georgia-Bold, Georgia" font-size="22" font-weight="bold">
+        <text id="plantground" fill="#000000">
+            <tspan x="0" y="20">plantground</tspan>
+        </text>
     </g>
 </svg>

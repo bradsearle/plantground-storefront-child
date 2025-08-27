@@ -12,10 +12,13 @@ export function fadeInProducts() {
   });
 }
 
-export function fetchProducts(categories) {
+export function fetchProducts(categories = []) {
+  const orderby = document.querySelector('.woocommerce-ordering .orderby')?.value || 'menu_order';
+
   const data = new FormData();
   data.append('action', 'plantground_filter_products');
   data.append('categories', JSON.stringify(categories));
+  data.append('orderby', orderby);
 
   return fetch(plantground_ajax.ajax_url, {
     method: 'POST',
@@ -38,6 +41,9 @@ export function initFilters() {
     fadeInProducts();
 
     const toggles = document.querySelectorAll('.category-toggle');
+    const sortSelect = document.querySelector('.woocommerce-ordering .orderby');
+
+    // Category toggles
     toggles.forEach((toggle) => {
       toggle.addEventListener('change', () => {
         const checkedCategories = Array.from(toggles)
@@ -47,5 +53,16 @@ export function initFilters() {
         fetchProducts(checkedCategories);
       });
     });
+
+    // Sort dropdown
+    if (sortSelect) {
+      sortSelect.addEventListener('change', () => {
+        const checkedCategories = Array.from(toggles)
+          .filter((t) => t.checked)
+          .map((t) => t.value);
+
+        fetchProducts(checkedCategories);
+      });
+    }
   });
 }

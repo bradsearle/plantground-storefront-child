@@ -16,6 +16,11 @@
 
 </head>
 <body <?php body_class( is_front_page() ? 'pg-content-hidden' : '' ); ?>>
+    <script>
+  if (sessionStorage.getItem('pgPreloaderSeen')) {
+    document.documentElement.classList.add('pg-no-preloader');
+  }
+</script>
 <?php if ( is_front_page() ) : ?>
   <!-- Preloader Overlay -->
   <div id="pg-preloader" class="pg-preloader">

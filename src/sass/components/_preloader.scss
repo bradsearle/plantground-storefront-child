@@ -2,7 +2,7 @@
 .pg-preloader {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: #00a562;
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 .pg-preloader__mask {
   position: absolute;
   inset: 0;
-  background: #000;
+  background: #00a562;
   transform: translateY(100%); // start below logo
 }
 
@@ -65,4 +65,8 @@ body.pg-content-hidden .nav__info-bar {
 /* Keep nav logo visible so it can animate */
 .nav-logo__img {
   opacity: 0; // starts hidden
+}
+
+.pg-no-preloader #pg-preloader {
+  display: none !important;
 }

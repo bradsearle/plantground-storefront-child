@@ -38,6 +38,7 @@
     "braces": "^3.0.3",
     "browserslist": "^4.25.0",
     "caniuse-lite": "^1.0.30001721",
+    "choices.js": "^11.1.0",
     "chokidar": "^4.0.3",
     "detect-libc": "^1.0.3",
     "electron-to-chromium": "^1.5.165",

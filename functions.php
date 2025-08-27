@@ -58,13 +58,14 @@ add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
 add_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11);
 
-// AJAX handler for product filtering
+// === AJAX handler for product filtering + sort ===
 add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products');
 add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products');
 
 function plantground_filter_products()
 {
     $categories = json_decode(stripslashes($_POST['categories'] ?? ''), true);
+    $orderby    = sanitize_text_field($_POST['orderby'] ?? 'menu_order');
 
     $args = array(
         'post_type'      => 'product',
@@ -73,6 +74,7 @@ function plantground_filter_products()
         'tax_query'      => array(),
     );
 
+    // Handle categories
     if (!empty($categories)) {
         $args['tax_query'][] = array(
             'taxonomy' => 'product_cat',
@@ -80,6 +82,37 @@ function plantground_filter_products()
             'terms'    => $categories,
             'operator' => 'IN',
         );
+    }
+
+    // Handle WooCommerce sort options
+    switch ($orderby) {
+        case 'popularity':
+            $args['meta_key'] = 'total_sales';
+            $args['orderby']  = 'meta_value_num';
+            break;
+        case 'rating':
+            $args['meta_key'] = '_wc_average_rating';
+            $args['orderby']  = 'meta_value_num';
+            $args['order']    = 'DESC';
+            break;
+        case 'date':
+            $args['orderby']  = 'date';
+            $args['order']    = 'DESC';
+            break;
+        case 'price':
+            $args['meta_key'] = '_price';
+            $args['orderby']  = 'meta_value_num';
+            $args['order']    = 'ASC';
+            break;
+        case 'price-desc':
+            $args['meta_key'] = '_price';
+            $args['orderby']  = 'meta_value_num';
+            $args['order']    = 'DESC';
+            break;
+        default:
+            $args['orderby'] = 'menu_order title';
+            $args['order']   = 'ASC';
+            break;
     }
 
     $query = new WP_Query($args);
@@ -95,8 +128,8 @@ function plantground_filter_products()
 
     wp_die();
 }
-remove_action('woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10);
 
+// === Cart fragments ===
 function plantground_cart_count_fragment($fragments)
 {
     ob_start();
@@ -125,7 +158,33 @@ function plantground_custom_cart_fragment($fragments)
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
 
-// Remove sort dropdown on shop loop
-add_action('init', function () {
-    remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
+/**
+ * === Sort dropdown control ===
+ * Default WooCommerce sort dropdown is visible again.
+ */
+add_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 20);
+
+/**
+ * === Remove default WooCommerce products header (title) ===
+ */
+add_action('after_setup_theme', function() {
+    remove_action('woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10);
 });
+
+
+// Enqueue Choices.js for custom select styling
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_style(
+        'choices-css',
+        'https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css',
+        [],
+        '10.2.0'
+    );
+    wp_enqueue_script(
+        'choices-js',
+        'https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js',
+        [],
+        '10.2.0',
+        true
+    );
+}, 20);
