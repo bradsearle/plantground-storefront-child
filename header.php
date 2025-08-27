@@ -15,16 +15,18 @@
 
 
 </head>
-<body <?php body_class('pg-content-hidden'); ?>>
-<!-- Preloader Overlay -->
-<div id="pg-preloader" class="pg-preloader">
-  <div class="pg-preloader__inner">
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-fff.svg"
-         alt="Plantground Logo"
-         class="pg-preloader__logo" />
-    <div class="pg-preloader__mask"></div>
+<body <?php body_class( is_front_page() ? 'pg-content-hidden' : '' ); ?>>
+<?php if ( is_front_page() ) : ?>
+  <!-- Preloader Overlay -->
+  <div id="pg-preloader" class="pg-preloader">
+    <div class="pg-preloader__inner">
+      <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-fff.svg"
+           alt="Plantground Logo"
+           class="pg-preloader__logo" />
+      <div class="pg-preloader__mask"></div>
+    </div>
   </div>
-</div>
+<?php endif; ?>
 
 <?php wp_body_open(); ?>
 
