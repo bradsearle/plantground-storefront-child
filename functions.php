@@ -188,3 +188,10 @@ add_action('wp_enqueue_scripts', function () {
         true
     );
 }, 20);
+
+
+// Remove "Sort by popularity" from sort dropdown
+add_filter('woocommerce_catalog_orderby', function($sortby) {
+    unset($sortby['popularity']); // removes "Sort by popularity"
+    return $sortby;
+});

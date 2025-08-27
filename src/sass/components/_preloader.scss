@@ -70,3 +70,14 @@ body.pg-content-hidden .nav__info-bar {
 .pg-no-preloader #pg-preloader {
   display: none !important;
 }
+
+.pg-content-hidden .nav__info-bar {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+@media (max-width: 768px) {
+  .pg-preloader__logo {
+    width: 130px;
+  }
+}

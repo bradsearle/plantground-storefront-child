@@ -28,7 +28,7 @@ export function initPreloader() {
     }
 
     document.body.classList.remove('pg-content-hidden');
-    gsap.to(['.nav__info-bar', 'main', 'footer'], {
+    gsap.to(['main', 'footer'], {
       opacity: 1,
       duration: 0.4,
       ease: 'power1.out',
@@ -67,8 +67,8 @@ export function initPreloader() {
       '<' // synced with nav logo reveal
     );
 
-    // staggered fade-in of page content
-    tl.to(['.nav__info-bar', 'main', 'footer'], {
+    // fade-in of only the page content (NOT info-bar anymore)
+    tl.to(['main', 'footer'], {
       opacity: 1,
       duration: 0.8,
       ease: 'power2.out',

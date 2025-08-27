@@ -3,7 +3,7 @@
 .nav__info-bar {
   width: 100%;
   height: 30px;
-  background: #000;
+  background: #00a562;
   color: #fff;
   font-family: 'Space Mono', monospace;
   font-size: 11px;
@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1001; /* above nav__flexm/ */
+  z-index: 1001; /* above nav__flex */
   pointer-events: auto;
   transition: transform 0.3s ease;
   transform: translateY(0);
@@ -40,6 +40,7 @@
     }
   }
 }
+
 .nav__wrap {
   display: flex;
   justify-content: space-between;
@@ -56,6 +57,7 @@
   transform: translateY(0); /* Initial position */
   transition: transform 0.5s ease; /* Optional smooth transition */
 }
+
 nav.hidden {
   transform: translateY(-100%); /* Hide the navigation */
 }
@@ -155,7 +157,6 @@ nav.hidden {
 /* === Cart Count === */
 .cart-link {
   position: relative;
-  // display: flex;
 
   .cart-count {
     color: #000;
@@ -174,19 +175,24 @@ nav.hidden {
 
 /* === Mobile Overrides === */
 @media (max-width: 768px) {
+  /* ==== Completed nav.scss ==== */
+
+  .nav__info-bar {
+    font-size: 12px;
+  }
   .nav__grid {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+  .nav__wrap {
+    padding: 22px 12px;
   }
 
   .nav__logo {
     display: block;
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.3rem;
-    font-weight: 700;
+    width: 130px;
+    transform: none; /* remove centering */
     opacity: 1 !important;
     z-index: 1600;
 
@@ -209,9 +215,7 @@ nav.hidden {
   }
 
   .nav__cart {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+    position: relative;
     display: flex;
     z-index: 1600;
   }
