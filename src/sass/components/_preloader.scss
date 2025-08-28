@@ -14,20 +14,14 @@
 .pg-preloader__inner {
   position: relative;
   display: inline-block;
-  overflow: hidden;
+  overflow: hidden; // acts as mask "window"
 }
 
 .pg-preloader__logo {
   max-width: 260px;
   display: block;
   opacity: 0; // start hidden
-}
-
-.pg-preloader__mask {
-  position: absolute;
-  inset: 0;
-  background: #00a562;
-  transform: translateY(100%); // start below logo
+  transform: translateY(0); // GSAP will slide this upward
 }
 
 .pg-preloader.pg-preloader--done {
@@ -36,35 +30,24 @@
 }
 
 /* === NAV LOGO REVEAL === */
-
 .nav-logo__inner {
   position: relative;
   display: inline-block;
-  overflow: hidden;
+  overflow: hidden; // mask window
+  height: auto;
 }
 
 .nav-logo__img {
   display: block;
-  opacity: 0; // hidden until GSAP sets visible
+  opacity: 0; // GSAP will fade/show
+  transform: translateY(100%); // start below view, GSAP animates up
 }
 
-.nav-logo__mask {
-  position: absolute;
-  inset: 0;
-  background: #fff; // white page background
-  transform: translateY(0%); // start fully covering logo
-}
-
-/* Hide content until reveal */
+/* === Content Hide/Show === */
 body.pg-content-hidden main,
 body.pg-content-hidden footer,
 body.pg-content-hidden .nav__info-bar {
   opacity: 0;
-}
-
-/* Keep nav logo visible so it can animate */
-.nav-logo__img {
-  opacity: 0; // starts hidden
 }
 
 .pg-no-preloader #pg-preloader {

@@ -10,16 +10,16 @@
     </span>
   </div>
   <div class="nav__wrap">
-<a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
-  <div class="nav-logo__inner">
-    <img
-      src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
-      alt="Plantground Logo"
-      class="nav-logo__img"
-    />
-    <div class="nav-logo__mask"></div>
-  </div>
-</a>
+    <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
+      <div class="nav-logo__inner">
+        <img
+          src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
+          alt="Plantground Logo"
+          class="nav-logo__img"
+        />
+      </div>
+    </a>
+
     <?php
       $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     ?>
@@ -46,8 +46,3 @@
 </nav>
 
 <!-- Main nav -->
-
-
-
-
-

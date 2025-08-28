@@ -3,30 +3,20 @@ import { gsap } from 'gsap';
 export function initPreloader() {
   const pre = document.getElementById('pg-preloader');
   const navLogo = document.querySelector('.nav-logo__img');
-  const navMask = document.querySelector('.nav-logo__mask');
 
   // === NON-HOMEPAGE CASE ===
   if (!pre) {
-    if (navLogo && navMask) {
-      gsap.set(navLogo, { opacity: 1 });
-      gsap.set(navMask, { yPercent: -100 });
-    }
+    if (navLogo) gsap.set(navLogo, { y: 0, opacity: 1 });
     document.body.classList.remove('pg-content-hidden');
     return;
   }
 
   const logo = pre?.querySelector('.pg-preloader__logo');
-  const mask = pre?.querySelector('.pg-preloader__mask');
 
   // === REFRESH CASE ===
   if (sessionStorage.getItem('pgPreloaderSeen')) {
     pre.remove();
-
-    if (navLogo && navMask) {
-      gsap.set(navLogo, { opacity: 1 });
-      gsap.set(navMask, { yPercent: -100 });
-    }
-
+    if (navLogo) gsap.set(navLogo, { y: 0, opacity: 1 });
     document.body.classList.remove('pg-content-hidden');
     gsap.to(['main', 'footer'], {
       opacity: 1,
@@ -39,35 +29,25 @@ export function initPreloader() {
   sessionStorage.setItem('pgPreloaderSeen', '1');
 
   // === FIRST VISIT ===
-  if (logo && mask && navLogo && navMask) {
+  if (logo && navLogo) {
     const tl = gsap.timeline({
       onComplete: () => pre.remove(),
     });
 
-    // subtle hold before fade-in
-    tl.to({}, { duration: 0.4 });
+    // 1) Fade in white FFF logo
+    tl.to(logo, { opacity: 1, duration: 1.0, ease: 'circ.out' });
 
-    // smooth fade-in of white logo
-    tl.to(logo, { opacity: 1, duration: 1.3, ease: 'circ.out' });
+    // 2) Slide FFF logo up and out
+    tl.to(logo, { y: -120, duration: 0.6, ease: 'power3.in' });
 
-    // immediately mask white logo away (fast + snappy)
-    tl.to(mask, { yPercent: -100, duration: 0.45, ease: 'power3.inOut' });
+    // 3) Black 000 logo slides up from below
+    tl.set(navLogo, { opacity: 1, y: 200 });
+    tl.to(navLogo, { y: 0, duration: 0.8, ease: 'power4.out' });
 
-    // black nav logo reveal + background fade start TOGETHER
-    tl.set(navLogo, { opacity: 1 });
-    tl.fromTo(
-      navMask,
-      { yPercent: 0 },
-      { yPercent: -100, duration: 0.45, ease: 'power3.inOut' },
-      '<' // start at same time as background fade
-    );
-    tl.to(
-      pre,
-      { opacity: 0, duration: 0.5, ease: 'power2.out' },
-      '<' // synced with nav logo reveal
-    );
+    // 4) Fade out green background AFTER black logo finishes
+    tl.to(pre, { opacity: 0, duration: 0.6, ease: 'power2.out' });
 
-    // fade-in of only the page content (NOT info-bar anymore)
+    // 5) Fade in content
     tl.to(['main', 'footer'], {
       opacity: 1,
       duration: 0.8,
