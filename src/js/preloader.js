@@ -42,10 +42,14 @@ export function initPreloader() {
 
     // 3) Black 000 logo slides up from below
     tl.set(navLogo, { opacity: 1, y: 200 });
-    tl.to(navLogo, { y: 0, duration: 0.8, ease: 'power4.out' });
+    tl.to(navLogo, { y: 0, duration: 0.8, ease: 'power4.out' }, '+=0.1');
 
-    // 4) Fade out green background AFTER black logo finishes
-    tl.to(pre, { opacity: 0, duration: 0.6, ease: 'power2.out' });
+    // 4) Fade out green background slightly *after* black logo starts
+    tl.to(
+      pre,
+      { opacity: 0, duration: 0.6, ease: 'power2.out' },
+      '-=0.5' // overlap background fade with black logo animation
+    );
 
     // 5) Fade in content
     tl.to(['main', 'footer'], {
