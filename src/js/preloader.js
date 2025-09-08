@@ -4,7 +4,7 @@ export function initPreloader() {
   const pre = document.getElementById('pg-preloader');
   const navLogo = document.querySelector('.nav-logo__img');
 
-  // === NON-HOMEPAGE CASE ===
+  // === NON-HOMEPAGE CASE ==
   if (!pre) {
     if (navLogo) gsap.set(navLogo, { y: 0, opacity: 1 });
     document.body.classList.remove('pg-content-hidden');
