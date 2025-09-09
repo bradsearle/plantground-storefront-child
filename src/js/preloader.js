@@ -28,7 +28,7 @@ export function initPreloader() {
   }
   sessionStorage.setItem('pgPreloaderSeen', '1');
 
-  // === FIRST VISIT ===
+  // === FIRST VISIT ==
   if (logo && navLogo) {
     const tl = gsap.timeline({
       onComplete: () => pre.remove(),
