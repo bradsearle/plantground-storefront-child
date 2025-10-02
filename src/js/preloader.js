@@ -48,7 +48,7 @@ export function initPreloader() {
     tl.to(
       pre,
       { opacity: 0, duration: 0.6, ease: 'power2.out' },
-      '-=0.5' // overlap background fade with black logo animation
+      '-=0.5' // overlap background fade with black logo slide up
     );
 
     // 5) Fade in content
