@@ -112,7 +112,7 @@ window.addEventListener("DOMContentLoaded", () => {
     <label class="toggle-switch">
       <input type="checkbox" value="originals" class="category-toggle">
       <span class="slider"></span>
-      <span class="toggle-label">Originals</span>
+      <span class="toggle-label">Originals/</span>
     </label>
   </div>
 <?php endif; ?>
