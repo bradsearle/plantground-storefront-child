@@ -1,195 +1,86 @@
 <?php
 /**
- * The Template for displaying product archives, including the main shop page which is a post type archive
+ * Template for displaying product archives (main shop page + categories)
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/archive-product.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see https://woocommerce.com/document/template-structure/
  * @package WooCommerce\Templates
- * @version 8.6.0
  */
 
 defined('ABSPATH') || exit;
 
 get_header('shop');
 
-/**
- * Hook: woocommerce_before_main_content.
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- * @hooked WC_Structured_Data::generate_website_data() - 30
- */
 do_action('woocommerce_before_main_content');
 ?>
+<div class="site-main"><!-- wrapper -->
 
-<div class="site-main">  <!-- Added wrapper here -->
 
-<style>
-  .hero {
-    height: auto;
-    display: block;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin-top: 100px;
-  }
-  .hero__mask {
-    overflow: hidden;
-    height: 5.5rem; /* tightly matches font size and line height */
-  }
-  .hero__title {
-    font-size: 3.5rem;
-    font-weight: 500;
-    line-height: 1.1;
-    display: flex;
-    color: #111;
-  }
-  .hero__word {
-    display: inline-block;
-    transform: translateY(100%);
-    will-change: transform;
-    white-space: nowrap;
-  }
-  .hero__word--second {
-    display: flex;
-  }
-</style>
-</head>
-<body>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-<!-- Hero section (optional, commented out)
-<section class="hero">
-  <div class="hero__mask">
-    <h1 class="hero__title">
-      <span class="hero__word hero__word--first">Slinging unique cactus, succulents, and originals, mostly bare root,</span>
-    </h1>
-  </div>
-</section>
--->
-<br><br><br><br><br><br>
 
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  const tl = gsap.timeline();
-  const customEase = "cubic-bezier(0.215, 0.61, 0.355, 1)";
-
-  tl.to(".hero__word--first", {
-    y: 0,
-    opacity: 1,
-    duration: 1.1,
-    ease: customEase,
-  }, 0);
-
-  tl.to(".hero__word--second", {
-    y: 0,
-    opacity: 1,
-    duration: 1.1,
-    ease: "back.inOut(1)",
-  }, 0.1);
-});
-</script>
 
 <?php if (is_shop() || is_product_category()) : ?>
-  <div id="plantground-filters">
-    <label class="toggle-switch">
-      <input type="checkbox" value="cactus" class="category-toggle">
-      <span class="slider"></span>
-      <span class="toggle-label">Cactus</span>
-    </label>
+  <div class="shop-controls" id="shop-controls">
+    <!-- Mobile toggle button (for later use) -->
+    <button class="shop-controls__mobile-toggle" aria-expanded="false" aria-controls="shop-controls-panel" id="shop-controls-toggle" type="button">
+      <span class="sr-only">Open filters and sort</span>
+      <span class="icon">☰</span>
+    </button>
 
-    <label class="toggle-switch">
-      <input type="checkbox" value="succulents" class="category-toggle">
-      <span class="slider"></span>
-      <span class="toggle-label">Succulents</span>
-    </label>
+    <!-- Controls panel: holds filters + sort -->
+   <div class="shop-controls__filters" id="plantground-filters">
+  <label class="toggle-switch">
+    <input type="checkbox" value="cactus" class="category-toggle" />
+    <span class="slider"></span>
+    <span class="toggle-label">Cactus</span>
+  </label>
 
-    <label class="toggle-switch">
-      <input type="checkbox" value="originals" class="category-toggle">
-      <span class="slider"></span>
-      <span class="toggle-label">Originals/</span>
-    </label>
-  </div>
+  <label class="toggle-switch">
+    <input type="checkbox" value="succulents" class="category-toggle" />
+    <span class="slider"></span>
+    <span class="toggle-label">Succulents</span>
+  </label>
+
+  <label class="toggle-switch">
+    <input type="checkbox" value="originals" class="category-toggle" />
+    <span class="slider"></span>
+    <span class="toggle-label">Originals</span>
+  </label>
+</div>
+
+
+      <div class="shop-controls__sort">
+        <?php woocommerce_catalog_ordering(); ?>
+      </div>
+    </div><!-- /.shop-controls__panel -->
+  </div><!-- /.shop-controls -->
 <?php endif; ?>
 
 <?php
-/**
- * Hook: woocommerce_shop_loop_header.
- *
- * @since 8.6.0
- *
- * @hooked woocommerce_product_taxonomy_archive_header - 10
- */
-do_action('woocommerce_shop_loop_header');
-
-/**
- * Always show notices, result count, and sort dropdown (woocommerce_catalog_ordering).
- * These are hooked into woocommerce_before_shop_loop.
- */
-// Always show notices
+// Show notices, result count, and start the product loop.
 do_action('woocommerce_output_all_notices');
-
-// Always show result count
 woocommerce_result_count();
 
-// Always show catalog ordering dropdown
-woocommerce_catalog_ordering();
-
 if (woocommerce_product_loop()) {
+  woocommerce_product_loop_start();
 
-    woocommerce_product_loop_start();
-
-    if (wc_get_loop_prop('total')) {
-        while (have_posts()) {
-            the_post();
-
-            /**
-             * Hook: woocommerce_shop_loop.
-             */
-            do_action('woocommerce_shop_loop');
-
-            wc_get_template_part('content', 'product');
-        }
+  if (wc_get_loop_prop('total')) {
+    while (have_posts()) {
+      the_post();
+      do_action('woocommerce_shop_loop');
+      wc_get_template_part('content', 'product');
     }
+  }
 
-    woocommerce_product_loop_end();
-
-    /**
-     * Hook: woocommerce_after_shop_loop.
-     *
-     * @hooked woocommerce_pagination - 10
-     */
-    do_action('woocommerce_after_shop_loop');
-
+  woocommerce_product_loop_end();
+  do_action('woocommerce_after_shop_loop');
 } else {
-    /**
-     * Hook: woocommerce_no_products_found.
-     *
-     * @hooked wc_no_products_found - 10
-     */
-    do_action('woocommerce_no_products_found');
+  do_action('woocommerce_no_products_found');
 }
 
-/**
- * Hook: woocommerce_after_main_content.
- *
- * @hooked woocommerce_output_content_wrapper_end - 10
- */
 do_action('woocommerce_after_main_content');
-
-/**
- * Hook: woocommerce_sidebar.
- *
- * @hooked woocommerce_get_sidebar - 10
- */
 do_action('woocommerce_sidebar');
 ?>
 
-</div> <!-- /.site-main -->
+</div><!-- /.site-main -->
 
 <?php get_footer('shop'); ?>
