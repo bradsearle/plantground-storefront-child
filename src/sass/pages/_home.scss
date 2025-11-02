@@ -98,3 +98,12 @@
     pointer-events: none;
   }
 }
+
+// for filters and sort html structure
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Optional: vertically centers items if container has height */
+  width: 100%;
+  /* Add padding or max-width as needed for your layout */
+}

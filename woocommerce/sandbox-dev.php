@@ -2,7 +2,7 @@
 /* Template Name: Dev Sandbox */
 get_header(); 
 ?>
-
+<!-- 
 <style>
   .hero {
     height: auto;
@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", () => {
     ease: "back.inOut(1)",
   }, 0.1);
 });
-</script>
+</script> -->
 
 <!-- Hero section (optional, commented out)
 <section class="hero">
@@ -63,6 +63,34 @@ window.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 -->
+
+<style>
+    .test {
+        font-size: 48px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 200px;
+    }   
+
+    .flex-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Optional: vertically centers items if container has height */
+  width: 100%;
+  /* Add padding or max-width as needed for your layout */
+}
+</style>
+
+
+<div class="test">Sandbox Dev Page</div>
+
+
+
+<div class="flex-row">
+  <div class="left-item">Left Content</div>
+  <div class="right-item">Right Content</div>
+</div>
+
 
 
 

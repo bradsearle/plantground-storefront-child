@@ -11,12 +11,18 @@ get_header('shop');
 
 do_action('woocommerce_before_main_content');
 ?>
-<div class="site-main"><!-- wrapper -->
-
+<div class="site-main">
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-
+<style>
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+</style>
 
 <?php if (is_shop() || is_product_category()) : ?>
   <div class="shop-controls" id="shop-controls">
@@ -26,32 +32,36 @@ do_action('woocommerce_before_main_content');
       <span class="icon">☰</span>
     </button>
 
-    <!-- Controls panel: holds filters + sort -->
-   <div class="shop-controls__filters" id="plantground-filters">
-  <label class="toggle-switch">
-    <input type="checkbox" value="cactus" class="category-toggle" />
-    <span class="slider"></span>
-    <span class="toggle-label">Cactus</span>
-  </label>
+    <!-- Flex row: filters on left, sort on right -->
+    <div class="flex-row">
+      <div class="left-item">
+        <div class="shop-controls__filters" id="plantground-filters">
+          <label class="toggle-switch">
+            <input type="checkbox" value="cactus" class="category-toggle" />
+            <span class="slider"></span>
+            <span class="toggle-label">Cactus</span>
+          </label>
 
-  <label class="toggle-switch">
-    <input type="checkbox" value="succulents" class="category-toggle" />
-    <span class="slider"></span>
-    <span class="toggle-label">Succulents</span>
-  </label>
+          <label class="toggle-switch">
+            <input type="checkbox" value="succulents" class="category-toggle" />
+            <span class="slider"></span>
+            <span class="toggle-label">Succulents</span>
+          </label>
 
-  <label class="toggle-switch">
-    <input type="checkbox" value="originals" class="category-toggle" />
-    <span class="slider"></span>
-    <span class="toggle-label">Originals</span>
-  </label>
-</div>
-
-
-      <div class="shop-controls__sort">
-        <?php woocommerce_catalog_ordering(); ?>
+          <label class="toggle-switch">
+            <input type="checkbox" value="originals" class="category-toggle" />
+            <span class="slider"></span>
+            <span class="toggle-label">Originals</span>
+          </label>
+        </div>
       </div>
-    </div><!-- /.shop-controls__panel -->
+
+      <div class="right-item">
+        <div class="shop-controls__sort">
+          <?php woocommerce_catalog_ordering(); ?>
+        </div>
+      </div>
+    </div> <!-- /.flex-row -->
   </div><!-- /.shop-controls -->
 <?php endif; ?>
 
