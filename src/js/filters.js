@@ -68,23 +68,21 @@ export function initFilters() {
 }
 
 // filters-sort btn for desktop/mobile
-// filters-sort btn for desktop/mobile
 document.addEventListener('DOMContentLoaded', function () {
   const mobileToggle = document.getElementById('mobile-filter-toggle');
   const filtersContainer = document.getElementById('filters-container');
   const filterIcon = document.getElementById('filter-icon');
+  const filterText = document.getElementById('filter-text');
 
   // Check if all required elements exist
-  if (!mobileToggle || !filtersContainer || !filterIcon) {
+  if (!mobileToggle || !filtersContainer || !filterIcon || !filterText) {
     console.error('Required elements not found');
     return;
   }
 
-  // Store original SVG path for filter icon
+  // Store original SVG path for filter icon (same for both states)
   const filterPath =
     'M440-120v-240h80v80h320v80H520v80h-80Zm-320-80v-80h240v80H120Zm160-160v-80H120v-80h160v-80h80v240h-80Zm160-80v-80h400v80H440Zm160-160v-240h80v80h160v80H680v80h-80Zm-480-80v-80h400v80H120Z';
-  // SVG path for X icon
-  const xPath = 'M6 18L18 6M6 6l12 12';
 
   mobileToggle.addEventListener('click', function (e) {
     e.preventDefault();
@@ -92,18 +90,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Toggle visibility of filters
     filtersContainer.classList.toggle('mobile-filters-visible');
 
-    // Update icon based on visibility state
+    // Update text based on visibility state (icon stays the same)
     if (filtersContainer.classList.contains('mobile-filters-visible')) {
-      // Change to X icon
-      filterIcon.innerHTML =
-        '<path d="' +
-        xPath +
-        '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-      filterIcon.setAttribute('aria-label', 'Close Filters');
+      // Keep the same filter icon, update text to "Hide Filters"
+      filterText.textContent = 'Hide Filters';
+      filterIcon.setAttribute('aria-label', 'Hide Filters');
     } else {
-      // Revert to filter icon
-      filterIcon.innerHTML = '<path d="' + filterPath + '" fill="currentColor"/>';
-      filterIcon.setAttribute('aria-label', 'Filter');
+      // Keep the same filter icon, update text to "Show Filters"
+      filterText.textContent = 'Show Filters';
+      filterIcon.setAttribute('aria-label', 'Show Filters');
     }
   });
 
@@ -119,8 +114,8 @@ document.addEventListener('DOMContentLoaded', function () {
       window.innerWidth <= 800
     ) {
       filtersContainer.classList.remove('mobile-filters-visible');
-      filterIcon.innerHTML = '<path d="' + filterPath + '" fill="currentColor"/>';
-      filterIcon.setAttribute('aria-label', 'Filter');
+      filterText.textContent = 'Show Filters';
+      filterIcon.setAttribute('aria-label', 'Show Filters');
     }
   });
 
@@ -130,13 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (window.innerWidth > 800) {
         // On desktop, ensure filters are visible and icon shows filter
         filtersContainer.classList.remove('mobile-filters-visible');
-        filterIcon.innerHTML = '<path d="' + filterPath + '" fill="currentColor"/>';
-        filterIcon.setAttribute('aria-label', 'Filter');
+        filterText.textContent = 'Show Filters';
+        filterIcon.setAttribute('aria-label', 'Show Filters');
       } else {
-        // On mobile, if filters are hidden, ensure it shows the filter icon
+        // On mobile, if filters are hidden, ensure it shows the filter icon and "Show Filters" text
         if (!filtersContainer.classList.contains('mobile-filters-visible')) {
-          filterIcon.innerHTML = '<path d="' + filterPath + '" fill="currentColor"/>';
-          filterIcon.setAttribute('aria-label', 'Filter');
+          filterText.textContent = 'Show Filters';
+          filterIcon.setAttribute('aria-label', 'Show Filters');
         }
       }
     }, 150);
