@@ -15,68 +15,16 @@ do_action('woocommerce_before_main_content');
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-<style>
-.shop-controls {
-  position: relative;
-  margin-bottom: 20px;
-}
 
-.mobile-filter-toggle {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-}
-
-@media (max-width: 800px) {
-  .mobile-filter-toggle {
-    display: block;
-  }
-  
-  .shop-controls__row {
-    display: none;
-  }
-  
-  .shop-controls__row.mobile-filters-visible {
-    display: flex;
-  }
-  
-  .shop-controls__row.mobile-filters-visible {
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .shop-controls__left,
-  .shop-controls__right {
-    width: 100%;
-  }
-}
-
-/* Responsive adjustments for filter controls */
-@media (max-width: 800px) {
-  .shop-controls__row {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .shop-controls__left,
-  .shop-controls__right {
-    width: 100%;
-  }
-}
-</style>
 
 <?php if (is_shop() || is_product_category()) : ?>
   <div class="shop-controls" id="shop-controls">
     <!-- Mobile toggle button -->
-    <button class="mobile-filter-toggle" id="mobile-filter-toggle">
-      <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/filter.svg" alt="Filter" id="filter-icon" />
-    </button>
+  <button class="mobile-filter-toggle" id="mobile-filter-toggle">
+  <svg id="filter-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+    <path d="M440-120v-240h80v80h320v80H520v80h-80Zm-320-80v-80h240v80H120Zm160-160v-80H120v-80h160v-80h80v240h-80Zm160-80v-80h400v80H440Zm160-160v-240h80v80h160v80H680v80h-80Zm-480-80v-80h400v80H120Z"/>
+  </svg>
+</button>
 
     <!-- Flex row: filters on left, sort on right -->
     <div class="shop-controls__row" id="filters-container">
@@ -139,60 +87,6 @@ do_action('woocommerce_sidebar');
 
 </div><!-- /.site-main -->
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileToggle = document.getElementById('mobile-filter-toggle');
-  const filtersContainer = document.getElementById('filters-container');
-  const filterIcon = document.getElementById('filter-icon');
-  
-  // Check if all required elements exist
-  if (!mobileToggle || !filtersContainer || !filterIcon) {
-    console.error('Required elements not found');
-    return;
-  }
 
-  mobileToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    // Toggle visibility of filters
-    filtersContainer.classList.toggle('mobile-filters-visible');
-    
-    // Update icon based on visibility state
-    if (filtersContainer.classList.contains('mobile-filters-visible')) {
-      // Change to X icon (you'll need to replace with your X icon path)
-      filterIcon.src = '<?php echo get_stylesheet_directory_uri(); ?>/assets/images/x-icon.svg'; // Update this path to your X icon
-      filterIcon.alt = 'Close Filters';
-    } else {
-      // Revert to filter icon
-      filterIcon.src = '<?php echo get_stylesheet_directory_uri(); ?>/assets/images/filter.svg';
-      filterIcon.alt = 'Filter';
-    }
-  });
-
-  // Optional: Close filters when clicking outside
-  document.addEventListener('click', function(e) {
-    const isClickInsideFilters = filtersContainer.contains(e.target);
-    const isClickOnToggle = mobileToggle.contains(e.target);
-    
-    if (!isClickInsideFilters && !isClickOnToggle && 
-        filtersContainer.classList.contains('mobile-filters-visible') &&
-        window.innerWidth <= 800) {
-      filtersContainer.classList.remove('mobile-filters-visible');
-      filterIcon.src = '<?php echo get_stylesheet_directory_uri(); ?>/assets/images/filter.svg';
-      filterIcon.alt = 'Filter';
-    }
-  });
-
-  // Handle window resize to reset state if needed
-  window.addEventListener('resize', function() {
-    if (window.innerWidth > 800) {
-      // On desktop, ensure filters are visible and icon shows filter
-      filtersContainer.classList.remove('mobile-filters-visible');
-      filterIcon.src = '<?php echo get_stylesheet_directory_uri(); ?>/assets/images/filter.svg';
-      filterIcon.alt = 'Filter';
-    }
-  });
-});
-</script>
 
 <?php get_footer('shop'); ?>

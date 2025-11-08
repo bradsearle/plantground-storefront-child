@@ -99,7 +99,6 @@
   }
 }
 
-// for filters and sort html structure
 .flex-row {
   display: flex;
   justify-content: space-between;
@@ -113,4 +112,42 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.shop-controls {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.mobile-filter-toggle {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+@media (max-width: 800px) {
+  .mobile-filter-toggle {
+    display: block;
+  }
+
+  .shop-controls__row {
+    display: none;
+  }
+
+  .shop-controls__row.mobile-filters-visible {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .shop-controls__left,
+  .shop-controls__right {
+    width: 100%;
+  }
 }
