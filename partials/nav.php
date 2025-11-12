@@ -12,11 +12,11 @@
   <div class="nav__wrap">
     <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
       <div class="nav-logo__inner">
-        <img
+        <!-- <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
           alt="Plantground Logo"
           class="nav-logo__img"
-        />
+        /> -->
       </div>
     </a>
 

@@ -13,7 +13,7 @@ do_action('woocommerce_before_main_content');
 ?>
 <div class="site-main">
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 
 
 
@@ -42,12 +42,6 @@ do_action('woocommerce_before_main_content');
             <span class="slider"></span>
             <span class="toggle-label">Succulents</span>
           </label>
-
-          <!-- <label class="toggle-switch">
-            <input type="checkbox" value="originals" class="category-toggle" />
-            <span class="slider"></span>
-            <span class="toggle-label">Originals</span>
-          </label> -->
         </div>
       </div>
 
