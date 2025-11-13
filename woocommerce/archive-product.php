@@ -27,6 +27,8 @@ do_action('woocommerce_before_main_content');
   </svg>
 </button>
 
+
+
     <!-- Flex row: filters on left, sort on right -->
     <div class="shop-controls__row" id="filters-container">
       <div class="shop-controls__left">

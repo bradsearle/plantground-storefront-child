@@ -44,14 +44,7 @@ function plantground_override_storefront_header()
 }
 add_action('after_setup_theme', 'plantground_override_storefront_header');
 
-// Optionally load plugin assets only on homepage
-function my_enqueue_scripts()
-{
-    if (is_front_page()) {
-        wp_enqueue_script('woof-js', plugin_dir_url(__FILE__) . 'path/to/woof.js', array('jquery'), null, true);
-        wp_enqueue_style('woof-css', plugin_dir_url(__FILE__) . 'path/to/woof.css');
-    }
-}
+
 add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
 // Move "Add to cart" under the price on the single product page
