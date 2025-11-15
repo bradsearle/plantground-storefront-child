@@ -1,35 +1,35 @@
 // 1. Abstracts
-@use 'abstracts/variables' as *;
-@use 'abstracts/mixins';
-@use 'abstracts/functions';
-@use 'abstracts/placeholders';
-@use 'abstracts/overrides';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'abstracts/functions';
+@import 'abstracts/placeholders';
+@import 'abstracts/overrides';
 
 // 2. Vendors (must come before base styles if needed)
-@use 'vendors/normalize';
-@use 'vendors/woocommerce';
+@import 'vendors/normalize';
+@import 'vendors/woocommerce';
 
 // 3. Base
-@use 'base/reset';
-@use 'base/typography';
-@use 'base/base';
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/base';
 
 // 4. Layout
-@use 'layout/header';
-@use 'layout/footer';
-@use 'layout/grid';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/grid';
 
 // 5. Components
-@use 'components/buttons';
-@use 'components/sort';
-@use 'components/cards';
-@use 'components/product-grid';
-@use 'components/nav';
-@use 'components/preloader';
+@import 'components/buttons';
+@import 'components/sort';
+@import 'components/cards';
+@import 'components/product-grid';
+@import 'components/nav';
+@import 'components/preloader';
 
 // 6. Pages
-@use 'pages/home';
-@use 'pages/single-product';
+@import 'pages/home';
+@import 'pages/single-product';
 
 // 7. Themes
-@use 'themes/default';
+@import 'themes/default';

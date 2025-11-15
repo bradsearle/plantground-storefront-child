@@ -1,0 +1,27 @@
+.footer-grid {
+  display: grid;
+  grid-template-columns: 22% 22% auto;
+  grid-template-rows: repeat(5, auto);
+  background-color: $light-grey-color;
+  border: 1px solid #dfdcdc;
+  border-top: none; /* Remove top border of container */
+  border-bottom: none; /* Remove bottom border of container */
+  padding: 0;
+}
+
+.footer-cell {
+  padding: 2px;
+  text-align: left;
+  display: flex;
+  min-height: 30px;
+}
+
+/* Add top border to all cells except the first row (positions 1, 2, 3) */
+.footer-grid > :not(:nth-child(-n + 3)) {
+  border-top: 1px solid #dfdcdc;
+}
+
+/* Remove border from the last row (the last 3 cells) */
+.footer-grid > :nth-last-child(-n + 3) {
+  border-top: none;
+}

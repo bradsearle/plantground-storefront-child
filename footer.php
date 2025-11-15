@@ -11,25 +11,39 @@
 
     </div><!-- #content -->
 
-    <footer class="footer" role="contentinfo">
-      <div class="footer__inner container">
-        <div class="footer__brand">
-          <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="footer__logo">Plantground</a>
-        </div>
+    <footer class="footer-grid">
+      
+      
+  <!-- Row 1 -->
+  <div class="footer-cell">About</div>
+  <div class="footer-cell">Terms</div>
+  <div class="footer-cell">Social</div>
+  
+  <!-- Row 2 -->
+  <div class="footer-cell">Company</div>
+  <div class="footer-cell">Shipping</div>
+  <div class="footer-cell">Instagram</div>
+  
+  <!-- Row 3 -->
+  <div class="footer-cell">Contact</div>
+  <div class="footer-cell">Privacy</div>
+  <div class="footer-cell">TikTok</div>
+  
+  <!-- Row 4 - Add your content later -->
+  <div class="footer-cell"></div>
+  <div class="footer-cell"></div>
+  <div class="footer-cell"></div>
+  
+  <!-- Row 5 - Add your content later -->
+  <div class="footer-cell"></div>
+  <div class="footer-cell"></div>
+  <div class="footer-cell"></div>
 
-        <nav class="footer__nav" aria-label="Footer Navigation">
-          <!-- <ul>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/faq">FAQ</a></li>
-          </ul> -->
-        </nav>
 
-        <div class="footer__legal">
-          <p>&copy; <?php echo date( 'Y' ); ?> Plantground. All rights reserved.</p>
-        </div>
-      </div><!-- .footer__inner -->
+
+
+
+
     </footer><!-- .footer -->
 
   </div><!-- #page -->
