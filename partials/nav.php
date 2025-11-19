@@ -12,24 +12,23 @@
   <div class="nav__wrap">
     <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
       <div class="nav-logo__inner">
-        <!-- <img
+        <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
           alt="Plantground Logo"
-          class="nav-logo__img"
-        /> -->
+          class="nav-logo__img" />
       </div>
     </a>
 
     <?php
-      $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+    $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     ?>
 
     <a href="#"
-       class="cart-link cfw-side-cart-open-trigger"
-       title="View your shopping cart"
-       role="button"
-       aria-label="Open shopping cart"
-       onclick="event.preventDefault();">
+      class="cart-link cfw-side-cart-open-trigger"
+      title="View your shopping cart"
+      role="button"
+      aria-label="Open shopping cart"
+      onclick="event.preventDefault();">
       <div class="nav__cart">
         <span
           id="cart-count"
@@ -38,8 +37,7 @@
         </span>
         <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg"
-          class="header__img"
-        />
+          class="header__img" />
       </div>
     </a>
   </div>
