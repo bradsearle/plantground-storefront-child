@@ -13,4 +13,4 @@ removeStickyBar();
 initPreloader();
 infoBar();
 initNavScroll();
-initCustomSelect();
+initCustomSelect(); // <-- run it
