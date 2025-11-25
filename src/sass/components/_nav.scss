@@ -53,7 +53,7 @@
   left: 0;
   background-color: #fff;
   width: 100%;
-  z-index: 10; /* Ensure it stays on top */
+  z-index: 10000; /* Above fullscreen menu so cart and menu button stay visible */
   transform: translateY(0); /* Initial position */
   transition: transform 0.5s ease; /* Optional smooth transition */
 }
@@ -62,66 +62,19 @@ nav.hidden {
   transform: translateY(-100%); /* Hide the navigation */
 }
 
-/* === Burger Button === */
-.menu__btn {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1601;
-  display: none;
+/* === Hide Storefront parent theme elements (but NOT our custom menu) === */
+.main-navigation button.menu-toggle,
+.storefront-handheld-footer-bar,
+.handheld-navigation {
+  display: none !important;
 }
 
-.menu {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #ccc;
-  }
-
-  svg {
-    width: 28px;
-    height: 28px;
-    display: block;
-    pointer-events: none;
-  }
-}
-
-/* === Burger Icon Animation === */
-.line {
-  fill: none;
-  stroke: black;
-  stroke-width: 6;
-  transition:
-    stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.line1 {
-  stroke-dasharray: 60 207;
-}
-.line2 {
-  stroke-dasharray: 60 60;
-}
-.line3 {
-  stroke-dasharray: 60 207;
-}
-
-.opened .line1 {
-  stroke-dasharray: 90 207;
-  stroke-dashoffset: -134;
-}
-.opened .line2 {
-  stroke-dasharray: 1 60;
-  stroke-dashoffset: -30;
-}
-.opened .line3 {
-  stroke-dasharray: 90 207;
-  stroke-dashoffset: -134;
+/* Keep our custom menu visible */
+#menuToggle,
+span#menuToggle,
+.nav__actions .menu-toggle {
+  display: inline-block !important;
+  visibility: visible !important;
 }
 
 /* === Nav Grid and Logo (Desktop) === */
@@ -137,8 +90,18 @@ nav.hidden {
   padding: 22px;
 }
 
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 9999; /* Keep cart and menu above everything including fullscreen menu */
+}
+
 .nav__cart {
   display: inline-flex;
+  position: relative;
+  z-index: 9999;
 }
 
 .nav__logo {
@@ -225,4 +188,155 @@ nav.hidden {
 /* === Ship Date Styling === */
 .ship-date {
   color: #ff0; // example gold color
+}
+
+/* === Menu Toggle - Plain Text (span element) === */
+.menu-toggle {
+  position: relative;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: 4px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  display: inline-block !important;
+  visibility: visible !important;
+  z-index: 9999;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  /* White text when menu is open */
+  &.menu-open {
+    color: #fff;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .menu-toggle {
+    font-size: 12px;
+  }
+}
+
+/* === Fullscreen Menu Overlay === */
+.fullscreen-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #00a562;
+  z-index: 9000; /* Below menu toggle button */
+  display: none;
+  opacity: 0;
+  overflow: hidden;
+  // transition: opacity 0.4s ease;
+
+  &.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+  }
+
+  &__nav {
+    width: 100%;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  &__item {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  &__link {
+    font-family: 'Space Mono', monospace;
+    font-size: 32px;
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: opacity 0.3s ease;
+    display: block;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+/* === Additional Responsive Adjustments === */
+@media (max-width: 768px) {
+  .fullscreen-menu {
+    &__link {
+      font-size: 14px;
+    }
+
+    &__list {
+      gap: 30px;
+    }
+  }
+}
+
+/* === Override parent theme that hides menu-toggle on desktop === */
+@media (min-width: 768px) {
+  .menu-toggle,
+  .menu-toggle.toggled,
+  button.menu-toggle {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* === Hide everything except CLOSE button when menu is open === */
+body.fullscreen-menu-open {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+
+  .nav__info-bar,
+  .nav__logo,
+  .nav__cart,
+  .cart-link {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .nav__flex {
+    background-color: transparent !important;
+  }
+
+  .menu-toggle {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* Additional scrollbar hiding */
+html.fullscreen-menu-open,
+html:has(body.fullscreen-menu-open) {
+  overflow: hidden !important;
 }

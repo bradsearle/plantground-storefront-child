@@ -1,0 +1,6 @@
+models:
+  - title: Qwen 72B via OpenRouter
+    provider: openrouter
+    model: qwen/qwen-72b-chat
+    apiKey: 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
+    apiBase:

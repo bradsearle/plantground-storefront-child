@@ -23,24 +23,43 @@
     $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     ?>
 
-    <a href="#"
-      class="cart-link cfw-side-cart-open-trigger"
-      title="View your shopping cart"
-      role="button"
-      aria-label="Open shopping cart"
-      onclick="event.preventDefault();">
-      <div class="nav__cart">
-        <span
-          id="cart-count"
-          class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-          (<?php echo $count; ?>)
-        </span>
-        <img
-          src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg"
-          class="header__img" />
-      </div>
-    </a>
+    <div class="nav__actions">
+      <a href="#"
+        class="cart-link cfw-side-cart-open-trigger"
+        title="View your shopping cart"
+        role="button"
+        aria-label="Open shopping cart"
+        onclick="event.preventDefault();">
+        <div class="nav__cart">
+          <span
+            id="cart-count"
+            class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
+            (<?php echo $count; ?>)
+          </span>
+          <img
+            src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg"
+            class="header__img" />
+        </div>
+      </a>
+      <span class="menu-toggle" id="menuToggle">MENU</span>
+    </div>
   </div>
 </nav>
+
+<!-- Fullscreen Menu Overlay -->
+<div class="fullscreen-menu" id="fullscreenMenu">
+  <div class="fullscreen-menu__content">
+    <nav class="fullscreen-menu__nav">
+      <ul class="fullscreen-menu__list">
+        <li class="fullscreen-menu__item">
+          <a href="<?php echo esc_url(home_url('/about')); ?>" class="fullscreen-menu__link">ABOUT</a>
+        </li>
+        <li class="fullscreen-menu__item">
+          <a href="<?php echo esc_url(home_url('/contact')); ?>" class="fullscreen-menu__link">CONTACT</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
 
 <!-- Main nav -->

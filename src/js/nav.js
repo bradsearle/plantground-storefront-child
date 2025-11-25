@@ -2,6 +2,8 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+let navScrollTrigger = null;
+
 export function initNavScroll() {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -15,12 +17,17 @@ export function initNavScroll() {
       duration: 0.2,
     })
     .progress(1);
-
-  ScrollTrigger.create({
+  navScrollTrigger = ScrollTrigger.create({
     start: 'top top',
     end: 'max',
     onUpdate: (self) => {
       self.direction === -1 ? scrollTween.play() : scrollTween.reverse();
     },
   });
+
+  return navScrollTrigger;
+}
+
+export function getNavScrollTrigger() {
+  return navScrollTrigger;
 }
