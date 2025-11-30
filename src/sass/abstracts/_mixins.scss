@@ -8,38 +8,7 @@
   position: relative;
   margin: $top auto $bottom auto;
   box-sizing: border-box;
-  padding: 0 40px;
-
-  @media (min-width: 576px) {
-    max-width: 100%;
-  }
-
-  @media (min-width: 768px) {
-    max-width: 100%;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 16px;
-  }
-
-  @media (min-width: 990px) {
-    max-width: 100%;
-  }
-  @media (min-width: 1900px) {
-  }
-
-  @media (min-width: 1280px) {
-    width: 100%;
-    max-width: 120rem;
-  }
-
-  @media (min-width: 1600px) {
-    width: 100%;
-    max-width: 190rem;
-  }
-  @media (max-width: 960px) {
-    padding: 0 16px;
-  }
+  padding: 22px 40px;
 }
 
 @mixin animation-delay {

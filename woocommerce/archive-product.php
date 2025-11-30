@@ -14,23 +14,7 @@ do_action('woocommerce_before_main_content');
 ?>
 
 
-<style>
-  .shop-controls__right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    /* Adds space between the results count text and the sort dropdown */
-  }
 
-  /* Optional: Make the result count text subtle */
-  .woocommerce-result-count {
-    font-size: 0.9rem;
-    color: #6c757d;
-    /* A subtle gray color */
-    margin: 0;
-    /* Remove default margins if any */
-  }
-</style>
 
 <div class="site-main">
 
@@ -47,7 +31,7 @@ do_action('woocommerce_before_main_content');
       </button>
 
       <!-- Flex row: filters on left, sort on right -->
-      <div class="shop-controls__row" id="filters-container">
+      <div class="shop-controls__row shop-controls__container" id="filters-container">
         <div class="shop-controls__left">
           <div class="shop-controls__filters" id="plantground-filters">
             <label class="toggle-switch">

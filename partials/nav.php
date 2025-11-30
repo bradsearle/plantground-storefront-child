@@ -9,7 +9,7 @@
       Orders in by Sunday ship <span class="ship-date">July 1</span>
     </span>
   </div>
-  <div class="nav__wrap">
+  <div class="nav__wrap  nav__flex-container">
     <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
       <div class="nav-logo__inner">
         <img

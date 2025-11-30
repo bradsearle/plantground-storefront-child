@@ -1,14 +1,16 @@
+@use '../abstracts/mixins' as *;
+
 #plantground-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem; // spacing between toggles
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
 }
 
 .toggle-switch {
   display: flex;
   align-items: center;
-  gap: 0.5rem; // space between switch and label
+  // gap: 0.5rem; // space between switch and label
   position: relative;
 }
 
@@ -51,6 +53,7 @@
 .toggle-label {
   font-size: 14px;
   white-space: nowrap;
+  padding: 0 12px 1px 4px;
 }
 
 @media (max-width: 600px) {
@@ -113,7 +116,16 @@
   align-items: center;
   width: 100%;
 }
-
+.shop-controls__container {
+  @include container;
+}
+.woocommerce-result-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+  /* A subtle gray color */
+  margin: 0;
+  /* Remove default margins if any */
+}
 .shop-controls {
   position: relative;
   margin-bottom: 20px;
@@ -177,4 +189,10 @@
   .mobile-filter-toggle {
     display: flex;
   }
+}
+.shop-controls__right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* Adds space between the results count text and the sort dropdown */
 }

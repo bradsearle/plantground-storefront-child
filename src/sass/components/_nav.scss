@@ -1,4 +1,5 @@
 /* ==== Completed nav.scss ==== */
+@use '../abstracts/mixins' as *;
 
 .nav__info-bar {
   width: 100%;
@@ -44,7 +45,8 @@
 .nav__wrap {
   display: flex;
   justify-content: space-between;
-  padding: 22px 22px 0 22px;
+  // padding: 22px 22px 0 22px;
+  padding: 22px 0;
 }
 
 .nav__flex {
@@ -56,6 +58,9 @@
   z-index: 10000; /* Above fullscreen menu so cart and menu button stay visible */
   transform: translateY(0); /* Initial position */
   transition: transform 0.5s ease; /* Optional smooth transition */
+}
+.nav__flex-container {
+  @include container;
 }
 
 nav.hidden {
