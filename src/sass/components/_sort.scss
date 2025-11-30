@@ -82,3 +82,8 @@
 .choices__list[aria-expanded] {
   width: 264px !important;
 }
+
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  margin-top: 14px;
+}
