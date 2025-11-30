@@ -44,15 +44,15 @@
   border-radius: 0px !important;
 }
 .choices__inner {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #fff !important;
+  border: none !important;
   // border-radius: 6px;
   // padding: 0.5em 2.5em 0.5em 0.9em;
   padding: 0 0 !important;
   font-size: 0.95rem;
   color: #111;
   cursor: pointer;
-  min-width: 180px;
+  min-width: 110px;
   min-height: 26px !important;
   appearance: none;
   -webkit-appearance: none;
@@ -76,4 +76,9 @@
   &:hover {
     background-color: #f7f7f7;
   }
+}
+
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+  width: 264px !important;
 }
