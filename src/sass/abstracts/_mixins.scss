@@ -3,12 +3,12 @@
 // -----------------------------------------------------------------------------
 
 @mixin container($top: 0, $bottom: 0) {
-  max-width: 1152px;
+  max-width: 1600px;
   width: 100%;
   position: relative;
   margin: $top auto $bottom auto;
   box-sizing: border-box;
-  padding: 22px 40px;
+  padding: 20px 20px;
 }
 
 @mixin animation-delay {

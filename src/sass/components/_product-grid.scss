@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as *; // or `as vars;` and then use vars.$light-grey-color
+@use '../abstracts/mixins' as *;
 
 .woocommerce-message,
 .woocommerce-info,
@@ -15,7 +16,7 @@ ul.columns-4 {
   padding-inline-start: 0;
   list-style: none;
   gap: 4px;
-  margin: 0 0.5rem !important;
+  // margin: 0 0.5rem !important;
 
   img {
     max-width: 73%;
@@ -41,6 +42,12 @@ ul.columns-4 {
     display: none;
   }
 }
+
+.product-grid__container {
+  @include container;
+  padding-top: 0px !important;
+}
+
 .product {
   &__container {
     // border-radius: 8px;
@@ -48,6 +55,7 @@ ul.columns-4 {
     grid-column: span 3 !important;
     width: 100% !important;
     margin-bottom: 8px !important;
+    // @include container;
 
     img {
       margin-bottom: 82px;
