@@ -1,4 +1,11 @@
 // filters.js
+
+// Import the custom select initialization function
+import { initCustomSelect } from './custom-select.js';
+
+/**
+ * Fades in newly loaded products.
+ */
 export function fadeInProducts() {
   const products = document.querySelectorAll('.product__container.card');
 
@@ -12,8 +19,15 @@ export function fadeInProducts() {
   });
 }
 
+/**
+ * Fetches products via AJAX based on categories and sort order.
+ * Expects a JSON response from the server with 'productsHtml' and 'resultCountHtml'.
+ */
 export function fetchProducts(categories = []) {
   const orderby = document.querySelector('.woocommerce-ordering .orderby')?.value || 'menu_order';
+  const productContainer = document.querySelector('.woocommerce ul.products');
+  // Target the results count container element
+  const resultCountContainer = document.querySelector('.woocommerce-result-count');
 
   const data = new FormData();
   data.append('action', 'plantground_filter_products');
@@ -25,20 +39,31 @@ export function fetchProducts(categories = []) {
     credentials: 'same-origin',
     body: data,
   })
-    .then((response) => response.text())
-    .then((html) => {
-      const productContainer = document.querySelector('.woocommerce ul.products');
-      if (productContainer) {
-        productContainer.innerHTML = html;
+    .then((response) => response.json()) // Changed: Expect JSON response
+    .then((data) => {
+      if (productContainer && data.productsHtml) {
+        productContainer.innerHTML = data.productsHtml;
         fadeInProducts();
       }
+      // Added: Update the results count element
+      if (resultCountContainer && data.resultCountHtml) {
+        resultCountContainer.innerHTML = data.resultCountHtml;
+      }
+
+      // *** ADDED: Re-initialize the custom select menu after products load ***
+      initCustomSelect();
     })
     .catch((error) => console.error('Product fetch error:', error));
 }
 
+/**
+ * Initializes filter and sort event listeners.
+ */
 export function initFilters() {
   document.addEventListener('DOMContentLoaded', () => {
     fadeInProducts();
+    // *** ADDED: Initialize custom select on first page load ***
+    initCustomSelect();
 
     const toggles = document.querySelectorAll('.category-toggle');
     const sortSelect = document.querySelector('.woocommerce-ordering .orderby');
@@ -67,7 +92,7 @@ export function initFilters() {
   });
 }
 
-// filters-sort btn for desktop/mobile
+// filters-sort btn for desktop/mobile (This section remains unchanged)
 document.addEventListener('DOMContentLoaded', function () {
   const mobileToggle = document.getElementById('mobile-filter-toggle');
   const filtersContainer = document.getElementById('filters-container');

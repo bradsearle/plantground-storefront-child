@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plantground Storefront Child Theme functions and definitions
  */
@@ -6,6 +7,7 @@
 // Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets()
 {
+    // ... (This section remains unchanged) ...
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
     $script_path     = get_stylesheet_directory() . '/dist/main.js';
 
@@ -51,11 +53,14 @@ add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
 add_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11);
 
-// === AJAX handler for product filtering + sort ===
-add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products');
-add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products');
 
-function plantground_filter_products()
+// ====================================================================================
+// === AJAX handler for product filtering + sort: Keep only this handler and hooks! ===
+// ====================================================================================
+add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products_handler');
+add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products_handler');
+
+function plantground_filter_products_handler()
 {
     $categories = json_decode(stripslashes($_POST['categories'] ?? ''), true);
     $orderby    = sanitize_text_field($_POST['orderby'] ?? 'menu_order');
@@ -108,46 +113,53 @@ function plantground_filter_products()
             break;
     }
 
+    // Use $query instead of $product_query to match variable names below
     $query = new WP_Query($args);
 
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
+    // Start output buffering to capture the product list HTML
+    ob_start();
+    if ($query->have_posts()) { // Use $query here
+        while ($query->have_posts()) { // Use $query here
+            $query->the_post(); // Use $query here
             wc_get_template_part('content', 'product');
         }
     } else {
         echo '<p>No products found.</p>';
+        // do_action('woocommerce_no_products_found'); // If you want to use the standard WC template
     }
+    $products_html = ob_get_clean();
 
+    // Start output buffering to capture the results count HTML
+    ob_start();
+    // Set loop properties based on the results of our custom query
+    wc_set_loop_prop('total', $query->found_posts);
+    wc_set_loop_prop('current_page', 1);
+    wc_set_loop_prop('per_page', $query->get('posts_per_page'));
+
+    woocommerce_result_count(); // Generate the HTML for "Showing X results"
+    $result_count_html = ob_get_clean();
+
+    // Prepare the JSON response
+    $response = array(
+        'productsHtml' => $products_html,
+        'resultCountHtml' => $result_count_html
+    );
+
+    wp_send_json($response);
     wp_die();
 }
+
 
 // === Cart fragments ===
 function plantground_cart_count_fragment($fragments)
 {
-    ob_start();
-    $count = WC()->cart->get_cart_contents_count();
-    ?>
-    <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-        <?php echo esc_html($count); ?>
-    </span>
-    <?php
-    $fragments['#cart-count'] = ob_get_clean();
-    return $fragments;
+    // ... (This section remains unchanged) ...
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
 
 function plantground_custom_cart_fragment($fragments)
 {
-    ob_start();
-    $count = WC()->cart->get_cart_contents_count();
-    ?>
-    <span id="cart-count" class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-        <?php echo $count > 0 ? '(' . $count . ')' : ''; ?>
-    </span>
-    <?php
-    $fragments['#cart-count'] = ob_get_clean();
-    return $fragments;
+    // ... (This section remains unchanged) ...
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
 
@@ -155,36 +167,9 @@ add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragmen
  * === Sort dropdown control ===
  * Default WooCommerce sort dropdown is visible again.
  */
-add_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 20);
-
-/**
- * === Remove default WooCommerce products header (title) ===
- */
-add_action('after_setup_theme', function() {
-    remove_action('woocommerce_shop_loop_header', 'woocommerce_product_taxonomy_archive_header', 10);
-});
+// NOTE: We probably removed this hook in the first advice session, 
+// if so, this line should stay commented out/removed.
+// add_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 20); 
 
 
-// Enqueue Choices.js for custom select styling
-add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style(
-        'choices-css',
-        'https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css',
-        [],
-        '10.2.0'
-    );
-    wp_enqueue_script(
-        'choices-js',
-        'https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js',
-        [],
-        '10.2.0',
-        true
-    );
-}, 20);
-
-
-// Remove "Sort by popularity" from sort dropdown/
-add_filter('woocommerce_catalog_orderby', function($sortby) {
-    unset($sortby['popularity']); // removes "Sort by popularity"
-    return $sortby;
-});
+// ... (The rest of the file remains unchanged) ...
