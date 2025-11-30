@@ -130,9 +130,6 @@
   position: relative;
   margin-bottom: 0px;
 }
-.woocommerce-result-count {
-  margin-top: -6px;
-}
 
 .mobile-filter-toggle {
   display: none;
@@ -195,4 +192,7 @@
   align-items: center;
   gap: 5px;
   /* Adds space between the results count text and the sort dropdown */
+}
+.woocommerce-result-count {
+  padding: 0 !important;
 }

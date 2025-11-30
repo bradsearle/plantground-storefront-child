@@ -36,9 +36,10 @@
             class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
             (<?php echo $count; ?>)
           </span>
-          <img
+          <span class="menu-toggle">CART</span>
+          <!-- <img
             src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg"
-            class="header__img" />
+            class="header__img" /> -->
         </div>
       </a>
       <span class="menu-toggle" id="menuToggle">MENU</span>
