@@ -22,7 +22,6 @@ do_action('woocommerce_before_main_content');
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
-      <!-- Mobile toggle button -->
       <button class="mobile-filter-toggle" id="mobile-filter-toggle">
         <span id="filter-text">Show Filters</span>
         <svg id="filter-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -30,7 +29,6 @@ do_action('woocommerce_before_main_content');
         </svg>
       </button>
 
-      <!-- Flex row: filters on left, sort on right -->
       <div class="shop-controls__row shop-controls__container" id="filters-container">
         <div class="shop-controls__left">
           <div class="shop-controls__filters" id="plantground-filters">
@@ -49,21 +47,18 @@ do_action('woocommerce_before_main_content');
         </div>
 
         <div class="shop-controls__right">
-
-          <div class="shop-controls__sort">
-            <?php woocommerce_catalog_ordering(); ?>
-          </div>
-          <!-- MOVED: Result count placed right before the sort div -->
-          <?php woocommerce_result_count(); ?>
+          <?php
+          // FINAL FIX: Calling custom functions to render bare select/count,
+          // removing the native woocommerce_catalog_ordering() that contained the conflicting <form>.
+          plantground_render_bare_sort_select();
+          plantground_render_bare_result_count();
+          ?>
         </div>
-      </div> <!-- /.flex-row -->
-    </div><!-- /.shop-controls -->
-  <?php endif; ?>
+      </div>
+    </div><?php endif; ?>
   <div class="product-grid__container">
     <?php
-    // The result count hook is commented out here as it's now handled above
     do_action('woocommerce_output_all_notices');
-    // woocommerce_result_count(); // <-- This line is now redundant and removed/commented out
 
     if (woocommerce_product_loop()) {
       woocommerce_product_loop_start();
@@ -88,8 +83,4 @@ do_action('woocommerce_before_main_content');
   </div>
 
 
-</div><!-- /.site-main -->
-
-
-
-<?php get_footer('shop'); ?>
+</div><?php get_footer('shop'); ?>

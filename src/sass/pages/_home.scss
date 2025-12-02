@@ -42,11 +42,13 @@
   transition: transform 0.4s;
 }
 
-.toggle-switch input:checked + .slider {
+/* ✅ FIX: Use the JavaScript class 'is-active' instead of the unreliable :checked attribute
+   to maintain the visual state after an AJAX product refresh (sort). */
+.toggle-switch.is-active .slider {
   background-color: #000;
 }
 
-.toggle-switch input:checked + .slider::before {
+.toggle-switch.is-active .slider::before {
   transform: translateX(26px);
 }
 

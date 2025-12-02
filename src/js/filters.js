@@ -20,6 +20,35 @@ export function fadeInProducts() {
 }
 
 /**
+ * Synchronizes the visual state of the category toggles
+ * with the currently active categories array using classes and 'checked'.
+ * @param {string[]} activeCategories - An array of category slugs.
+ */
+export function syncTogglesWithFilters(activeCategories) {
+  // Target the input (checkbox)
+  const toggles = document.querySelectorAll('.category-toggle');
+
+  toggles.forEach((toggle) => {
+    const shouldBeChecked = activeCategories.includes(toggle.value);
+
+    // Set the functional checked state
+    toggle.checked = shouldBeChecked;
+
+    // Find the nearest label wrapper
+    const wrapper = toggle.closest('.toggle-switch');
+
+    // FIX: Set the visual state using a class. This class is styled by CSS.
+    if (wrapper) {
+      if (shouldBeChecked) {
+        wrapper.classList.add('is-active');
+      } else {
+        wrapper.classList.remove('is-active');
+      }
+    }
+  });
+}
+
+/**
  * Fetches products via AJAX based on categories and sort order.
  * Expects a JSON response from the server with 'productsHtml' and 'resultCountHtml'.
  */
@@ -50,8 +79,14 @@ export function fetchProducts(categories = []) {
         resultCountContainer.innerHTML = data.resultCountHtml;
       }
 
-      // *** ADDED: Re-initialize the custom select menu after products load ***
-      initCustomSelect();
+      // FINAL FIX: Using a 50ms delay. This is long enough to outrun virtually any
+      // theme/library DOM manipulation cycle that might be causing the reset.
+      setTimeout(() => {
+        // 1. Re-initialize the custom select menu (Choices.js)
+        initCustomSelect();
+        // 2. FORCE-SYNC the visual and functional state of the toggles last
+        syncTogglesWithFilters(categories);
+      }, 50);
     })
     .catch((error) => console.error('Product fetch error:', error));
 }
@@ -65,6 +100,14 @@ export function initFilters() {
     // *** ADDED: Initialize custom select on first page load ***
     initCustomSelect();
 
+    // Find initial state of categories
+    const initialCheckedCategories = Array.from(document.querySelectorAll('.category-toggle'))
+      .filter((t) => t.checked)
+      .map((t) => t.value);
+
+    // Sync toggles on load, in case the server sent pre-checked ones
+    syncTogglesWithFilters(initialCheckedCategories);
+
     const toggles = document.querySelectorAll('.category-toggle');
     const sortSelect = document.querySelector('.woocommerce-ordering .orderby');
 
@@ -74,6 +117,9 @@ export function initFilters() {
         const checkedCategories = Array.from(toggles)
           .filter((t) => t.checked)
           .map((t) => t.value);
+
+        // When user changes toggle, update the class visually immediately
+        toggle.closest('.toggle-switch').classList.toggle('is-active', toggle.checked);
 
         fetchProducts(checkedCategories);
       });
