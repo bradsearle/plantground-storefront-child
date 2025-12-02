@@ -7,10 +7,15 @@
 // Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets()
 {
-    // ... (This section remains unchanged) ...
+    // --- FIX: Deregister WordPress’s old cached jQuery so dependent scripts never get stuck in mobile cache ---
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', includes_url('/js/jquery/jquery.min.js'), array(), null, true);
+
+    // Paths to compiled assets
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
     $script_path     = get_stylesheet_directory() . '/dist/main.js';
 
+    // Version numbers based on file modification time (mobile cache busting)
     $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');
     $script_version     = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
@@ -45,9 +50,6 @@ function plantground_override_storefront_header()
     add_action('storefront_header', 'plantground_custom_header', 10);
 }
 add_action('after_setup_theme', 'plantground_override_storefront_header');
-
-
-// **REMOVED THE BROKEN LINE: add_action('wp_enqueue_scripts', 'my_enqueue_scripts');**
 
 
 // Move "Add to cart" under the price on the single product page
@@ -114,36 +116,31 @@ function plantground_filter_products_handler()
             break;
     }
 
-    // Use $query instead of $product_query to match variable names below
     $query = new WP_Query($args);
 
     // Start output buffering to capture the product list HTML
     ob_start();
-    if ($query->have_posts()) { // Use $query here
-        while ($query->have_posts()) { // Use $query here
-            $query->the_post(); // Use $query here
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
             wc_get_template_part('content', 'product');
         }
     } else {
         echo '<p>No products found.</p>';
-        // do_action('woocommerce_no_products_found'); // If you want to use the standard WC template
     }
     $products_html = ob_get_clean();
 
     // Start output buffering to capture the results count HTML
     ob_start();
-    // Set loop properties based on the results of our custom query
     wc_set_loop_prop('total', $query->found_posts);
     wc_set_loop_prop('current_page', 1);
     wc_set_loop_prop('per_page', $query->get('posts_per_page'));
-
-    woocommerce_result_count(); // Generate the HTML for "Showing X results"
+    woocommerce_result_count();
     $result_count_html = ob_get_clean();
 
-    // Prepare the JSON response
     $response = array(
-        'productsHtml' => $products_html,
-        'resultCountHtml' => $result_count_html
+        'productsHtml'     => $products_html,
+        'resultCountHtml'  => $result_count_html
     );
 
     wp_send_json($response);
@@ -154,15 +151,14 @@ function plantground_filter_products_handler()
 // === FINAL STRUCTURAL FIX: Custom Render Sort and Result Count (No <form>) ===
 // ====================================================================================
 
-/**
- * Custom function to render the WooCommerce sort options, removing the <form> tag
- * that was causing the native refresh conflict.
- */
 function plantground_render_bare_sort_select()
 {
-    $orderby = isset($_GET['orderby']) ? wc_clean(wp_unslash($_GET['orderby'])) : apply_filters('woocommerce_default_catalog_orderby', get_option('woocommerce_default_catalog_orderby'));
+    $orderby = isset($_GET['orderby']) ? wc_clean(wp_unslash($_GET['orderby'])) :
+        apply_filters(
+            'woocommerce_default_catalog_orderby',
+            get_option('woocommerce_default_catalog_orderby')
+        );
 
-    // Get the standard ordering options
     $catalog_orderby_options = apply_filters('woocommerce_catalog_orderby', array(
         'menu_order' => __('Default sorting', 'woocommerce'),
         'popularity' => __('Sort by popularity', 'woocommerce'),
@@ -171,7 +167,6 @@ function plantground_render_bare_sort_select()
         'price'      => __('Sort by price: low to high', 'woocommerce'),
         'price-desc' => __('Sort by price: high to low', 'woocommerce'),
     ));
-
 ?>
     <div class="shop-controls__sort woocommerce-ordering">
         <select name="orderby" class="orderby" aria-label="<?php esc_attr_e('Shop order', 'woocommerce'); ?>">
@@ -185,12 +180,8 @@ function plantground_render_bare_sort_select()
 <?php
 }
 
-/**
- * Custom function to render the WooCommerce result count, wrapped in the required HTML.
- */
 function plantground_render_bare_result_count()
 {
-    // This simply calls the WooCommerce function within the required HTML structure
 ?>
     <div class="woocommerce-result-count">
         <?php woocommerce_result_count(); ?>
@@ -201,15 +192,14 @@ function plantground_render_bare_result_count()
 // === Cart fragments ===
 function plantground_cart_count_fragment($fragments)
 {
-    // ... (This section remains unchanged) ...
-    $fragments['.header__cart-count'] = '<span class="header__cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+    $fragments['.header__cart-count'] =
+        '<span class="header__cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
 
 function plantground_custom_cart_fragment($fragments)
 {
-    // ... (This section remains unchanged) ...
     ob_start();
 ?>
     <div class="header__cart-count-container">
