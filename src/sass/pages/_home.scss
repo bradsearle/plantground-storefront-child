@@ -135,9 +135,9 @@
 
 .mobile-filter-toggle {
   display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
   background: none;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -187,6 +187,7 @@
   }
   .mobile-filter-toggle {
     display: flex;
+    margin-left: auto;
   }
 }
 .shop-controls__right {

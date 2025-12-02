@@ -18,7 +18,7 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">
 
-  <br><br><br><br><br><br>
+  <br><br><br><br><br><br> <br><br><br><br><br><br>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
