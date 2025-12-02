@@ -47,7 +47,8 @@ function plantground_override_storefront_header()
 add_action('after_setup_theme', 'plantground_override_storefront_header');
 
 
-add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
+// **REMOVED THE BROKEN LINE: add_action('wp_enqueue_scripts', 'my_enqueue_scripts');**
+
 
 // Move "Add to cart" under the price on the single product page
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
