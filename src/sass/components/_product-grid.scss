@@ -149,6 +149,11 @@ ul.products .wc-block-grid__product img,
 }
 
 @media (max-width: 768px) {
+  .product-grid__container {
+    @include container;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
   ul.columns-3,
   ul.columns-4 {
     margin: 0 4px !important;
