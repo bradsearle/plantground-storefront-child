@@ -199,18 +199,18 @@ ul.products .wc-block-grid__product img,
   }
 }
 
-@media (max-width: 600px) {
-  .product__container {
-    grid-column: span 12 !important;
-  }
+// @media (max-width: 600px) {
+//   .product__container {
+//     grid-column: span 12 !important;
+//   }
 
-  ul.columns-3,
-  ul.columns-4 {
-    img {
-      max-width: 80%;
-    }
-  }
-}
+//   ul.columns-3,
+//   ul.columns-4 {
+//     img {
+//       max-width: 80%;
+//     }
+//   }
+// }
 
 @media (max-width: 496px) {
   .product__container {
