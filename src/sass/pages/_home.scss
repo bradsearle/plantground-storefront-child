@@ -187,7 +187,9 @@
   }
   .mobile-filter-toggle {
     display: flex;
-    margin-left: auto;
+    // margin-left: auto;
+    margin: auto;
+    margin-bottom: 22px;
   }
 }
 .shop-controls__right {

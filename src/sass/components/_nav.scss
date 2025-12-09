@@ -7,7 +7,7 @@
   background: #00a562;
   color: #fff;
   font-family: 'Space Mono', monospace;
-  font-size: 11px;
+  font-size: 0.6875rem;
   text-transform: uppercase;
   display: flex;
   justify-content: center;
@@ -146,8 +146,8 @@ span#menuToggle,
   /* ==== Completed nav.scss ==== */
 
   .nav__info-bar {
-    font-size: 13px;
-    height: 34px;
+    font-size: 0.6875rem;
+    height: 32px;
   }
   .nav__grid {
     display: flex;
@@ -294,7 +294,7 @@ span#menuToggle,
 @media (max-width: 768px) {
   .fullscreen-menu {
     &__link {
-      font-size: 14px;
+      font-size: 0.6875rem;
     }
 
     &__list {
