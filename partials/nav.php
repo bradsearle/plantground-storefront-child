@@ -24,6 +24,20 @@
     ?>
 
     <div class="nav__actions">
+      <?php
+      // Logic to determine which links to show based on the page
+      if (is_shop() || is_front_page()) {
+        // On Shop/Home, show link to Originals, labeled "Shop Originals"
+        echo '<a href="/originals" class="nav__link nav__link--originals">Shop Originals</a>';
+      } elseif (is_page('originals')) {
+        // On Originals page, only show link to Shop
+        echo '<a href="' . esc_url(wc_get_page_permalink('shop')) . '" class="nav__link nav__link--shop">Shop</a>';
+      } else {
+        // On all other pages (Cart, Account, etc.), show both
+        echo '<a href="' . esc_url(wc_get_page_permalink('shop')) . '" class="nav__link nav__link--shop">Shop</a>';
+        echo '<a href="/originals" class="nav__link nav__link--originals">Originals</a>';
+      }
+      ?>
       <a href="#"
         class="cart-link cfw-side-cart-open-trigger"
         title="View your shopping cart"
