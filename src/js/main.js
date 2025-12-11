@@ -15,4 +15,4 @@ initPreloader();
 infoBar();
 initNavScroll();
 initCustomSelect();
-initFullscreenMenu();
+fullscreenMenu();

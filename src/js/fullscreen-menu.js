@@ -1,102 +1,51 @@
-// fullscreen-menu.js
-import { gsap } from 'gsap';
-import { getNavScrollTrigger } from './nav.js';
+// main.js – Mobile Menu Toggle with Icon Swap
 
-export function initFullscreenMenu() {
-  const menuToggle = document.getElementById('menuToggle');
-  const fullscreenMenu = document.getElementById('fullscreenMenu');
-  const menuItems = document.querySelectorAll('.fullscreen-menu__item');
-  const nav = document.querySelector('nav');
+const menuToggle = document.getElementById('menu-toggle');
+const overlay = document.getElementById('mobile-menu-overlay');
 
-  if (!menuToggle || !fullscreenMenu) {
-    console.warn('Menu elements not found');
-    return;
-  }
+if (menuToggle && overlay) {
+  // Store original menu icon (☰) as HTML string
+  const menuIconHtml = menuToggle.innerHTML.trim();
 
-  let isMenuOpen = false;
+  // Define close icon (✕) as HTML string
+  const closeIconHtml = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  `.trim();
 
-  // Function to disable nav scroll behavior when menu is open
-  function disableNavScroll() {
-    const scrollTrigger = getNavScrollTrigger();
-    if (scrollTrigger) {
-      scrollTrigger.disable();
-    }
-    if (nav) {
-      gsap.to(nav, { yPercent: 0, duration: 0.3 });
-    }
-  }
-
-  // Function to enable nav scroll behavior when menu is closed
-  function enableNavScroll() {
-    const scrollTrigger = getNavScrollTrigger();
-    if (scrollTrigger) {
-      scrollTrigger.enable();
-    }
-  }
+  // Helper to update button state
+  const updateMenuButton = (isOpen) => {
+    menuToggle.innerHTML = isOpen ? closeIconHtml : menuIconHtml;
+    menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  };
 
   // Open menu
-  function openMenu() {
-    isMenuOpen = true;
-    fullscreenMenu.classList.add('active');
-    menuToggle.classList.add('menu-open');
-    document.body.classList.add('fullscreen-menu-open'); // Hide nav elements
-    document.documentElement.classList.add('fullscreen-menu-open'); // Hide scrollbar on html
-    document.body.style.overflow = 'hidden';
-    menuToggle.textContent = 'CLOSE';
-    disableNavScroll();
+  const openMenu = () => {
+    overlay.classList.add('is-open');
+    updateMenuButton(true);
+  };
 
-    // Instant appearance - no animation
-    gsap.set(fullscreenMenu, { opacity: 1 });
-    gsap.set(menuItems, { opacity: 1, y: 0 });
-  }
+  // Close menu
+  const closeMenu = () => {
+    overlay.classList.remove('is-open');
+    updateMenuButton(false);
+  };
 
-  // Close menu - instant close
-  function closeMenu() {
-    isMenuOpen = false;
-    menuToggle.classList.remove('menu-open');
-    document.body.classList.remove('fullscreen-menu-open'); // Show nav elements again
-    document.documentElement.classList.remove('fullscreen-menu-open'); // Restore scrollbar on html
-    menuToggle.textContent = 'MENU';
-
-    // Instant close - no animation
-    fullscreenMenu.classList.remove('active');
-    document.body.style.overflow = '';
-    enableNavScroll();
-
-    // Reset menu items instantly
-    gsap.set(menuItems, { opacity: 0, y: 20 });
-    gsap.set(fullscreenMenu, { opacity: 0 });
-  }
-
-  // Toggle menu
-  function toggleMenu() {
-    if (isMenuOpen) {
+  // Toggle on button click
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent triggering overlay click
+    if (overlay.classList.contains('is-open')) {
       closeMenu();
     } else {
       openMenu();
     }
-  }
-
-  // Click handler for menu toggle button
-  menuToggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
   });
 
-  // Close menu when clicking on a link
-  const menuLinks = document.querySelectorAll('.fullscreen-menu__link');
-  menuLinks.forEach((link) => {
-    link.addEventListener('click', () => {
-      if (isMenuOpen) {
-        closeMenu();
-      }
-    });
-  });
-
-  // Close menu on ESC key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isMenuOpen) {
+  // Close when clicking overlay background
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
       closeMenu();
     }
   });

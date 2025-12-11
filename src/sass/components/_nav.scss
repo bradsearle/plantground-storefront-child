@@ -1,5 +1,67 @@
-/* ==== Completed nav.scss ==== */
 @use '../abstracts/mixins' as *;
+
+/* ============================================== */
+/* 0. UTILITY CLASSES */
+/* ============================================== */
+
+/* Shared Utility Class (Toggled by JavaScript) */
+.hidden {
+  display: none !important;
+}
+
+/* ============================================== */
+/* 1. CORE LAYOUT AND FIXED CONTAINER */
+/* ============================================== */
+
+/* Main Fixed Container (The actual fixed navigation bar) */
+.nav__flex {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  /* NOTE: Z-index needs to be addressed for fullscreen menu */
+  z-index: 1000;
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+}
+.nav__flex-container {
+  @include container;
+}
+
+/* Container for Logo, Links, Actions */
+.nav__wrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 0;
+}
+
+/* Full navigation hide state (for scroll-down hiding) */
+nav.hidden {
+  transform: translateY(-100%);
+}
+
+/* Mobile menu toggle container (Hidden on desktop) */
+.nav__menu {
+  display: none;
+}
+
+/* === Nav Grid and Logo (Desktop) === */
+.nav__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.nav__flex-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 22px;
+}
+
+/* ============================================== */
+/* 2. COMPONENT: INFO BAR */
+/* ============================================== */
 
 .nav__info-bar {
   width: 100%;
@@ -12,7 +74,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1001; /* above nav__flex */
+  z-index: 1001;
   pointer-events: auto;
   transition: transform 0.3s ease;
   transform: translateY(0);
@@ -42,71 +104,20 @@
   }
 }
 
-.nav__wrap {
-  display: flex;
-  justify-content: space-between;
-  // padding: 22px 22px 0 22px;
-  padding: 22px 0;
+/* === Ship Date Styling === */
+.ship-date {
+  color: #ff0;
 }
 
-.nav__flex {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #fff;
-  width: 100%;
-  z-index: 10000; /* Above fullscreen menu so cart and menu button stay visible */
-  transform: translateY(0); /* Initial position */
-  transition: transform 0.5s ease; /* Optional smooth transition */
-}
-.nav__flex-container {
-  @include container;
-}
-
-nav.hidden {
-  transform: translateY(-100%); /* Hide the navigation */
-}
-
-/* === Hide Storefront parent theme elements (but NOT our custom menu) === */
-.main-navigation button.menu-toggle,
-.storefront-handheld-footer-bar,
-.handheld-navigation {
-  display: none !important;
-}
-
-/* Keep our custom menu visible */
-#menuToggle,
-span#menuToggle,
-.nav__actions .menu-toggle {
-  display: inline-block !important;
-  visibility: visible !important;
-}
-
-/* === Nav Grid and Logo (Desktop) === */
-.nav__grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-}
-
-.nav__flex-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 22px;
-}
+/* ============================================== */
+/* 3. COMPONENT: ACTIONS (Logo & Cart) */
+/* ============================================== */
 
 .nav__actions {
   display: flex;
   align-items: center;
   gap: 16px;
   position: relative;
-  z-index: 9999; /* Keep cart and menu above everything including fullscreen menu */
-}
-
-.nav__cart {
-  display: inline-flex;
-  position: relative;
-  z-index: 9999;
 }
 
 .nav__logo {
@@ -122,6 +133,14 @@ span#menuToggle,
   }
 }
 
+.nav__cart {
+  display: inline-flex;
+  position: relative;
+}
+.nav__cart-title {
+  display: block;
+}
+
 /* === Cart Count === */
 .cart-link {
   position: relative;
@@ -135,16 +154,53 @@ span#menuToggle,
     justify-content: center;
     line-height: 1;
   }
-
-  .hidden {
+}
+@media (min-width: 768px) {
+  .cart__img {
     display: none;
   }
 }
 
-/* === Mobile Overrides === */
-@media (max-width: 768px) {
-  /* ==== Completed nav.scss ==== */
+/* ============================================== */
+/* 4. COMPONENT: MOBILE MENU TOGGLE BUTTON */
+/* ============================================== */
 
+.menu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  outline: none;
+  box-shadow: none;
+
+  position: relative;
+  width: 24px;
+  height: 24px;
+  color: #000;
+}
+
+.menu-toggle__icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+/* ============================================== */
+/* 5. MEDIA QUERIES (Mobile Overrides) */
+/* ============================================== */
+
+@media (max-width: 768px) {
+  .nav__menu {
+    display: block;
+  }
+  .nav__link {
+    display: none;
+  }
+  .nav__cart-title {
+    display: none;
+  }
   .nav__info-bar {
     font-size: 0.6875rem;
     height: 32px;
@@ -161,9 +217,8 @@ span#menuToggle,
   .nav__logo {
     display: block;
     width: 130px;
-    transform: none; /* remove centering */
+    transform: none;
     opacity: 1 !important;
-    z-index: 1600;
 
     a,
     a:visited {
@@ -186,162 +241,5 @@ span#menuToggle,
   .nav__cart {
     position: relative;
     display: flex;
-    z-index: 1600;
   }
-}
-
-/* === Ship Date Styling === */
-.ship-date {
-  color: #ff0; // example gold color
-}
-
-/* === Menu Toggle - Plain Text (span element) === */
-.menu-toggle {
-  position: relative;
-  cursor: pointer;
-  font-family: 'Space Mono', monospace;
-  font-size: 13px;
-  font-weight: 400;
-  margin-top: 4px;
-  color: #000;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: color 0.3s ease;
-  display: inline-block !important;
-  visibility: visible !important;
-  z-index: 9999;
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  /* White text when menu is open */
-  &.menu-open {
-    color: #fff;
-  }
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .menu-toggle {
-    font-size: 12px;
-  }
-}
-
-/* === Fullscreen Menu Overlay === */
-.fullscreen-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #00a562;
-  z-index: 9000; /* Below menu toggle button */
-  display: none;
-  opacity: 0;
-  overflow: hidden;
-  // transition: opacity 0.4s ease;
-
-  &.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__content {
-    width: 100%;
-    max-width: 600px;
-    padding: 40px;
-  }
-
-  &__nav {
-    width: 100%;
-  }
-
-  &__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 40px;
-  }
-
-  &__item {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  &__link {
-    font-family: 'Space Mono', monospace;
-    font-size: 32px;
-    font-weight: 400;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: opacity 0.3s ease;
-    display: block;
-
-    &:hover {
-      opacity: 0.6;
-    }
-  }
-}
-
-/* === Additional Responsive Adjustments === */
-@media (max-width: 768px) {
-  .fullscreen-menu {
-    &__link {
-      font-size: 0.6875rem;
-    }
-
-    &__list {
-      gap: 30px;
-    }
-  }
-}
-
-/* === Override parent theme that hides menu-toggle on desktop === */
-@media (min-width: 768px) {
-  .menu-toggle,
-  .menu-toggle.toggled,
-  button.menu-toggle {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-
-/* === Hide everything except CLOSE button when menu is open === */
-body.fullscreen-menu-open {
-  overflow: hidden !important;
-  position: fixed;
-  width: 100%;
-
-  .nav__info-bar,
-  .nav__logo,
-  .nav__cart,
-  .cart-link {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  .nav__flex {
-    background-color: transparent !important;
-  }
-
-  .menu-toggle {
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-}
-
-/* Additional scrollbar hiding */
-html.fullscreen-menu-open,
-html:has(body.fullscreen-menu-open) {
-  overflow: hidden !important;
 }
