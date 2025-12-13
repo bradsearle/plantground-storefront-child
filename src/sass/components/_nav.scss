@@ -33,7 +33,7 @@
 .nav__wrap {
   display: flex;
   justify-content: space-between;
-  padding: 22px 0;
+  // padding: 22px 0;
 }
 
 /* Full navigation hide state (for scroll-down hiding) */
@@ -113,12 +113,12 @@ nav.hidden {
 /* 3. COMPONENT: ACTIONS (Logo & Cart) */
 /* ============================================== */
 
-.nav__actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  position: relative;
-}
+// .nav__actions {
+//   display: flex;
+//   align-items: center;
+//   gap: 16px;
+//   position: relative;
+// }
 
 .nav__logo {
   font-size: 1.1rem;
@@ -132,6 +132,9 @@ nav.hidden {
     text-decoration: none;
   }
 }
+.nav__cart-copy {
+  display: flex;
+}
 
 .nav__cart {
   display: inline-flex;
@@ -140,21 +143,32 @@ nav.hidden {
 .nav__cart-title {
   display: block;
 }
+// Fix the link color — this controls the SVG via currentColor
+.cart-link,
+.cart-link:link,
+.cart-link:visited {
+  color: #000; // or your nav text color
+  text-decoration: none;
+}
 
 /* === Cart Count === */
 .cart-link {
   position: relative;
-
-  .cart-count {
-    color: #000;
-    font-size: 13px;
-    padding: 0 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
+  text-decoration: none !important;
+  border: none;
+  outline: none;
 }
+
+.cart-count {
+  color: #000;
+  font-size: 13px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
 @media (min-width: 768px) {
   .cart__img {
     display: none;
@@ -192,6 +206,15 @@ nav.hidden {
 /* ============================================== */
 
 @media (max-width: 768px) {
+  .nav__cart-copy {
+    display: none;
+  }
+  .cart__img {
+    text-decoration: none !important;
+    border: none;
+    outline: none;
+  }
+
   .nav__menu {
     display: block;
   }

@@ -41,7 +41,7 @@
     $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     ?>
 
-    <div class="nav__actions">
+    <div class="">
       <?php
       // Logic to determine which links to show based on the page
       if (is_shop() || is_front_page()) {
@@ -56,23 +56,26 @@
         echo '<a href="/originals" class="nav__link nav__link--originals">Originals</a>';
       }
       ?>
+
+      <div class="nav__cart-copy">Cart</div>
       <a href="#"
         class="cart-link cfw-side-cart-open-trigger"
         title="View your shopping cart"
         role="button"
         aria-label="Open shopping cart"
         onclick="event.preventDefault();">
+
         <div class="nav__cart">
 
-          <span class="nav__cart-title">Cart</span>
-
-          <img
-            src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/shopping_bag.svg"
-            class="cart__img" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag cart__img">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
           <span
             id="cart-count"
             class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-            (<?php echo $count; ?>)
+            / <?php echo $count; ?>
           </span>
         </div>
       </a>

@@ -1,4 +1,4 @@
-// main.js – Mobile Menu Toggle with Icon Swap
+// main.js – Mobile Menu Toggle with Icon Swap + Scroll Lock
 
 const menuToggle = document.getElementById('menu-toggle');
 const overlay = document.getElementById('mobile-menu-overlay');
@@ -21,21 +21,40 @@ if (menuToggle && overlay) {
     menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   };
 
+  // Lock scroll: prevent background scroll, preserve scroll position
+  const lockScroll = () => {
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%'; // prevents layout shift on mobile
+  };
+
+  // Unlock scroll: restore scroll position
+  const unlockScroll = () => {
+    const scrollY = parseInt(document.body.style.top || '0', 10) * -1;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
+  };
+
   // Open menu
   const openMenu = () => {
     overlay.classList.add('is-open');
     updateMenuButton(true);
+    lockScroll();
   };
 
   // Close menu
   const closeMenu = () => {
     overlay.classList.remove('is-open');
     updateMenuButton(false);
+    unlockScroll();
   };
 
   // Toggle on button click
   menuToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent triggering overlay click
+    e.stopPropagation();
     if (overlay.classList.contains('is-open')) {
       closeMenu();
     } else {
@@ -46,6 +65,13 @@ if (menuToggle && overlay) {
   // Close when clicking overlay background
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
+      closeMenu();
+    }
+  });
+
+  // Optional: Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
       closeMenu();
     }
   });
