@@ -1,0 +1,59 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// 1. Variables
+$hero-height-mobile: 300px;
+$hero-height-desktop: 420px;
+
+// 2. The Frame
+.custom-container {
+  margin: 0 auto;
+  @include container;
+  padding: 0;
+}
+
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: $hero-height-mobile;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    height: $hero-height-desktop;
+  }
+}
+
+.parallax-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  // Combined the centering (translate) with the zoom (scale)
+  // Scale 0.8 means 80% size (zoomed out). Scale 1.2 would be zoomed in.
+  transform: translate(-50%, -50%) scale(0.8);
+
+  width: 100%;
+  height: 110%; // Keep this for parallax room
+  object-fit: cover;
+}
+
+// 4. Show/Hide & Specific Positioning
+.parallax-img.mobile-img {
+  // ADUST MOBILE FOCUS HERE (X Y)
+  object-position: 50% 50%;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.parallax-img.desktop-img {
+  display: none;
+
+  // ADJUST DESKTOP FOCUS HERE (X Y)
+  // Example: 45% 20% like your original background logic
+  object-position: 45% 50%;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}

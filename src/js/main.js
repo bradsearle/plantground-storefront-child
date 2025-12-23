@@ -6,9 +6,14 @@ import { removeStickyBar } from './sticky-bar.js';
 import infoBar from './info-bar.js';
 import { initNavScroll } from './nav.js';
 import { initCustomSelect } from './custom-select.js';
+
+// ... all your other imports ...
 import { initFullscreenMenu } from './fullscreen-menu.js';
 
-// Run features
+// JUST ADD THIS ONE LINE AT THE VERY BOTTOM OF IMPORTS
+import './hero-parallax.js';
+
+// Run features (Keep exactly as you have it)
 initFilters();
 removeStickyBar();
 initPreloader();

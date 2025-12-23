@@ -18,7 +18,22 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">
 
-  <br><br><br><br><br><br>
+  <br><br><br><br>
+
+  <?php
+  $theme_path = get_stylesheet_directory_uri();
+  $mobile_img  = $theme_path . '/assets/images/hero-mobile.webp';
+  $desktop_img = $theme_path . '/assets/images/hero-desktop.webp';
+  ?>
+
+  <div class="custom-container">
+    <div class="hero-banner">
+      <img src="<?php echo $mobile_img; ?>" class="parallax-img mobile-img" alt="">
+      <img src="<?php echo $desktop_img; ?>" class="parallax-img desktop-img" alt="">
+    </div>
+  </div>
+
+  <br><br>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
