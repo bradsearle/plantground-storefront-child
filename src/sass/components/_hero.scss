@@ -3,13 +3,14 @@
 
 // 1. Variables
 $hero-height-mobile: 300px;
-$hero-height-desktop: 420px;
+$hero-height-desktop: 270px; // Updated to your new height
 
-// 2. The Frame
+// 2. The Frame (Container)
 .custom-container {
   margin: 0 auto;
   @include container;
   padding: 0;
+  background-color: #f7f7f7;
 }
 
 .hero-banner {
@@ -23,37 +24,37 @@ $hero-height-desktop: 420px;
   }
 }
 
+// 3. Base Image Styles
 .parallax-img {
   position: absolute;
   top: 50%;
   left: 50%;
-  // Combined the centering (translate) with the zoom (scale)
-  // Scale 0.8 means 80% size (zoomed out). Scale 1.2 would be zoomed in.
-  transform: translate(-50%, -50%) scale(0.8);
-
   width: 100%;
-  height: 110%; // Keep this for parallax room
   object-fit: cover;
+  transform: translate(-50%, -50%);
+  will-change: transform;
 }
 
-// 4. Show/Hide & Specific Positioning
+// 4. Mobile Specific
 .parallax-img.mobile-img {
-  // ADUST MOBILE FOCUS HERE (X Y)
-  object-position: 50% 50%;
+  height: 170%;
+  display: block;
 
   @media (min-width: 768px) {
     display: none;
   }
 }
 
+// 5. Desktop Specific
 .parallax-img.desktop-img {
   display: none;
+  // Increased to 140% to allow for a nice "floaty" feel in a short banner
+  height: 140%;
 
-  // ADJUST DESKTOP FOCUS HERE (X Y)
-  // Example: 45% 20% like your original background logic
   object-position: 45% 50%;
 
   @media (min-width: 768px) {
     display: block;
+    transform: translate(-50%, -50%);
   }
 }

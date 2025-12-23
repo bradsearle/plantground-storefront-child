@@ -18,30 +18,38 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
       (context) => {
         let { isDesktop } = context.conditions;
 
-        // Target only the active image
         const targetImg = isDesktop
           ? hero.querySelector('.desktop-img')
           : hero.querySelector('.mobile-img');
 
         if (targetImg) {
-          // We set the initial scale here.
-          // 0.8 = Shrunk/Zoomed Out
-          // 1.0 = Original
+          // Sync heights: Desktop 140% | Mobile 170%
+          const imgHeight = isDesktop ? '140%' : '170%';
+
           gsap.set(targetImg, {
-            height: '110%',
+            top: '50%',
+            left: '50%',
+            xPercent: -50,
+            yPercent: -50,
+            height: imgHeight,
+            width: '100%',
             scale: 1,
-            transformOrigin: 'center center',
             objectFit: 'cover',
           });
 
+          // Animation:
+          // Desktop: -50 to -65 (15% move - feels strong on a short banner)
+          // Mobile: -50 to -70 (20% move)
+          const targetY = isDesktop ? -65 : -70;
+
           gsap.to(targetImg, {
-            yPercent: -10,
+            yPercent: targetY,
             ease: 'none',
             scrollTrigger: {
               trigger: hero,
               start: 'top top',
               end: 'bottom top',
-              scrub: true,
+              scrub: isDesktop ? 1.5 : 0.5,
               invalidateOnRefresh: true,
             },
           });
@@ -50,6 +58,5 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
     );
   };
 
-  // Wait for full load to protect your preloader sequence
   window.addEventListener('load', init);
 })();

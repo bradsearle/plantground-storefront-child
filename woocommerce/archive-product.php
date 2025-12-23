@@ -18,12 +18,11 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">
 
-  <br><br><br><br>
 
   <?php
   $theme_path = get_stylesheet_directory_uri();
-  $mobile_img  = $theme_path . '/assets/images/hero-mobile.webp';
-  $desktop_img = $theme_path . '/assets/images/hero-desktop.webp';
+  $mobile_img  = $theme_path . '/assets/images/hero-mobile_nobg.webp';
+  $desktop_img = $theme_path . '/assets/images/hero-desktop_nobg.webp';
   ?>
 
   <div class="custom-container">
@@ -33,7 +32,6 @@ do_action('woocommerce_before_main_content');
     </div>
   </div>
 
-  <br><br>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
