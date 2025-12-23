@@ -3,17 +3,31 @@
 
 // 1. Variables
 $hero-height-mobile: 300px;
-$hero-height-desktop: 270px; // Updated to your new height
+$hero-height-desktop: 270px;
 
 // 2. The Frame (Container)
 .custom-container {
-  margin: 0 auto;
-  @include container;
   padding: 0;
+  width: 100%;
+  margin: 0;
+  // We keep the background color here
   background-color: #f7f7f7;
+
+  @media (min-width: 768px) {
+    // Instead of margin: auto (which creates huge gaps),
+    // we use padding to force exactly 20px of the body color to show.
+    display: block;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    // This tells the background-color to ONLY fill the area inside the padding
+    background-clip: content-box;
+  }
 }
 
 .hero-banner {
+  margin-top: 110px;
   position: relative;
   width: 100%;
   height: $hero-height-mobile;
@@ -21,6 +35,7 @@ $hero-height-desktop: 270px; // Updated to your new height
 
   @media (min-width: 768px) {
     height: $hero-height-desktop;
+    // On desktop, the banner takes up 100% of the space inside the 20px padding
   }
 }
 
@@ -48,9 +63,7 @@ $hero-height-desktop: 270px; // Updated to your new height
 // 5. Desktop Specific
 .parallax-img.desktop-img {
   display: none;
-  // Increased to 140% to allow for a nice "floaty" feel in a short banner
   height: 140%;
-
   object-position: 45% 50%;
 
   @media (min-width: 768px) {
