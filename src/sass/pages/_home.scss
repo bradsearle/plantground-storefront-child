@@ -120,6 +120,8 @@
 }
 .shop-controls__container {
   @include container;
+  padding: 0 20px;
+  margin-top: 50px;
 }
 .woocommerce-result-count {
   font-size: 0.9rem;

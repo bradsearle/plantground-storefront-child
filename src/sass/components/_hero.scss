@@ -3,39 +3,39 @@
 
 // 1. Variables
 $hero-height-mobile: 300px;
-$hero-height-desktop: 270px;
+$hero-height-desktop: 420px;
 
 // 2. The Frame (Container)
 .custom-container {
+  //   background-color: #f7f7f7;
+  background-color: #00a562;
   padding: 0;
   width: 100%;
   margin: 0;
-  // We keep the background color here
-  background-color: #f7f7f7;
 
   @media (min-width: 768px) {
-    // Instead of margin: auto (which creates huge gaps),
-    // we use padding to force exactly 20px of the body color to show.
     display: block;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    // This tells the background-color to ONLY fill the area inside the padding
+    padding-left: 0px;
+    padding-right: 0px;
     background-clip: content-box;
   }
 }
 
 .hero-banner {
-  margin-top: 110px;
+  //   margin-top: 1.75rem;
   position: relative;
   width: 100%;
   height: $hero-height-mobile;
   overflow: hidden;
 
+  // Use an inset box-shadow instead of a border.
+  // This places the 1px line INSIDE the container so the height
+  // stays exactly 300px/270px and the image doesn't jump.
+  //   box-shadow: inset 0 -1px 0 0 #eceaea;
+
   @media (min-width: 768px) {
     height: $hero-height-desktop;
-    // On desktop, the banner takes up 100% of the space inside the 20px padding
   }
 }
 
@@ -69,5 +69,11 @@ $hero-height-desktop: 270px;
   @media (min-width: 768px) {
     display: block;
     transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    margin-top: 5.75rem;
   }
 }

@@ -31,6 +31,16 @@
 .choices {
   margin-bottom: 0 !important;
   position: relative;
+  &:focus {
+    outline: none;
+  }
+
+  // 2. Define a "Brand" focus style for keyboard users only
+  &:focus-visible {
+    outline: 1.5px solid #fff; // A clean black line instead of blue
+    outline-offset: 3px; // Gives it some breathing room
+    transition: outline-offset 0.2s ease; // Smooths the "pop"
+  }
 }
 
 /* Add a custom arrow to the Choices.js container using ::after */
@@ -57,8 +67,6 @@
 
 .choices__inner {
   background-color: #fff !important;
-  border: 1px solid #efefef !important; /* Added border back for consistency */
-  border-radius: 6px !important; /* Ensure the top border radius is kept */
   padding: 0 0 !important;
   padding-right: 2.5em !important; /* Space for the custom arrow */
   font-size: 0.95rem;
@@ -76,17 +84,16 @@
 .choices__list--dropdown {
   display: none;
   background-color: #fff;
-  border: 1px solid #ddd;
+  // border: 1px solid #ddd;
   /* REMOVED fixed width to align with input above */
-  // width: 264px !important;
-  border-radius: 6px !important; /* Ensure dropdown has rounded corners */
+  width: 264px !important;
   margin-top: 4px;
   font-size: 0.95rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding-left: 6px;
   /* Fix alignment issues when the menu opens */
   position: absolute !important;
   top: 100% !important; /* Position right below the input */
-  left: 0 !important;
+  left: -6px !important;
   right: 0 !important;
   z-index: 10;
   word-break: break-all;
@@ -100,15 +107,15 @@
 
 .choices__item--selectable {
   /* Use consistent padding for menu items */
-  padding: 0.5em 0.9em !important;
+  padding: 0.5em 0 !important;
   cursor: pointer;
 
   &:hover {
-    background-color: #f7f7f7;
+    // background-color: #f7f7f7;
   }
 }
 
 .choices__list--single {
   /* Use consistent padding for selected item in the input box */
-  padding: 0.5em 0.9em !important;
+  padding: 0.5em 0 !important;
 }

@@ -25,6 +25,7 @@ do_action('woocommerce_before_main_content');
   $desktop_img = $theme_path . '/assets/images/hero-desktop_nobg.webp';
   ?>
 
+
   <div class="custom-container">
     <div class="hero-banner">
       <img src="<?php echo $mobile_img; ?>" class="parallax-img mobile-img" alt="">

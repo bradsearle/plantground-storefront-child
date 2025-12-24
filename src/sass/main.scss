@@ -35,3 +35,11 @@
 
 // 7. Themes
 @use 'themes/default' as *;
+
+.home::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: #00a562;
+  z-index: -1;
+}

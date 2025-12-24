@@ -91,11 +91,6 @@ function plantground_filter_products_handler()
             $args['meta_key'] = 'total_sales';
             $args['orderby']  = 'meta_value_num';
             break;
-        case 'rating':
-            $args['meta_key'] = '_wc_average_rating';
-            $args['orderby']  = 'meta_value_num';
-            $args['order']    = 'DESC';
-            break;
         case 'date':
             $args['orderby']  = 'date';
             $args['order']    = 'DESC';
@@ -161,8 +156,7 @@ function plantground_render_bare_sort_select()
 
     $catalog_orderby_options = apply_filters('woocommerce_catalog_orderby', array(
         'menu_order' => __('Default sorting', 'woocommerce'),
-        'popularity' => __('Sort by popularity', 'woocommerce'),
-        'rating'     => __('Sort by average rating', 'woocommerce'),
+
         'date'       => __('Sort by latest', 'woocommerce'),
         'price'      => __('Sort by price: low to high', 'woocommerce'),
         'price-desc' => __('Sort by price: high to low', 'woocommerce'),

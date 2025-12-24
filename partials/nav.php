@@ -41,7 +41,7 @@
     $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     ?>
 
-    <div class="">
+    <div class="nav__links">
       <?php
       // Logic to determine which links to show based on the page
       if (is_shop() || is_front_page()) {
@@ -57,6 +57,9 @@
       }
       ?>
 
+
+    </div>
+    <div class="nav__right">
       <div class="nav__cart-copy">Cart</div>
       <a href="#"
         class="cart-link cfw-side-cart-open-trigger"
@@ -80,6 +83,7 @@
         </div>
       </a>
     </div>
+
   </div>
 </nav>
 
