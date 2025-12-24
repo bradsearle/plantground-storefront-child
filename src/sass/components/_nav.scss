@@ -72,13 +72,12 @@ nav.hidden {
 /* 2. COMPONENT: INFO BAR */
 /* ============================================== */
 
-$brand-green: #00a562;
-
 .nav__info-bar {
   width: 100%;
   height: 30px;
-  background-color: darken($brand-green, 5%);
+  // background-color: darken($brand-green, 5%);
   // background-color: #006a3e;
+  background-color: #00a562;
   color: #fff;
   font-family: 'Space Mono', monospace;
   font-size: 0.6875rem;

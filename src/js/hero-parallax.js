@@ -12,48 +12,42 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
     mm.add(
       {
-        isDesktop: '(min-width: 768px)',
+        isLargeDesktop: '(min-width: 1401px)',
+        isMediumDesktop: '(min-width: 768px) and (max-width: 1400px)',
         isMobile: '(max-width: 767px)',
       },
       (context) => {
-        let { isDesktop } = context.conditions;
+        let { isLargeDesktop, isMediumDesktop } = context.conditions;
+        const isDesktop = isLargeDesktop || isMediumDesktop;
 
         const targetImg = isDesktop
           ? hero.querySelector('.desktop-img')
           : hero.querySelector('.mobile-img');
 
-        if (targetImg) {
-          // Sync heights: Desktop 140% | Mobile 170%
-          const imgHeight = isDesktop ? '140%' : '170%';
+        if (!targetImg) return;
 
-          gsap.set(targetImg, {
-            top: '50%',
-            left: '50%',
-            xPercent: -50,
-            yPercent: -50,
-            height: imgHeight,
-            width: '100%',
-            scale: 1,
-            objectFit: 'cover',
-          });
+        // Clear any existing ScrollTrigger to avoid duplicates
+        ScrollTrigger.getAll().forEach((st) => st.kill());
 
-          // Animation:
-          // Desktop: -50 to -65 (15% move - feels strong on a short banner)
-          // Mobile: -50 to -70 (20% move)
-          const targetY = isDesktop ? -65 : -70;
+        gsap.set(targetImg, {
+          scale: 1.15,
+          top: '50%',
+          left: '50%',
+          xPercent: -50,
+          yPercent: -50,
+        });
 
-          gsap.to(targetImg, {
-            yPercent: targetY,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: hero,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: isDesktop ? 1.5 : 0.5,
-              invalidateOnRefresh: true,
-            },
-          });
-        }
+        gsap.to(targetImg, {
+          yPercent: -60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: hero,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: isDesktop ? 1.5 : 0.5,
+            invalidateOnRefresh: true,
+          },
+        });
       }
     );
   };

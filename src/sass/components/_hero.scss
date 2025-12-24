@@ -1,58 +1,76 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-// 1. Variables
-$hero-height-mobile: 300px;
-$hero-height-desktop: 420px;
+$hero-height-mobile: 420px;
+$hero-height-desktop: 620px;
 
-// 2. The Frame (Container)
 .custom-container {
-  //   background-color: #f7f7f7;
-  background-color: #00a562;
   padding: 0;
   width: 100%;
   margin: 0;
-
-  @media (min-width: 768px) {
-    display: block;
-    width: 100%;
-    padding-left: 0px;
-    padding-right: 0px;
-    background-clip: content-box;
-  }
+  display: flow-root;
 }
 
 .hero-banner {
-  //   margin-top: 1.75rem;
   position: relative;
   width: 100%;
   height: $hero-height-mobile;
   overflow: hidden;
+  margin-top: -1px;
 
-  // Use an inset box-shadow instead of a border.
-  // This places the 1px line INSIDE the container so the height
-  // stays exactly 300px/270px and the image doesn't jump.
-  //   box-shadow: inset 0 -1px 0 0 #eceaea;
+  // Indented Bottom Border
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background-color: #ccc;
+    z-index: 10;
+  }
 
-  @media (min-width: 768px) {
+  // Mobile: already uses $hero-height-mobile
+
+  // Tablet to large desktop: responsive height between 768px and 1400px
+  @media (min-width: 768px) and (max-width: 1400px) {
+    // Linear interpolation: 420px at 768px → 620px at 1400px
+    height: calc(420px + (620 - 420) * ((100vw - 768px) / (1400 - 768)));
+
+    // Optional: ensure it doesn’t go below 420px or above 620px (safety)
+    // (calc above should stay in range, but this is extra protection)
+    min-height: $hero-height-mobile;
+    max-height: $hero-height-desktop;
+
+    &::after {
+      left: 1.25rem;
+      right: 1.25rem;
+    }
+  }
+
+  // Large desktop (>1400px): fixed height
+  @media (min-width: 1401px) {
     height: $hero-height-desktop;
+
+    &::after {
+      left: 1.25rem;
+      right: 1.25rem;
+    }
   }
 }
 
-// 3. Base Image Styles
 .parallax-img {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   transform: translate(-50%, -50%);
   will-change: transform;
 }
 
-// 4. Mobile Specific
 .parallax-img.mobile-img {
-  height: 170%;
   display: block;
 
   @media (min-width: 768px) {
@@ -60,20 +78,10 @@ $hero-height-desktop: 420px;
   }
 }
 
-// 5. Desktop Specific
 .parallax-img.desktop-img {
   display: none;
-  height: 140%;
-  object-position: 45% 50%;
 
   @media (min-width: 768px) {
     display: block;
-    transform: translate(-50%, -50%);
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-banner {
-    margin-top: 5.75rem;
   }
 }
