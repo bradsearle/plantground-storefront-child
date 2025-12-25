@@ -35,3 +35,16 @@
   height: 63px;
   justify-content: center;
 }
+
+@mixin btn-rnd($top: 0, $bottom: 0) {
+  background: none;
+  border: 1px solid #dddcdc;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 50px; /* Creates the pill shape */
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000; /* Text color */
+  min-height: 28px; /* Ensures good touch target */
+  box-sizing: border-box;
+}

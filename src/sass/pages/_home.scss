@@ -140,16 +140,7 @@
   // position: absolute;
   // top: 0;
   // right: 0;
-  background: none;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  padding: 6px 20px;
-  border-radius: 50px; /* Creates the pill shape */
-  font-size: 14px;
-  font-weight: 500;
-  color: #000; /* Text color */
-  min-height: 36px; /* Ensures good touch target */
-  box-sizing: border-box;
+  @include btn-rnd;
 }
 .mobile-filter-toggle:hover {
   color: #000000; /* Full black text on hover */
