@@ -1,11 +1,12 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-$hero-height-mobile: 420px;
-$hero-height-desktop: 620px;
+$hero-height-mobile: 320px;
+$hero-height-desktop: 420px;
 
 .custom-container {
   padding: 0;
+  display: none !important;
   width: 100%;
   margin: 0;
   display: flow-root;
@@ -16,6 +17,7 @@ $hero-height-desktop: 620px;
 .hero__title {
   display: block;
   font-weight: bold;
+  font-size: 1.5rem !important;
 }
 
 .hero__btn {
@@ -54,7 +56,7 @@ $hero-height-desktop: 620px;
   // Tablet to large desktop: responsive height between 768px and 1400px
   @media (min-width: 768px) and (max-width: 1400px) {
     // Linear interpolation: 420px at 768px → 620px at 1400px
-    height: calc(420px + (620 - 420) * ((100vw - 768px) / (1400 - 768)));
+    height: calc(420px + (420 - 420) * ((100vw - 768px) / (1400 - 768)));
 
     // Optional: ensure it doesn’t go below 420px or above 620px (safety)
     // (calc above should stay in range, but this is extra protection)
