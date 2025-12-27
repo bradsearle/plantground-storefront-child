@@ -18,4 +18,15 @@
   <div class="footer-cell">Contact</div>
   <div class="footer-cell">Privacy</div>
   <div class="footer-cell">TikTok</div> </footer
->.footer
+>.footer <?php $theme_path = get_stylesheet_directory_uri(); $mobile_img = $theme_path .
+'/assets/images/hero-mobile_nobg.webp'; $desktop_img = $theme_path .
+'/assets/images/hero-desktop_nobg.webp'; ?>
+
+<div class="custom-container">
+  <div class="hero-banner">
+    <h1 class="hero__title">All unique, grow one of a kind</h1>
+    <button class="hero__btn"> Shop Originals </button>
+    <img src="<?php echo $mobile_img; ?>" class="parallax-img mobile-img" alt="" />
+    <img src="<?php echo $desktop_img; ?>" class="parallax-img desktop-img" alt="" />
+  </div>
+</div>

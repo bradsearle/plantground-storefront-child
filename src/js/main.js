@@ -11,7 +11,7 @@ import { initCustomSelect } from './custom-select.js';
 import { initFullscreenMenu } from './fullscreen-menu.js';
 
 // JUST ADD THIS ONE LINE AT THE VERY BOTTOM OF IMPORTS
-import './hero-parallax.js';
+// import './hero-parallax.js';
 
 // Run features (Keep exactly as you have it)
 initFilters();

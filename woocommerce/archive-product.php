@@ -15,28 +15,10 @@ do_action('woocommerce_before_main_content');
 
 
 
-<?php
-$theme_path = get_stylesheet_directory_uri();
-$mobile_img  = $theme_path . '/assets/images/hero-mobile_nobg.webp';
-$desktop_img = $theme_path . '/assets/images/hero-desktop_nobg.webp';
-?>
 
-
-<div class="custom-container">
-  <div class="hero-banner">
-    <h1 class="hero__title">All unique, grow one of a kind</h1>
-    <button class="hero__btn">
-      Shop Originals
-    </button>
-    <img src="<?php echo $mobile_img; ?>" class="parallax-img mobile-img" alt="">
-    <img src="<?php echo $desktop_img; ?>" class="parallax-img desktop-img" alt="">
-  </div>
-</div>
 
 <div class="site-main">
-
-
-
+  <br> <br> <br> <br> <br>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
@@ -60,6 +42,12 @@ $desktop_img = $theme_path . '/assets/images/hero-desktop_nobg.webp';
               <input type="checkbox" value="succulents" class="category-toggle" />
               <span class="slider"></span>
               <span class="toggle-label">Succulents</span>
+            </label>
+
+            <label class="toggle-switch">
+              <input type="checkbox" value="seeds" class="category-toggle" />
+              <span class="slider"></span>
+              <span class="toggle-label">Seeds</span>
             </label>
           </div>
         </div>
