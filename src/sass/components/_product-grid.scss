@@ -1,4 +1,4 @@
-@use '../abstracts/variables' as *; // or `as vars;` and then use vars.$light-grey-color
+@use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
 .woocommerce-message,
@@ -6,7 +6,14 @@
 .woocommerce-error,
 .woocommerce-noreviews,
 p.no-comments {
-  margin-top: 100px !important;
+  margin-top: 6.25rem !important; // 100px
+}
+
+ul.products li.product img,
+ul.products .wc-block-grid__product img,
+.wc-block-grid__products li.product img,
+.wc-block-grid__products .wc-block-grid__product img {
+  margin: 0 auto;
 }
 
 ul.columns-3,
@@ -15,15 +22,13 @@ ul.columns-4 {
   grid-template-columns: repeat(12, 1fr);
   padding-inline-start: 0;
   list-style: none;
-  gap: 4px;
-  // margin: 0 0.5rem !important;
+  gap: 0.25rem; // 4px
 
   img {
     max-width: 73%;
     height: auto;
     margin: auto;
     display: flex;
-    // border-radius: 8px;
   }
 
   &::before,
@@ -34,45 +39,46 @@ ul.columns-4 {
 
 .woocommerce-LoopProduct-link {
   background-color: $light-grey-color;
-  margin-bottom: 85px;
-  // border-radius: 8px;
 }
+
 .product__container {
   span.onsale {
     display: none;
   }
 }
 
+.product__info {
+  margin-top: 0.3625rem !important; // 9px
+  padding-left: 0.25rem !important; // 4px
+  padding-top: 0.7rem;
+}
+
 .product-grid__container {
   @include container;
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
+
 ul.products li.product .price {
-  // margin-bottom: 0.3rem !important;
+  margin-bottom: 0 !important;
 }
+
 .product {
   &__container {
-    // border-radius: 8px;
     padding: 0;
     grid-column: span 3 !important;
     width: 100% !important;
-    margin-bottom: 8px !important;
-    // @include container;
+    margin-bottom: 0.5rem !important; // 8px
 
     img {
-      margin-bottom: 82px;
+      margin-bottom: 5.125rem; // 82px
       padding: 0;
     }
 
     h2 {
-      font-size: 12px;
+      font-size: 0.75rem; // 12px
       font-weight: 600;
       color: #686868;
       margin: 0 !important;
-      position: absolute;
-      bottom: -22px;
-      left: 0;
-      height: 95px;
 
       &:hover {
         text-decoration: underline;
@@ -80,11 +86,10 @@ ul.products li.product .price {
     }
 
     .price {
-      font-size: 1.2m;
+      font-size: 1.2rem; // Corrected typo from 1.2m
       font-weight: 800 !important;
       background-color: #fff !important;
-      margin-top: 12px !important;
-      position: absolute;
+      margin-top: 0 !important;
     }
 
     .products ul li {
@@ -92,11 +97,18 @@ ul.products li.product .price {
     }
   }
 
+  .ul.products li.product img,
+  ul.products .wc-block-grid__product img,
+  .wc-block-grid__products li.product img,
+  .wc-block-grid__products .wc-block-grid__product img {
+    margin: 0 auto !important;
+  }
+
   &__name {
     font-size: 1rem;
     font-weight: 400;
     color: #686868;
-    margin-top: 6px;
+    margin-top: 0.375rem; // 6px
     position: absolute;
   }
 
@@ -105,15 +117,14 @@ ul.products li.product .price {
     font-style: italic;
     font-weight: 600;
     text-align: center;
-    border: 1px solid #dfdfdf;
+    border: 0.0625rem solid #dfdfdf; // 1px
     background-color: #fff;
     color: #aeadad;
     position: absolute;
-    top: 22px;
-    right: 22px;
-    // border-radius: 30px;
-    height: 22px;
-    width: 45px;
+    top: 1.375rem; // 22px
+    right: 1.375rem; // 22px
+    height: 1.375rem; // 22px
+    width: 2.8125rem; // 45px
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,10 +132,10 @@ ul.products li.product .price {
 }
 
 .product__shipping-img {
-  width: 17px;
+  width: 1.0625rem; // 17px
   display: inline-flex !important;
   padding: 0 !important;
-  margin: 0 4px -2px 0 !important;
+  margin: 0 0.25rem -0.125rem 0 !important; // 0 4px -2px 0
   color: #fff;
 }
 
@@ -134,13 +145,6 @@ ul.products li.product .price {
 
 ul.products li.product .button {
   display: none !important;
-}
-
-ul.products li.product img,
-ul.products .wc-block-grid__product img,
-.wc-block-grid__products li.product img,
-.wc-block-grid__products .wc-block-grid__product img {
-  margin: 0;
 }
 
 // Responsive
@@ -153,16 +157,22 @@ ul.products .wc-block-grid__product img,
 @media (max-width: 768px) {
   .product-grid__container {
     @include container;
-    padding-right: 0px !important;
-    padding-left: 0px !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  .product__info {
+    background-color: #fff;
+    height: 3.0625rem; // 49px
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 1.0625rem; // 17px
+    position: relative;
   }
   ul.columns-3,
   ul.columns-4 {
-    margin: 0 4px !important;
-
-    img {
-      max-width: 100% !important;
-    }
+    margin: 0 0.25rem !important; // 4px
   }
 
   .product__container {
@@ -170,72 +180,14 @@ ul.products .wc-block-grid__product img,
     padding: 0;
     margin-bottom: 0 !important;
 
-    img {
-      padding: 0;
-    }
-
     h2 {
-      margin: 0 !important;
-      bottom: 20px;
-      height: 50px;
+      margin-bottom: 0.25rem !important; // 4px
     }
 
     .price {
       font-size: 0.8em;
       font-weight: 400 !important;
-      background-color: #fff !important;
-      color: $text-color !important;
-      position: absolute;
-      bottom: 22px;
-      padding-left: 8px;
     }
-  }
-
-  .product__shipping {
-    font-size: 0.75em;
-    position: absolute;
-    bottom: 0;
-    color: #999;
-    font-weight: 600;
-    text-align: left;
-    font-style: italic;
-  }
-}
-
-// @media (max-width: 600px) {
-//   .product__container {
-//     grid-column: span 12 !important;
-//   }
-
-//   ul.columns-3,
-//   ul.columns-4 {
-//     img {
-//       max-width: 80%;
-//     }
-//   }
-// }
-
-@media (max-width: 496px) {
-  .product__container {
-    padding: 0;
-
-    img {
-      padding: 0;
-    }
-
-    h2 {
-      height: 50px;
-    }
-
-    .price {
-      bottom: 0;
-    }
-  }
-}
-
-@media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
-  .product__container {
-    grid-column: span 6 !important;
   }
 }
 
@@ -245,5 +197,5 @@ body {
 }
 
 .products li.product__container {
-  opacity: 0; // default before fade-in
+  opacity: 0;
 }

@@ -222,6 +222,9 @@ nav.hidden {
   }
   .nav__right {
     display: flex;
+    min-width: 50px;
+    justify-content: flex-end; /* This pushes all child elements to the right */
+
     margin-left: unset; // This pushes element 1 and 2 to the left and 3 to the right
   }
   .nav__links {
@@ -234,7 +237,8 @@ nav.hidden {
   }
 
   .nav__menu {
-    display: block;
+    display: flex;
+    min-width: 50px;
   }
   .nav__link {
     display: none;

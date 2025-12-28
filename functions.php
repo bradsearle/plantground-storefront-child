@@ -207,3 +207,22 @@ function plantground_custom_cart_fragment($fragments)
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
+
+
+
+/**
+ * Wrap only Title and Price in product__info
+ */
+// Start the div AFTER the image (which is usually at 10)
+add_action('woocommerce_before_shop_loop_item_title', 'opening_product_info_div', 15);
+function opening_product_info_div()
+{
+    echo '<div class="product__info">';
+}
+
+// Close the div AFTER the price
+add_action('woocommerce_after_shop_loop_item_title', 'closing_product_info_div', 15);
+function closing_product_info_div()
+{
+    echo '</div>';
+}
