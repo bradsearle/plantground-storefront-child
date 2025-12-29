@@ -18,7 +18,11 @@ do_action('woocommerce_before_main_content');
 
 
 <div class="site-main">
-  <br> <br> <br> <br> <br>
+  <div class="custom-container">
+    <div class="hero-banner">
+      <h1 class="hero__title">one of a kind Shop originals</h1>
+    </div>
+  </div>
 
   <?php if (is_shop() || is_product_category()) : ?>
     <div class="shop-controls" id="shop-controls">
@@ -44,6 +48,12 @@ do_action('woocommerce_before_main_content');
               <input type="checkbox" value="succulents" class="category-toggle" />
               <span class="slider"></span>
               <span class="toggle-label">Succulents</span>
+            </label>
+
+            <label class="toggle-switch">
+              <input type="checkbox" value="originals" class="category-toggle" />
+              <span class="slider"></span>
+              <span class="toggle-label">Originals</span>
             </label>
 
             <label class="toggle-switch">

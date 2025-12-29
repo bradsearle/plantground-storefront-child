@@ -10,6 +10,9 @@
   box-sizing: border-box;
   padding: 20px 0.5rem;
 }
+@mixin type($top: 0, $bottom: 0) {
+  font-family: 'die-grotesk';
+}
 
 @mixin animation-delay {
   animation: fadein 900ms;
@@ -52,5 +55,23 @@
   &:active {
     background-color: #fff !important;
     color: #000;
+  }
+}
+
+@mixin clean-link($color: inherit, $active-color: $color) {
+  color: $color;
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: $color;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $active-color;
+    outline: 2px solid transparent; // Optional: preserve focus visibility for a11y
+    outline-offset: 2px;
   }
 }

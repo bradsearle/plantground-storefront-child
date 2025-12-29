@@ -28,3 +28,14 @@
 .site-main {
   // background-image: url('../assets/images/plantground-closeup.jpg');
 }
+
+.single-product .woocommerce-product-gallery {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.single-product .woocommerce-product-gallery .wp-post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}

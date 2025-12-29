@@ -1,3 +1,4 @@
+@use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
 /* ============================================== */
@@ -34,11 +35,16 @@
 .nav__wrap {
   display: flex;
   justify-content: space-between;
-  // padding: 22px 0;
+  @include type;
+  background-color: #fff;
 }
 .nav__links {
   display: flex;
   margin-left: 3.75rem;
+  align-items: center;
+}
+.nav__link {
+  @include clean-link;
 }
 .nav__right {
   display: flex;
@@ -135,6 +141,8 @@ nav.hidden {
   font-size: 1.1rem;
   font-weight: 700;
   color: #000;
+  @include type;
+  display: flex;
 
   a,
   a:visited,

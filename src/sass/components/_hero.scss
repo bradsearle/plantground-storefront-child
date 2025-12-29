@@ -2,14 +2,14 @@
 @use '../abstracts/mixins' as *;
 
 $hero-height-mobile: 320px;
-$hero-height-desktop: 420px;
+$hero-height-desktop: 320px;
 .shop__btn {
   display: none;
 }
 
 .custom-container {
   padding: 0;
-  display: none !important;
+  // display: none !important;
   width: 100%;
   margin: 0;
   display: flow-root;
@@ -19,8 +19,10 @@ $hero-height-desktop: 420px;
 }
 .hero__title {
   display: block;
-  font-weight: bold;
-  font-size: 1.5rem !important;
+  font-weight: 400;
+  font-size: 2.5rem !important;
+  @include type;
+  font-weight: 700;
 }
 
 .hero__btn {
@@ -38,7 +40,7 @@ $hero-height-desktop: 420px;
   overflow: hidden;
   margin-top: -1px;
   padding-top: 15rem;
-  padding-left: 3rem;
+  padding-left: 0rem;
 
   // Indented Bottom Border
   &::after {
@@ -48,7 +50,7 @@ $hero-height-desktop: 420px;
     left: 20px;
     right: 20px;
     height: 1px;
-    background-color: #ebe7e7;
+    // background-color: #ebe7e7;
     left: 1.25rem;
     right: 1.25rem;
     z-index: 10;

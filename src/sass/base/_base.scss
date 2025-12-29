@@ -1,0 +1,10 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+body {
+  @include type;
+}
+
+img {
+  border-radius: 0 !important;
+}
