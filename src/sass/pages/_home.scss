@@ -1,5 +1,9 @@
 @use '../abstracts/mixins' as *;
 
+.mobile-filter-toggle {
+  display: none;
+}
+
 #plantground-filters {
   display: flex;
   flex-wrap: wrap;
@@ -133,13 +137,10 @@
 .shop-controls {
   position: relative;
   margin-bottom: 0px;
+  display: flex;
 }
 
 .mobile-filter-toggle {
-  display: none;
-  // position: absolute;
-  // top: 0;
-  // right: 0;
   @include btn-rnd;
 }
 .mobile-filter-toggle:hover {
@@ -155,6 +156,35 @@
 // }
 
 @media (max-width: 800px) {
+  @media (max-width: 800px) {
+    /* This is the parent wrapper holding the two buttons */
+    .shop-controls {
+      flex-wrap: wrap; // Allows the dropdown to wrap underneath the buttons
+      gap: 10px;
+    }
+
+    /* This is your dropdown container */
+    .shop-controls__row.mobile-filters-visible {
+      display: flex !important;
+      flex-direction: column;
+      width: 100%; /* Fill the container */
+      order: 3; /* Pushes the filters below both buttons */
+      padding: 20px 0; /* Give it some breathing room */
+    }
+
+    /* Ensure the container isn't restricting width */
+    .shop-controls__container {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Make sure the filter list itself spans the full width */
+    #plantground-filters {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
   .mobile-filter-toggle {
     display: block;
   }
@@ -182,7 +212,6 @@
     display: flex;
     // margin-left: auto;
     margin: auto;
-    margin-bottom: 22px;
   }
 }
 .shop-controls__right {

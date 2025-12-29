@@ -3,6 +3,9 @@
 
 $hero-height-mobile: 320px;
 $hero-height-desktop: 420px;
+.shop__btn {
+  display: none;
+}
 
 .custom-container {
   padding: 0;
@@ -121,6 +124,13 @@ $hero-height-desktop: 420px;
     border: 0;
     margin: auto;
     margin-top: 15.9rem; // Your 200px offset (calculated as 200/16)
+    z-index: 9999;
+    display: flex !important;
+  }
+
+  .shop__btn {
+    @include btn-rnd;
+    margin: auto;
     z-index: 9999;
     display: flex !important;
   }

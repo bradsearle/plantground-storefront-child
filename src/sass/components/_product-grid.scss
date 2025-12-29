@@ -13,7 +13,7 @@ ul.products li.product img,
 ul.products .wc-block-grid__product img,
 .wc-block-grid__products li.product img,
 .wc-block-grid__products .wc-block-grid__product img {
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
 ul.columns-3,
@@ -50,7 +50,7 @@ ul.columns-4 {
 .product__info {
   margin-top: 0.3625rem !important; // 9px
   padding-left: 0.25rem !important; // 4px
-  padding-top: 0.7rem;
+  padding-top: 0.4rem;
   background-color: #fff;
   height: 3.8625rem; // 49px
   text-align: left;
@@ -85,6 +85,10 @@ ul.products li.product .price {
     h2 {
       font-size: 0.75rem; // 12px
       font-weight: 600;
+      white-space: nowrap; /* Prevents wrapping to a second line */
+      overflow: hidden; /* Hides the extra text */
+      text-overflow: ellipsis; /* Adds the '...' */
+      max-width: 24ch;
       color: #686868;
       margin: 0 !important;
 
@@ -175,7 +179,7 @@ ul.products li.product .button {
     display: flex;
     flex-direction: column;
     margin-top: 0;
-    margin-bottom: 1.0625rem; // 17px
+    margin-bottom: 0;
     position: relative;
   }
   ul.columns-3,
