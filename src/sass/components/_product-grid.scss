@@ -73,6 +73,8 @@ ul.columns-4 {
 
 ul.products li.product .price {
   margin-bottom: 0 !important;
+  // font-weight: 700 !important;
+  font-size: 0.875rem !important;
 }
 
 .product {
@@ -88,13 +90,13 @@ ul.products li.product .price {
     }
 
     h2 {
-      font-size: 0.75rem; // 12px
+      font-size: 0.875rem !important;
       font-weight: 600;
       white-space: nowrap; /* Prevents wrapping to a second line */
       overflow: hidden; /* Hides the extra text */
       text-overflow: ellipsis; /* Adds the '...' */
       max-width: 24ch;
-      color: #686868;
+
       margin: 0 !important;
       @include clean-link;
     }

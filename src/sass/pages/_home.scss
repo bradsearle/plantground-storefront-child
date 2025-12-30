@@ -214,3 +214,9 @@
   @include container;
   padding: 0 20px 4rem;
 }
+
+@media (max-width: 768px) {
+  .mobile-filter-toggle {
+    margin: auto;
+  }
+}

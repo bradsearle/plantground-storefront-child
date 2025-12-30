@@ -138,6 +138,7 @@ nav.hidden {
 
 .nav__logo {
   font-weight: 700;
+  color: #000 !important;
 
   @include type;
   display: flex;

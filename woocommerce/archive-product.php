@@ -20,7 +20,7 @@ do_action('woocommerce_before_main_content');
 <div class="site-main">
   <div class="custom-container">
     <div class="hero__copy">
-      <h1 class=" hero__title">Unique botanicals.</h1>
+      <h1 class=" hero__title">Succulent botanicals.</h1>
     </div>
     <div class="hero__copy-second">
       <h2 class="hero__title">Find your little green.</h2>

@@ -30,7 +30,7 @@
 }
 
 .single-product .woocommerce-product-gallery {
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto 2rem;
 }
 
@@ -48,4 +48,8 @@ h5,
 h6,
 .wc-block-grid__product-title {
   color: unset !important;
+}
+
+.storefront-full-width-content.single-product div.product .woocommerce-product-gallery {
+  width: 50% !important;
 }
