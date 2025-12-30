@@ -1,10 +1,54 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
+// In your main.scss or base/_typography.scss
 body {
-  @include type;
+  color: #66615a !important; // base text
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Optional: force links, headings, etc. to inherit
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div,
+  a,
+  li,
+  ul,
+  ol,
+  .woocommerce,
+  .storefront {
+    color: inherit !important;
+  }
+
+  // Special: prevent link color override
+  a {
+    color: inherit !important;
+    text-decoration: none;
+
+    &:hover {
+      color: inherit !important;
+      text-decoration: underline;
+    }
+  }
 }
 
-img {
-  border-radius: 0 !important;
+// Force all text to #000
+*,
+*::before,
+*::after {
+  color: #66615a !important;
+}
+
+// But exclude elements that should NOT be black (e.g., SVG icons, placeholders)
+img,
+svg,
+input::placeholder,
+textarea::placeholder {
+  color: inherit !important;
 }

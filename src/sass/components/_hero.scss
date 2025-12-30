@@ -1,8 +1,8 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-$hero-height-mobile: 50vh;
-$hero-height-desktop: 50vh;
+$hero-height-mobile: 30vh;
+$hero-height-desktop: 30vh;
 .shop__btn {
   display: none;
 }
@@ -23,10 +23,10 @@ $hero-height-desktop: 50vh;
 .hero__title {
   display: block;
   font-weight: 400;
-  font-size: 2.5rem !important;
+  font-size: 2.2rem !important;
   @include type;
   font-weight: 700;
-  padding-left: 20px;
+  padding-left: 0.25rem !important;
 }
 
 .hero__btn {
@@ -42,6 +42,7 @@ $hero-height-desktop: 50vh;
   align-items: center;
   display: flex;
   padding-top: 9.5rem;
+  padding-right: 22px;
 }
 .hero__copy-second {
   grid-column: span 6;
@@ -100,6 +101,17 @@ $hero-height-desktop: 50vh;
     }
   }
 }
+@media (max-width: 1200px) {
+  .hero__copy {
+    display: inline-flex;
+  }
+  .custom-container {
+    display: inline-flex;
+  }
+  .hero__copy-second {
+    display: inline-flex;
+  }
+}
 
 .parallax-img {
   position: absolute;
@@ -133,7 +145,7 @@ $hero-height-desktop: 50vh;
 
 @media (max-width: 768px) {
   .hero__title {
-    display: none !important;
+    // display: none !important;
   }
   .hero__btn {
     @include btn-rnd;
@@ -153,16 +165,33 @@ $hero-height-desktop: 50vh;
     display: flex !important;
   }
   .hero-banner {
-    margin-top: 3.75rem !important; // 60px
-    padding-top: 0;
+    padding-top: 9.5rem;
+    align-items: center;
     padding-left: 0;
   }
   .hero__copy {
-    margin-top: 3.75rem !important; // 60px
-    padding-top: 0;
+    padding-top: 9.5rem;
     padding-left: 0;
   }
   .custom-container {
-    margin-bottom: 3.14rem !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 667px) {
+  .hero__copy {
+    padding-top: 13.5rem;
+    padding-left: 0;
+  }
+  .custom-container {
+    display: block;
+    height: auto;
+  }
+  .hero-banner {
+    padding-top: 0;
+  }
+  .hero__copy-second {
+    padding-top: 0;
+    margin-top: -22px;
   }
 }

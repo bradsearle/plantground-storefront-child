@@ -23,7 +23,7 @@ do_action('woocommerce_before_main_content');
       <h1 class=" hero__title">Unique botanicals.</h1>
     </div>
     <div class="hero__copy-second">
-      <h2 class="hero__title">Find your type.</h2>
+      <h2 class="hero__title">Find your little green.</h2>
     </div>
   </div>
 

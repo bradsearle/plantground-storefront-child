@@ -24,6 +24,10 @@
   }
 }
 
+.woocommerce-loop-product__link {
+  @include clean-link;
+}
+
 // Revealed by JS (on any screen size)
 .shop-controls__row.mobile-filters-visible {
   display: flex !important;
@@ -41,7 +45,9 @@
   width: 0;
   height: 0;
 }
-
+#filter-text {
+  margin-right: 0.42rem;
+}
 .slider {
   position: relative;
   display: inline-block;
@@ -100,6 +106,9 @@
   @include btn-rnd;
   display: block;
   margin-left: auto; // right-align within flex parent
+  display: flex;
+  margin-left: auto;
+  align-items: center;
 }
 
 .mobile-filter-toggle:hover {

@@ -96,10 +96,7 @@ ul.products li.product .price {
       max-width: 24ch;
       color: #686868;
       margin: 0 !important;
-
-      &:hover {
-        text-decoration: underline;
-      }
+      @include clean-link;
     }
 
     .price {

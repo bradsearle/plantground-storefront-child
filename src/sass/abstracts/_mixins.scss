@@ -73,7 +73,9 @@
     color: $color;
   }
 
-  &:hover,
+  &:hover {
+    text-decoration: none;
+  }
   &:focus,
   &:active {
     color: $active-color;
