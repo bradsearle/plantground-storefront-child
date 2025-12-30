@@ -91,6 +91,9 @@
     justify-content: flex-start;
   }
 }
+.mobile-filter__container {
+  @include container;
+}
 
 // "Show Filters" button — ALWAYS VISIBLE, RIGHT-ALIGNED
 .mobile-filter-toggle {
@@ -171,7 +174,6 @@
     line-height: 1.1;
     display: flex;
     gap: 1.5rem;
-    color: #111;
   }
 
   &__word {

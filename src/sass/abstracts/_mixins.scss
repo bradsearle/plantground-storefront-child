@@ -9,10 +9,15 @@
   position: relative;
   margin: $top auto $bottom auto;
   box-sizing: border-box;
-  padding: 20px 0.5rem;
+  padding: 1.25rem 1.25rem;
+}
+@mixin grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
 }
 @mixin type($top: 0, $bottom: 0) {
   font-family: 'die-grotesk';
+  // color: #222;
 }
 
 @mixin animation-delay {

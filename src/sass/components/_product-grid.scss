@@ -67,6 +67,8 @@ ul.columns-4 {
 .product-grid__container {
   @include container;
   padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 ul.products li.product .price {

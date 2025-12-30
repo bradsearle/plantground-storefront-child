@@ -16,6 +16,9 @@ $hero-height-desktop: 50vh;
   @include container;
   padding: 0 0;
   //   background-color: #00a562;
+  @include grid;
+  height: $hero-height-mobile;
+  min-height: 22rem;
 }
 .hero__title {
   display: block;
@@ -34,14 +37,26 @@ $hero-height-desktop: 50vh;
   position: relative;
   z-index: 9999999999;
 }
+.hero__copy {
+  grid-column: span 3;
+  align-items: center;
+  display: flex;
+  padding-top: 9.5rem;
+}
+.hero__copy-second {
+  grid-column: span 6;
+  align-items: center;
+  display: flex;
+  padding-top: 9.5rem;
+}
 .hero-banner {
   position: relative;
   width: 100%;
-  height: $hero-height-mobile;
   overflow: hidden;
   margin-top: -1px;
   padding-top: 15rem;
   padding-left: 0rem;
+  grid-column: span 3;
 
   // Indented Bottom Border
   &::after {
@@ -138,6 +153,11 @@ $hero-height-desktop: 50vh;
     display: flex !important;
   }
   .hero-banner {
+    margin-top: 3.75rem !important; // 60px
+    padding-top: 0;
+    padding-left: 0;
+  }
+  .hero__copy {
     margin-top: 3.75rem !important; // 60px
     padding-top: 0;
     padding-left: 0;

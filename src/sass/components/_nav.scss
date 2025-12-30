@@ -28,7 +28,6 @@
 }
 .nav__flex-container {
   @include container;
-  padding: 20px 20px 0 20px;
 }
 
 /* Container for Logo, Links, Actions */
@@ -138,7 +137,6 @@ nav.hidden {
 // }
 
 .nav__logo {
-  font-size: 1.1rem;
   font-weight: 700;
   color: #000;
   @include type;
@@ -268,6 +266,7 @@ nav.hidden {
     display: flex;
     align-items: center; // Vertical centering
     width: 100%;
+    font-size: 0.945rem;
   }
 
   .nav__logo {
