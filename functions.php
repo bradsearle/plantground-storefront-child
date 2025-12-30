@@ -271,3 +271,13 @@ function plantground_custom_product_gallery()
     // Optional: Re-init WooCommerce gallery JS if you use lightbox
     // (Storefront usually doesn't need this for basic display)
 }
+
+
+// Add custom class to product title in shop loops
+remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
+add_action('woocommerce_shop_loop_item_title', 'plantground_custom_product_title', 10);
+
+function plantground_custom_product_title()
+{
+    echo '<h2 class="woocommerce-loop-product__title product__title">' . esc_html(get_the_title()) . '</h2>';
+}

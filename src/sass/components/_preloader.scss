@@ -22,6 +22,7 @@
   display: block;
   opacity: 0; // start hidden
   transform: translateY(0); // GSAP will slide this upward
+  color: #fff;
 }
 
 .pg-preloader.pg-preloader--done {

@@ -1,8 +1,8 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-$hero-height-mobile: 320px;
-$hero-height-desktop: 320px;
+$hero-height-mobile: 50vh;
+$hero-height-desktop: 50vh;
 .shop__btn {
   display: none;
 }
@@ -23,6 +23,7 @@ $hero-height-desktop: 320px;
   font-size: 2.5rem !important;
   @include type;
   font-weight: 700;
+  padding-left: 20px;
 }
 
 .hero__btn {

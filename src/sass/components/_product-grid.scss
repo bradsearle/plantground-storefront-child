@@ -46,7 +46,9 @@ ul.columns-4 {
     display: none;
   }
 }
-
+.product__title {
+  font-size: 0.978rem !important;
+}
 .product__info {
   margin-top: 0.3625rem !important; // 9px
   padding-left: 0.25rem !important; // 4px

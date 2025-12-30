@@ -20,7 +20,7 @@ do_action('woocommerce_before_main_content');
 <div class="site-main">
   <div class="custom-container">
     <div class="hero-banner">
-      <h1 class="hero__title">one of a kind</h1>
+      <h1 class="hero__title">Find your type</h1>
     </div>
   </div>
 

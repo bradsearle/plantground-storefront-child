@@ -30,7 +30,7 @@
 
     <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
       <div class="nav-logo__inner nav-logo__img">
-        plantground
+        Plantground
         <!-- <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
           alt="Plantground Logo"
@@ -43,20 +43,7 @@
     ?>
 
     <div class="nav__links">
-      <?php
-      // Logic to determine which links to show based on the page
-      if (is_shop() || is_front_page()) {
-        // On Shop/Home, show link to Originals, labeled "Shop Originals"
-        echo '<a href="/originals" class="nav__link">Shop Originals</a>';
-      } elseif (is_page('originals')) {
-        // On Originals page, only show link to Shop
-        echo '<a href="' . esc_url(wc_get_page_permalink('shop')) . '" class="nav__link">Shop</a>';
-      } else {
-        // On all other pages (Cart, Account, etc.), show both
-        echo '<a href="' . esc_url(wc_get_page_permalink('shop')) . '" class="nav__link nav__link--shop">Shop</a>';
-        echo '<a href="/originals" class="nav__link nav__link--originals">Originals</a>';
-      }
-      ?>
+      Info
 
 
     </div>
