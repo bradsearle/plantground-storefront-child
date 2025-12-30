@@ -1,21 +1,38 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-.mobile-filter-toggle {
+// ==========================================================================
+// SHOP FILTERS & CONTROLS — FULLY TOGGLABLE ON ALL SCREENS
+// ==========================================================================
+
+// Main controls row: HIDDEN BY DEFAULT on ALL screens
+.shop-controls__row {
   display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 0;
+  margin-top: 10px;
+
+  @media (min-width: 800px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    margin-top: 0;
+  }
 }
 
-#plantground-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem; // spacing between toggles
-  // margin-bottom: 2rem;
+// Revealed by JS (on any screen size)
+.shop-controls__row.mobile-filters-visible {
+  display: flex !important;
 }
 
+// Filter toggle switch styles (unchanged)
 .toggle-switch {
   display: flex;
   align-items: center;
-  // gap: 0.5rem; // space between switch and label
   position: relative;
 }
 
@@ -47,8 +64,6 @@
   transition: transform 0.4s;
 }
 
-/* ✅ FIX: Use the JavaScript class 'is-active' instead of the unreliable :checked attribute
-   to maintain the visual state after an AJAX product refresh (sort). */
 .toggle-switch.is-active .slider {
   background-color: #000;
 }
@@ -64,12 +79,80 @@
   @include type;
 }
 
-@media (max-width: 600px) {
-  #plantground-filters {
-    flex-direction: column;
-    align-items: flex-start;
+// Plantground filters container
+#plantground-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+    justify-content: flex-start;
   }
 }
+
+// "Show Filters" button — ALWAYS VISIBLE, RIGHT-ALIGNED
+.mobile-filter-toggle {
+  @include btn-rnd;
+  display: block;
+  margin-left: auto; // right-align within flex parent
+}
+
+.mobile-filter-toggle:hover {
+  color: #000;
+  border-color: #000;
+  background-color: #fff;
+}
+
+// Shop controls wrapper: flex column on mobile, row on desktop
+.shop-controls {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+
+  @media (min-width: 800px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// Left/right sections
+.shop-controls__left,
+.shop-controls__right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+// Sort & count
+.shop-controls__right {
+  @include type;
+  gap: 5px;
+}
+
+.woocommerce-result-count {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin: 0;
+  padding: 0 !important;
+}
+
+// Container
+.shop-controls__container {
+  @include container;
+  padding: 0 20px;
+  margin-top: 50px;
+}
+
+// ==========================================================================
+// HERO & PRODUCT GRID (unchanged)
+// ==========================================================================
 
 .hero {
   position: relative;
@@ -80,7 +163,6 @@
 
   &__text {
     position: relative;
-    /* Text is fully visible, no transform */
   }
 
   &__title {
@@ -103,7 +185,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 8rem; /* full height of the text */
+    height: 8rem;
     background: #fff;
     z-index: 10;
     pointer-events: none;
@@ -113,116 +195,11 @@
 .flex-row {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Optional: vertically centers items if container has height */
-  width: 100%;
-  /* Add padding or max-width as needed for your layout */
-}
-
-.shop-controls__row {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-.shop-controls__container {
+
+.product-grid__container {
   @include container;
-  padding: 0 20px;
-  margin-top: 50px;
-}
-.woocommerce-result-count {
-  font-size: 0.9rem;
-  color: #6c757d;
-  /* A subtle gray color */
-  margin: 0;
-  /* Remove default margins if any */
-}
-.shop-controls {
-  position: relative;
-  margin-bottom: 0px;
-  display: flex;
-}
-
-.mobile-filter-toggle {
-  @include btn-rnd;
-}
-.mobile-filter-toggle:hover {
-  color: #000000; /* Full black text on hover */
-  border-color: #000000; /* Full black border on hover */
-  background-color: #fff;
-}
-
-/* Optional: Add focus state for accessibility */
-// .mobile-filter-toggle:focus {
-//   outline: 2px solid #0066cc; /* Visible focus indicator */
-//   outline-offset: 1px;
-// }
-
-@media (max-width: 800px) {
-  @media (max-width: 800px) {
-    /* This is the parent wrapper holding the two buttons */
-    .shop-controls {
-      flex-wrap: wrap; // Allows the dropdown to wrap underneath the buttons
-      gap: 10px;
-    }
-
-    /* This is your dropdown container */
-    .shop-controls__row.mobile-filters-visible {
-      display: flex !important;
-      flex-direction: column;
-      width: 100%; /* Fill the container */
-      order: 3; /* Pushes the filters below both buttons */
-      padding: 20px 0; /* Give it some breathing room */
-    }
-
-    /* Ensure the container isn't restricting width */
-    .shop-controls__container {
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-
-    /* Make sure the filter list itself spans the full width */
-    #plantground-filters {
-      width: 100%;
-      justify-content: flex-start;
-    }
-  }
-  .mobile-filter-toggle {
-    display: block;
-  }
-
-  .shop-controls__row {
-    display: none;
-    // padding: 0 40px;
-  }
-
-  .shop-controls__row.mobile-filters-visible {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 15px;
-  }
-
-  .shop-controls__left,
-  .shop-controls__right {
-    width: 100%;
-  }
-  #filter-text {
-    margin-right: 4px;
-  }
-  .mobile-filter-toggle {
-    display: flex;
-    // margin-left: auto;
-    margin: auto;
-  }
-}
-.shop-controls__right {
-  @include type;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  /* Adds space between the results count text and the sort dropdown */
-}
-.woocommerce-result-count {
-  padding: 0 !important;
+  padding: 0 20px 4rem;
 }
