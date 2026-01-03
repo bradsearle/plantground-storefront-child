@@ -17,6 +17,11 @@
 /* Main Fixed Container (The actual fixed navigation bar) */
 .nav__flex {
   position: fixed;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  background-color: rgba(255, 255, 255, 0.5);
+
+  z-index: 43;
   top: 0;
   left: 0;
   // background-color: #00a562;
@@ -35,7 +40,6 @@
   display: flex;
   justify-content: space-between;
   @include type;
-  background-color: #fff;
 }
 .nav__links {
   display: flex;

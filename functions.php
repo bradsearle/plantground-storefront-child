@@ -216,6 +216,41 @@ function closing_product_info_div()
     echo '</div>';
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ====================================================================================
 // === CUSTOM PRODUCT GALLERY: Use first gallery image as main, hide featured image
 // ====================================================================================
@@ -273,6 +308,25 @@ function plantground_custom_product_gallery()
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Add custom class to product title in shop loops
 remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
 add_action('woocommerce_shop_loop_item_title', 'plantground_custom_product_title', 10);
@@ -280,4 +334,17 @@ add_action('woocommerce_shop_loop_item_title', 'plantground_custom_product_title
 function plantground_custom_product_title()
 {
     echo '<h2 class="woocommerce-loop-product__title product__title">' . esc_html(get_the_title()) . '</h2>';
+}
+
+
+/**
+ * Add 'single-product__container' class to product pages
+ */
+add_filter('post_class', 'plantground_add_single_product_container_class', 10, 3);
+function plantground_add_single_product_container_class($classes, $class, $post_id)
+{
+    if (is_product() && get_post_type($post_id) === 'product') {
+        $classes[] = 'single-product__container';
+    }
+    return $classes;
 }
