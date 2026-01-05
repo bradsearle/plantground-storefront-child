@@ -216,41 +216,6 @@ function closing_product_info_div()
     echo '</div>';
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ====================================================================================
 // === CUSTOM PRODUCT GALLERY: Use first gallery image as main, hide featured image
 // ====================================================================================
@@ -306,7 +271,6 @@ function plantground_custom_product_gallery()
     // Optional: Re-init WooCommerce gallery JS if you use lightbox
     // (Storefront usually doesn't need this for basic display)
 }
-
 
 
 
