@@ -63,10 +63,8 @@
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          <span
-            id="cart-count"
-            class="cart-count <?php echo $count == 0 ? 'hidden' : ''; ?>">
-            / <?php echo $count; ?>
+          <span class="cart-label">
+            Cart (<span id="cart-count-number"><?php echo (int) WC()->cart->get_cart_contents_count(); ?></span>)
           </span>
         </div>
       </a>

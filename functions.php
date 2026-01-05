@@ -312,3 +312,13 @@ function plantground_add_single_product_container_class($classes, $class, $post_
     }
     return $classes;
 }
+
+
+// Add this to your theme's functions.php
+add_action('wp_ajax_get_cart_count', 'return_cart_count');
+add_action('wp_ajax_nopriv_get_cart_count', 'return_cart_count');
+
+function return_cart_count()
+{
+    wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
+}
