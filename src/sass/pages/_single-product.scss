@@ -1,14 +1,82 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-#single-product-wrapper {
-  background-color: $light-grey-color !important;
-  padding: 0 50px;
-}
+// #single-product-wrapper {
+//   background-color: $light-grey-color !important;
+//   padding: 0 50px;
+// }
 
 .single-product div.product {
   margin-top: 100px;
 }
 .single-product__container {
   @include container-sml;
+}
+.custom-product-gallery img {
+  border-radius: 0 !important;
+}
+.single-product__info {
+  margin-left: 22px;
+}
+/* Desktop: 50/50 using YOUR class */
+@media (min-width: 768px) {
+  .single-product div.product {
+    display: flex !important;
+  }
+
+  /* Hide WooCommerce's default layout behavior */
+  .single-product div.product > .images,
+  .single-product div.product > .summary.entry-summary {
+    width: auto !important;
+    float: none !important;
+    margin: 0 !important;
+  }
+
+  /* Promote YOUR gallery to 50% */
+  .custom-product-gallery {
+    width: 50% !important;
+    flex: 0 0 50% !important;
+  }
+
+  /* Keep summary at 50% */
+  .summary.entry-summary {
+    width: 50% !important;
+    flex: 0 0 50% !important;
+  }
+}
+
+/* Mobile: full width */
+@media (max-width: 767px) {
+  .custom-product-gallery,
+  .summary.entry-summary {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+}
+
+/* Ensure short description lives inside padded container */
+.woocommerce-product-details__short-description {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Reset paragraph inside it */
+.woocommerce-product-details__short-description p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.6;
+}
+
+.single-product .entry-summary .woocommerce-product-details__short-description {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+/* Target summary only on single product pages */
+.single-product .entry-summary.summary {
+  padding: 1.25rem;
 }

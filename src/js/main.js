@@ -7,9 +7,17 @@ import infoBar from './info-bar.js';
 import { initNavScroll } from './nav.js';
 import { initCustomSelect } from './custom-select.js';
 import { initCartCount } from './cart-count.js';
+import { initCustomProductGallery } from './custom-gallery.js';
 
 // ... all your other imports ...
 import { initFullscreenMenu } from './fullscreen-menu.js';
+
+// Run on DOM ready (if not already handled)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCustomProductGallery);
+} else {
+  initCustomProductGallery();
+}
 
 // JUST ADD THIS ONE LINE AT THE VERY BOTTOM OF IMPORTS
 // import './hero-parallax.js';

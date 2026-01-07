@@ -219,7 +219,8 @@ function closing_product_info_div()
 // ====================================================================================
 // === CUSTOM PRODUCT GALLERY: Use first gallery image as main, hide featured image
 // ====================================================================================
-
+// ⬇️ COMMENTED OUT TO ALLOW WOOCOMMERCE TEMPLATE OVERRIDE TO LOAD ⬇️
+/*
 add_action('wp', 'plantground_replace_product_gallery');
 function plantground_replace_product_gallery()
 {
@@ -271,24 +272,8 @@ function plantground_custom_product_gallery()
     // Optional: Re-init WooCommerce gallery JS if you use lightbox
     // (Storefront usually doesn't need this for basic display)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
+// ⬆️ COMMENTED OUT ⬆️
 
 
 // Add custom class to product title in shop loops
@@ -321,4 +306,24 @@ add_action('wp_ajax_nopriv_get_cart_count', 'return_cart_count');
 function return_cart_count()
 {
     wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
+}
+
+
+// Disable WooCommerce gallery assets (Flexslider, Photoswipe)
+add_action('wp_enqueue_scripts', 'plantground_disable_woocommerce_gallery', 99);
+function plantground_disable_woocommerce_gallery()
+{
+    if (is_product()) {
+        wp_dequeue_script('wc-single-product'); // This loads gallery JS
+        // Note: Only do this if you're replacing ALL gallery functionality
+    }
+}
+
+
+// Add custom class to product summary container
+add_filter('woocommerce_product_summary_classes', 'plantground_add_custom_summary_class', 10, 1);
+function plantground_add_custom_summary_class($classes)
+{
+    $classes[] = 'single-product__info'; // your unique class
+    return $classes;
 }

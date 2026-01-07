@@ -64,7 +64,7 @@
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
           <span class="cart-label">
-            Cart (<span id="cart-count-number"><?php echo (int) WC()->cart->get_cart_contents_count(); ?></span>)
+            (<span id="cart-count-number"><?php echo (int) WC()->cart->get_cart_contents_count(); ?></span>)
           </span>
         </div>
       </a>
