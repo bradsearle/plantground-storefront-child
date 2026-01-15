@@ -31,8 +31,8 @@ if (empty($gallery_image_ids)) {
     <?php endforeach; ?>
 
     <!-- Modal (for later use) -->
-    <div id="custom-gallery-modal" class="gallery-modal">
+    <!-- <div id="custom-gallery-modal" class="gallery-modal">
         <span class="modal-close">&times;</span>
         <img class="modal-image" src="" alt="">
-    </div>
+    </div> -->
 </div>

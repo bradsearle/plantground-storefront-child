@@ -309,16 +309,6 @@ function return_cart_count()
 }
 
 
-// Disable WooCommerce gallery assets (Flexslider, Photoswipe)
-add_action('wp_enqueue_scripts', 'plantground_disable_woocommerce_gallery', 99);
-function plantground_disable_woocommerce_gallery()
-{
-    if (is_product()) {
-        wp_dequeue_script('wc-single-product'); // This loads gallery JS
-        // Note: Only do this if you're replacing ALL gallery functionality
-    }
-}
-
 
 // Add custom class to product summary container
 add_filter('woocommerce_product_summary_classes', 'plantground_add_custom_summary_class', 10, 1);
@@ -326,4 +316,102 @@ function plantground_add_custom_summary_class($classes)
 {
     $classes[] = 'single-product__info'; // your unique class
     return $classes;
+}
+
+
+
+/**
+ * Hide the featured image on single product pages,
+ * but keep it for shop/homepage grids.
+ */
+add_filter('woocommerce_single_product_image_thumbnail_html', 'plantground_hide_featured_on_single_product', 10, 2);
+function plantground_hide_featured_on_single_product($html, $attachment_id)
+{
+    global $product;
+
+    if (!is_product() || !$product) {
+        return $html;
+    }
+
+    // Get all gallery image IDs (these are explicitly added to the product gallery)
+    $gallery_ids = $product->get_gallery_image_ids();
+
+    // If this attachment is NOT in the gallery, it's the featured image → hide it
+    if (!in_array($attachment_id, $gallery_ids)) {
+        return ''; // suppress output
+    }
+
+    return $html;
+}
+
+// Disable gallery thumbnails (but keep all gallery images as main)
+add_filter('woocommerce_single_product_image_gallery_classes', '__return_empty_array');
+
+
+/**
+ * Replace WooCommerce default gallery with a clean, clickable image list + modal
+ */
+
+// 1. Remove default gallery
+remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+
+// 2. Add our custom gallery
+add_action('woocommerce_before_single_product_summary', 'plantground_custom_simple_gallery', 20);
+
+function plantground_custom_simple_gallery()
+{
+    global $product;
+
+    if (!is_product() || !$product) return;
+
+    // Get gallery image IDs (featured image is NOT included here)
+    $gallery_ids = $product->get_gallery_image_ids();
+
+    // If no gallery, fall back to featured image (for safety)
+    if (empty($gallery_ids)) {
+        $featured_id = get_post_thumbnail_id();
+        if ($featured_id) {
+            $gallery_ids = [$featured_id];
+        } else {
+            echo '<p>No images available.</p>';
+            return;
+        }
+    }
+
+    // Get full-size URLs and alt text
+    $images = [];
+    foreach ($gallery_ids as $id) {
+        $url = wp_get_attachment_image_url($id, 'full');
+        $alt = get_post_meta($id, '_wp_attachment_image_alt', true) ?: $product->get_name();
+        $images[] = [
+            'url' => esc_url($url),
+            'alt' => esc_attr($alt)
+        ];
+    }
+
+    if (empty($images)) return;
+
+    // Output gallery images
+    echo '<div class="plantground-product-gallery" data-gallery="' . esc_attr(json_encode($images)) . '">';
+
+    foreach ($images as $index => $img) {
+        printf(
+            '<img src="%s" alt="%s" class="plantground-gallery-image" data-index="%d">',
+            $img['url'],
+            $img['alt'],
+            $index
+        );
+    }
+
+    echo '</div>';
+
+    // Modal container (hidden by default)
+?>
+    <div id="plantground-image-modal" class="plantground-modal" style="display:none;">
+        <span class="plantground-modal-close">&times;</span>
+        <button class="plantground-modal-nav plantground-modal-prev">&#8249;</button>
+        <img id="plantground-modal-image" src="" alt="">
+        <button class="plantground-modal-nav plantground-modal-next">&#8250;</button>
+    </div>
+<?php
 }
