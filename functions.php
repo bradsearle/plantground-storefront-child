@@ -415,3 +415,17 @@ function plantground_custom_simple_gallery()
     </div>
 <?php
 }
+
+// Remove tabs, show description directly under summary
+remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+add_action('woocommerce_single_product_summary', 'plantground_show_description_directly', 25);
+
+function plantground_show_description_directly()
+{
+    global $post;
+    if ($post->post_content) {
+        echo '<div class="product-long-description">';
+        echo apply_filters('the_content', $post->post_content);
+        echo '</div>';
+    }
+}

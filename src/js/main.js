@@ -35,3 +35,6 @@ if (document.readyState === 'loading') {
 } else {
   initApp();
 }
+
+document.body.classList.remove('woocommerce-no-js');
+document.body.classList.add('woocommerce-js');
