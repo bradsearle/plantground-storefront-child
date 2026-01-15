@@ -7,18 +7,36 @@
 // Enqueue child theme styles and scripts
 function plantground_child_enqueue_assets()
 {
+    // --- FIX: Deregister WordPress’s old cached jQuery so dependent scripts never get stuck in mobile cache ---
     wp_deregister_script('jquery');
     wp_register_script('jquery', includes_url('/js/jquery/jquery.min.js'), array(), null, true);
 
+    // Paths to compiled assets
     $main_style_path = get_stylesheet_directory() . '/dist/main.css';
     $script_path     = get_stylesheet_directory() . '/dist/main.js';
 
+    // Version numbers based on file modification time (mobile cache busting)
     $main_style_version = file_exists($main_style_path) ? filemtime($main_style_path) : wp_get_theme()->get('Version');
     $script_version     = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 
-    wp_enqueue_style('plantground-child-style', get_stylesheet_directory_uri() . '/dist/main.css', array(), $main_style_version);
-    wp_enqueue_script('plantground-child-main-js', get_stylesheet_directory_uri() . '/dist/main.js', array('jquery'), $script_version, true);
+    // Enqueue compiled main Sass CSS
+    wp_enqueue_style(
+        'plantground-child-style',
+        get_stylesheet_directory_uri() . '/dist/main.css',
+        array(),
+        $main_style_version
+    );
 
+    // Enqueue compiled main JS (includes preloader, filters, nav, etc.)
+    wp_enqueue_script(
+        'plantground-child-main-js',
+        get_stylesheet_directory_uri() . '/dist/main.js',
+        array('jquery'),
+        $script_version,
+        true
+    );
+
+    // Localize script for AJAX endpoint
     wp_localize_script('plantground-child-main-js', 'plantground_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php')
     ));
@@ -33,11 +51,13 @@ function plantground_override_storefront_header()
 }
 add_action('after_setup_theme', 'plantground_override_storefront_header');
 
-// Move "Add to cart" under the price
+// Move "Add to cart" under the price on the single product page
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
 add_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 11);
 
-// === AJAX handler for product filtering + sort ===
+// ====================================================================================
+// === AJAX handler for product filtering + sort
+// ====================================================================================
 add_action('wp_ajax_plantground_filter_products', 'plantground_filter_products_handler');
 add_action('wp_ajax_nopriv_plantground_filter_products', 'plantground_filter_products_handler');
 
@@ -107,18 +127,26 @@ function plantground_filter_products_handler()
     woocommerce_result_count();
     $result_count_html = ob_get_clean();
 
-    wp_send_json(array(
-        'productsHtml'    => $products_html,
-        'resultCountHtml' => $result_count_html
-    ));
+    $response = array(
+        'productsHtml'     => $products_html,
+        'resultCountHtml'  => $result_count_html
+    );
+
+    wp_send_json($response);
     wp_die();
 }
 
-// === Custom sort and result count renderers ===
+// ====================================================================================
+// === Custom sort and result count renderers
+// ====================================================================================
+
 function plantground_render_bare_sort_select()
 {
     $orderby = isset($_GET['orderby']) ? wc_clean(wp_unslash($_GET['orderby'])) :
-        apply_filters('woocommerce_default_catalog_orderby', get_option('woocommerce_default_catalog_orderby'));
+        apply_filters(
+            'woocommerce_default_catalog_orderby',
+            get_option('woocommerce_default_catalog_orderby')
+        );
 
     $catalog_orderby_options = apply_filters('woocommerce_catalog_orderby', array(
         'menu_order' => __('Default sorting', 'woocommerce'),
@@ -151,7 +179,8 @@ function plantground_render_bare_result_count()
 // === Cart fragments ===
 function plantground_cart_count_fragment($fragments)
 {
-    $fragments['.header__cart-count'] = '<span class="header__cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
+    $fragments['.header__cart-count'] =
+        '<span class="header__cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_cart_count_fragment');
@@ -173,26 +202,89 @@ function plantground_custom_cart_fragment($fragments)
 add_filter('woocommerce_add_to_cart_fragments', 'plantground_custom_cart_fragment');
 
 /**
- * Wrap Title and Price in product__info (shop loop)
+ * Wrap only Title and Price in product__info
  */
 add_action('woocommerce_before_shop_loop_item_title', 'opening_product_info_div', 15);
 function opening_product_info_div()
 {
     echo '<div class="product__info">';
 }
+
 add_action('woocommerce_after_shop_loop_item_title', 'closing_product_info_div', 15);
 function closing_product_info_div()
 {
     echo '</div>';
 }
 
+// ====================================================================================
+// === CUSTOM PRODUCT GALLERY: Use first gallery image as main, hide featured image
+// ====================================================================================
+// ⬇️ COMMENTED OUT TO ALLOW WOOCOMMERCE TEMPLATE OVERRIDE TO LOAD ⬇️
+/*
+add_action('wp', 'plantground_replace_product_gallery');
+function plantground_replace_product_gallery()
+{
+    if (is_product()) {
+        remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+        add_action('woocommerce_before_single_product_summary', 'plantground_custom_product_gallery', 20);
+    }
+}
+
+function plantground_custom_product_gallery()
+{
+    global $product;
+
+    $gallery_ids = $product->get_gallery_image_ids();
+
+    // If no gallery, fall back to default (keeps shop working)
+    if (empty($gallery_ids)) {
+        woocommerce_show_product_images();
+        return;
+    }
+
+    // Define display width (match your CSS)
+    $display_width = 600;
+
+    echo '<div class="woocommerce-product-gallery">';
+
+    // Main image = first gallery image
+    $main_id = $gallery_ids[0];
+    echo wp_get_attachment_image($main_id, 'woocommerce_single', false, array(
+        'class'  => 'wp-post-image',
+        'sizes'  => '(max-width: ' . $display_width . 'px) 100vw, ' . $display_width . 'px',
+        'srcset' => wp_get_attachment_image_srcset($main_id, 'woocommerce_single'),
+        'alt'    => wp_get_attachment_caption($main_id) ?: $product->get_name(),
+    ));
+
+    // Thumbnails = remaining gallery images (skip first)
+    if (count($gallery_ids) > 1) {
+        echo '<div class="flex-control-thumbs">';
+        for ($i = 1; $i < count($gallery_ids); $i++) {
+            echo wp_get_attachment_image($gallery_ids[$i], 'shop_thumbnail', false, array(
+                'class' => 'thumb'
+            ));
+        }
+        echo '</div>';
+    }
+
+    echo '</div>';
+
+    // Optional: Re-init WooCommerce gallery JS if you use lightbox
+    // (Storefront usually doesn't need this for basic display)
+}
+*/
+// ⬆️ COMMENTED OUT ⬆️
+
+
 // Add custom class to product title in shop loops
 remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
 add_action('woocommerce_shop_loop_item_title', 'plantground_custom_product_title', 10);
+
 function plantground_custom_product_title()
 {
     echo '<h2 class="woocommerce-loop-product__title product__title">' . esc_html(get_the_title()) . '</h2>';
 }
+
 
 /**
  * Add 'single-product__container' class to product pages
@@ -206,30 +298,64 @@ function plantground_add_single_product_container_class($classes, $class, $post_
     return $classes;
 }
 
-// Cart count AJAX
+
+// Add this to your theme's functions.php
 add_action('wp_ajax_get_cart_count', 'return_cart_count');
 add_action('wp_ajax_nopriv_get_cart_count', 'return_cart_count');
+
 function return_cart_count()
 {
     wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
 }
 
-// Add custom class to product summary
+
+
+// Add custom class to product summary container
 add_filter('woocommerce_product_summary_classes', 'plantground_add_custom_summary_class', 10, 1);
 function plantground_add_custom_summary_class($classes)
 {
-    $classes[] = 'single-product__info';
+    $classes[] = 'single-product__info'; // your unique class
     return $classes;
 }
 
-// ====================================================================================
-// ✅ CUSTOM PRODUCT GALLERY (clean, no template override)
-// ====================================================================================
 
-// Remove default WooCommerce gallery
+
+/**
+ * Hide the featured image on single product pages,
+ * but keep it for shop/homepage grids.
+ */
+add_filter('woocommerce_single_product_image_thumbnail_html', 'plantground_hide_featured_on_single_product', 10, 2);
+function plantground_hide_featured_on_single_product($html, $attachment_id)
+{
+    global $product;
+
+    if (!is_product() || !$product) {
+        return $html;
+    }
+
+    // Get all gallery image IDs (these are explicitly added to the product gallery)
+    $gallery_ids = $product->get_gallery_image_ids();
+
+    // If this attachment is NOT in the gallery, it's the featured image → hide it
+    if (!in_array($attachment_id, $gallery_ids)) {
+        return ''; // suppress output
+    }
+
+    return $html;
+}
+
+// Disable gallery thumbnails (but keep all gallery images as main)
+add_filter('woocommerce_single_product_image_gallery_classes', '__return_empty_array');
+
+
+/**
+ * Replace WooCommerce default gallery with a clean, clickable image list + modal
+ */
+
+// 1. Remove default gallery
 remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
 
-// Add our clean gallery
+// 2. Add our custom gallery
 add_action('woocommerce_before_single_product_summary', 'plantground_custom_simple_gallery', 20);
 
 function plantground_custom_simple_gallery()
@@ -238,9 +364,10 @@ function plantground_custom_simple_gallery()
 
     if (!is_product() || !$product) return;
 
+    // Get gallery image IDs (featured image is NOT included here)
     $gallery_ids = $product->get_gallery_image_ids();
 
-    // If no gallery, fall back to featured image (so shop grid still works)
+    // If no gallery, fall back to featured image (for safety)
     if (empty($gallery_ids)) {
         $featured_id = get_post_thumbnail_id();
         if ($featured_id) {
@@ -251,6 +378,7 @@ function plantground_custom_simple_gallery()
         }
     }
 
+    // Get full-size URLs and alt text
     $images = [];
     foreach ($gallery_ids as $id) {
         $url = wp_get_attachment_image_url($id, 'full');
@@ -263,14 +391,21 @@ function plantground_custom_simple_gallery()
 
     if (empty($images)) return;
 
-    // Output clean gallery
+    // Output gallery images
     echo '<div class="plantground-product-gallery" data-gallery="' . esc_attr(json_encode($images)) . '">';
+
     foreach ($images as $index => $img) {
-        printf('<img src="%s" alt="%s" class="plantground-gallery-image" data-index="%d">', $img['url'], $img['alt'], $index);
+        printf(
+            '<img src="%s" alt="%s" class="plantground-gallery-image" data-index="%d">',
+            $img['url'],
+            $img['alt'],
+            $index
+        );
     }
+
     echo '</div>';
 
-    // Modal (will be styled via CSS + controlled by JS)
+    // Modal container (hidden by default)
 ?>
     <div id="plantground-image-modal" class="plantground-modal" style="display:none;">
         <span class="plantground-modal-close">&times;</span>
