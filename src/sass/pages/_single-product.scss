@@ -134,3 +134,47 @@
   object-fit: contain;
   user-select: none;
 }
+
+// OVERRIDE FOR THE GALLERY GRID
+.single-product div.product .plantground-product-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // 2 columns
+  gap: 15px; // spacing between images
+  flex: 0 0 55%; // Slightly wider than the summary for visual impact
+  height: max-content;
+
+  .plantground-gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 3 / 2; // Keeps all images perfectly aligned
+    margin-bottom: 0; // Remove the old margin
+    border-radius: 8px;
+    cursor: zoom-in;
+
+    // Make the very first image take up both columns
+    &:first-child {
+      grid-column: span 2;
+      aspect-ratio: 16 / 9; // Optional: Make the hero even wider/cinematic
+    }
+  }
+}
+
+// Mobile Adjustments
+@media (max-width: 1024px) {
+  .single-product div.product {
+    flex-direction: column; // Stack summary under gallery
+  }
+}
+
+@media (max-width: 768px) {
+  .single-product div.product .plantground-product-gallery {
+    grid-template-columns: 1fr; // Single column on mobile
+    gap: 10px;
+
+    .plantground-gallery-image:first-child {
+      grid-column: span 1;
+      aspect-ratio: 3 / 2; // Back to standard landscape
+    }
+  }
+}
