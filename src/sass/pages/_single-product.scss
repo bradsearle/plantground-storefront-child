@@ -1,194 +1,188 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-// OVERRIDE STOREFRONT'S DEFAULT PRODUCT LAYOUT
+// ====================================================================================
+// === 1. SINGLE PRODUCT LAYOUT
+// ====================================================================================
+
 .single-product {
   div.product {
-    // Kill Storefront's float-based layout
     float: none !important;
     width: 100% !important;
     display: flex !important;
-    flex-direction: row !important;
-    gap: 2rem;
+    flex-wrap: wrap !important;
+    flex-direction: row;
+    gap: 3rem;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 
-    // Ensure no child inherits float
     > * {
       float: none !important;
-      width: auto !important;
       min-width: 0;
     }
 
-    .plantground-product-gallery {
-      flex: 0 0 50%; // exactly 50%, no grow/shrink
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    // MOBILE HEADER
+    .pg-mobile-product-header {
+      display: none;
+      flex: 0 0 100%;
+      text-align: left;
+      margin-bottom: 1.5rem;
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+      }
+      .price {
+        font-size: 1.5rem;
+        color: #666;
+      }
     }
 
+    // GALLERY GRID
+    .plantground-product-gallery {
+      flex: 0 0 55%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+
+      .plantground-gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+        border-radius: 4px;
+        cursor: zoom-in;
+        transition: opacity 0.2s ease; // Only fade, no scaling
+
+        &:first-child {
+          grid-column: span 2;
+          aspect-ratio: 16 / 9;
+        }
+        &:hover {
+          opacity: 0.8;
+          transform: none !important; // Absolute kill on GSAP/CSS scaling
+        }
+      }
+    }
+
+    // SUMMARY CONTENT
     .summary.entry-summary {
-      flex: 0 0 50%; // exactly 50%
-      // Prevent inner content from overflowing
-      > * {
-        max-width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .product-long-description {
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+    }
+
+    // RELATED PRODUCTS
+    .upsells.products,
+    .related.products {
+      flex: 0 0 100% !important;
+      margin-top: 5rem;
+      border-top: 1px solid #eee;
+      padding-top: 3rem;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    div.product {
+      flex-direction: column !important;
+      .pg-mobile-product-header {
+        display: block;
+        order: 1;
+      }
+      .plantground-product-gallery {
+        order: 2;
+        flex: 0 0 100%;
+      }
+      .summary.entry-summary {
+        order: 3;
+        flex: 0 0 100%;
+        .product_title,
+        .price {
+          display: none !important;
+        }
       }
     }
   }
-
-  // Mobile: stack
-  @media (max-width: 768px) {
-    div.product {
-      flex-direction: column;
-    }
-    div.product .plantground-product-gallery,
-    div.product .summary.entry-summary {
-      flex: 0 0 100%;
-    }
-  }
 }
 
-// // #single-product-wrapper {
-// //   background-color: $light-grey-color !important;
-// //   padding: 0 50px;
-// // }
+// ====================================================================================
+// === 2. MODAL SYSTEM (Dark Theme)
+// ====================================================================================
 
-// .single-product div.product {
-//   margin-top: 100px;
-// }
-// .single-product__container {
-//   @include container-sml;
-// }
-// .custom-product-gallery img {
-//   border-radius: 0 !important;
-// }
-// .single-product__info {
-//   margin-left: 22px;
-// }
-// /* Desktop: 50/50 using YOUR class */
-// @media (min-width: 768px) {
-//   .single-product div.product {
-//     display: flex !important;
-//   }
-
-//   /* Hide WooCommerce's default layout behavior */
-//   .single-product div.product > .images,
-//   .single-product div.product > .summary.entry-summary {
-//     width: auto !important;
-//     float: none !important;
-//     margin: 0 !important;
-//   }
-
-//   /* Promote YOUR gallery to 50% */
-//   .custom-product-gallery {
-//     width: 50% !important;
-//     flex: 0 0 50% !important;
-//   }
-
-//   /* Keep summary at 50% */
-//   .summary.entry-summary {
-//     width: 50% !important;
-//     flex: 0 0 50% !important;
-//   }
-// }
-
-// /* Mobile: full width */
-// @media (max-width: 767px) {
-//   .custom-product-gallery,
-//   .summary.entry-summary {
-//     width: 100% !important;
-//     flex: 0 0 100% !important;
-//   }
-// }
-
-// /* Ensure short description lives inside padded container */
-// .woocommerce-product-details__short-description {
-//   margin: 0 !important;
-//   padding: 0 !important;
-//   width: 100% !important;
-//   max-width: 100% !important;
-//   box-sizing: border-box !important;
-// }
-
-// /* Reset paragraph inside it */
-// .woocommerce-product-details__short-description p {
-//   margin: 0 !important;
-//   padding: 0 !important;
-//   line-height: 1.6;
-// }
-
-// .single-product .entry-summary .woocommerce-product-details__short-description {
-//   margin: 0 !important;
-//   padding: 0 !important;
-//   width: 100%;
-// }
-
-.plantground-gallery-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.plantground-gallery-image:hover {
-  opacity: 0.9;
-}
-
-/* Modal */
 .plantground-modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95); // Dark background, no white
+  display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 999999;
+  cursor: zoom-out;
+
+  .plantground-modal-content {
+    background: transparent !important; // Kill any white containers
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  &-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    line-height: 1;
+    z-index: 10;
+  }
+
+  &-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 50px;
+    padding: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &-prev {
+    left: 20px;
+  }
+  &-next {
+    right: 20px;
+  }
 }
 
-.plantground-modal img {
-  max-width: 90vw;
-  max-height: 90vh;
-  object-fit: contain;
-  border: 2px solid white;
-}
-
-.plantground-modal-close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  color: white;
-  font-size: 40px;
-  cursor: pointer;
-  line-height: 1;
-}
-
-.plantground-modal-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: none;
-  font-size: 30px;
-  padding: 10px 15px;
-  cursor: pointer;
-  backdrop-filter: blur(2px);
-}
-
-.plantground-modal-prev {
-  left: 20px;
-}
-.plantground-modal-next {
-  right: 20px;
-}
-
-.plantground-modal-nav:hover {
-  background: rgba(255, 255, 255, 0.3);
+body.modal-open {
+  overflow: hidden;
 }

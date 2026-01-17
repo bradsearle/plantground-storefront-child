@@ -111,10 +111,13 @@ function plantground_filter_products_handler()
 
     ob_start();
     if ($query->have_posts()) {
+        // WRAPPER FIX: Ensures your grid stays as a UL with WooCommerce classes
+        echo '<ul class="products columns-3">';
         while ($query->have_posts()) {
             $query->the_post();
             wc_get_template_part('content', 'product');
         }
+        echo '</ul>';
     } else {
         echo '<p>No products found.</p>';
     }
@@ -216,66 +219,6 @@ function closing_product_info_div()
     echo '</div>';
 }
 
-// ====================================================================================
-// === CUSTOM PRODUCT GALLERY: Use first gallery image as main, hide featured image
-// ====================================================================================
-// ⬇️ COMMENTED OUT TO ALLOW WOOCOMMERCE TEMPLATE OVERRIDE TO LOAD ⬇️
-/*
-add_action('wp', 'plantground_replace_product_gallery');
-function plantground_replace_product_gallery()
-{
-    if (is_product()) {
-        remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
-        add_action('woocommerce_before_single_product_summary', 'plantground_custom_product_gallery', 20);
-    }
-}
-
-function plantground_custom_product_gallery()
-{
-    global $product;
-
-    $gallery_ids = $product->get_gallery_image_ids();
-
-    // If no gallery, fall back to default (keeps shop working)
-    if (empty($gallery_ids)) {
-        woocommerce_show_product_images();
-        return;
-    }
-
-    // Define display width (match your CSS)
-    $display_width = 600;
-
-    echo '<div class="woocommerce-product-gallery">';
-
-    // Main image = first gallery image
-    $main_id = $gallery_ids[0];
-    echo wp_get_attachment_image($main_id, 'woocommerce_single', false, array(
-        'class'  => 'wp-post-image',
-        'sizes'  => '(max-width: ' . $display_width . 'px) 100vw, ' . $display_width . 'px',
-        'srcset' => wp_get_attachment_image_srcset($main_id, 'woocommerce_single'),
-        'alt'    => wp_get_attachment_caption($main_id) ?: $product->get_name(),
-    ));
-
-    // Thumbnails = remaining gallery images (skip first)
-    if (count($gallery_ids) > 1) {
-        echo '<div class="flex-control-thumbs">';
-        for ($i = 1; $i < count($gallery_ids); $i++) {
-            echo wp_get_attachment_image($gallery_ids[$i], 'shop_thumbnail', false, array(
-                'class' => 'thumb'
-            ));
-        }
-        echo '</div>';
-    }
-
-    echo '</div>';
-
-    // Optional: Re-init WooCommerce gallery JS if you use lightbox
-    // (Storefront usually doesn't need this for basic display)
-}
-*/
-// ⬆️ COMMENTED OUT ⬆️
-
-
 // Add custom class to product title in shop loops
 remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
 add_action('woocommerce_shop_loop_item_title', 'plantground_custom_product_title', 10);
@@ -284,7 +227,6 @@ function plantground_custom_product_title()
 {
     echo '<h2 class="woocommerce-loop-product__title product__title">' . esc_html(get_the_title()) . '</h2>';
 }
-
 
 /**
  * Add 'single-product__container' class to product pages
@@ -298,134 +240,93 @@ function plantground_add_single_product_container_class($classes, $class, $post_
     return $classes;
 }
 
-
-// Add this to your theme's functions.php
+// AJAX: Cart Count helper
 add_action('wp_ajax_get_cart_count', 'return_cart_count');
 add_action('wp_ajax_nopriv_get_cart_count', 'return_cart_count');
-
 function return_cart_count()
 {
     wp_send_json(['count' => WC()->cart->get_cart_contents_count()]);
 }
 
-
-
 // Add custom class to product summary container
 add_filter('woocommerce_product_summary_classes', 'plantground_add_custom_summary_class', 10, 1);
 function plantground_add_custom_summary_class($classes)
 {
-    $classes[] = 'single-product__info'; // your unique class
+    $classes[] = 'single-product__info';
     return $classes;
 }
 
+// ====================================================================================
+// === SINGLE PRODUCT PAGE CUSTOMIZATIONS (Step-by-Step Hooks)
+// ====================================================================================
 
-
-/**
- * Hide the featured image on single product pages,
- * but keep it for shop/homepage grids.
- */
-add_filter('woocommerce_single_product_image_thumbnail_html', 'plantground_hide_featured_on_single_product', 10, 2);
-function plantground_hide_featured_on_single_product($html, $attachment_id)
+add_action('wp', 'plantground_apply_single_product_changes');
+function plantground_apply_single_product_changes()
 {
-    global $product;
+    if (!is_product()) return;
 
-    if (!is_product() || !$product) {
-        return $html;
-    }
+    // 1. Mobile-only header (Title/Price at top)
+    add_action('woocommerce_before_single_product_summary', 'plantground_mobile_header_html', 5);
 
-    // Get all gallery image IDs (these are explicitly added to the product gallery)
-    $gallery_ids = $product->get_gallery_image_ids();
+    // 2. Custom Gallery (Replace default)
+    remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+    add_action('woocommerce_before_single_product_summary', 'plantground_custom_simple_gallery', 20);
 
-    // If this attachment is NOT in the gallery, it's the featured image → hide it
-    if (!in_array($attachment_id, $gallery_ids)) {
-        return ''; // suppress output
-    }
-
-    return $html;
+    // 3. Remove Tabs, show description directly
+    remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+    add_action('woocommerce_single_product_summary', 'plantground_show_description_directly', 25);
 }
 
-// Disable gallery thumbnails (but keep all gallery images as main)
-add_filter('woocommerce_single_product_image_gallery_classes', '__return_empty_array');
+// Mobile Header HTML
+function plantground_mobile_header_html()
+{
+    global $product;
+    echo '<div class="pg-mobile-product-header">';
+    echo '<h1 class="product_title">' . get_the_title() . '</h1>';
+    echo '<p class="price">' . $product->get_price_html() . '</p>';
+    echo '</div>';
+}
 
-
-/**
- * Replace WooCommerce default gallery with a clean, clickable image list + modal
- */
-
-// 1. Remove default gallery
-remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
-
-// 2. Add our custom gallery
-add_action('woocommerce_before_single_product_summary', 'plantground_custom_simple_gallery', 20);
-
+// Custom Simple Gallery HTML
 function plantground_custom_simple_gallery()
 {
     global $product;
-
-    if (!is_product() || !$product) return;
-
-    // Get gallery image IDs (featured image is NOT included here)
     $gallery_ids = $product->get_gallery_image_ids();
-
-    // If no gallery, fall back to featured image (for safety)
     if (empty($gallery_ids)) {
-        $featured_id = get_post_thumbnail_id();
-        if ($featured_id) {
-            $gallery_ids = [$featured_id];
-        } else {
-            echo '<p>No images available.</p>';
-            return;
-        }
+        $gallery_ids = [get_post_thumbnail_id()];
     }
 
-    // Get full-size URLs and alt text
     $images = [];
     foreach ($gallery_ids as $id) {
         $url = wp_get_attachment_image_url($id, 'full');
         $alt = get_post_meta($id, '_wp_attachment_image_alt', true) ?: $product->get_name();
-        $images[] = [
-            'url' => esc_url($url),
-            'alt' => esc_attr($alt)
-        ];
+        $images[] = ['url' => esc_url($url), 'alt' => esc_attr($alt)];
     }
 
-    if (empty($images)) return;
-
-    // Output gallery images
     echo '<div class="plantground-product-gallery" data-gallery="' . esc_attr(json_encode($images)) . '">';
-
     foreach ($images as $index => $img) {
-        printf(
-            '<img src="%s" alt="%s" class="plantground-gallery-image" data-index="%d">',
-            $img['url'],
-            $img['alt'],
-            $index
-        );
+        printf('<img src="%s" alt="%s" class="plantground-gallery-image" data-index="%d">', $img['url'], $img['alt'], $index);
     }
-
     echo '</div>';
+}
 
-    // Modal container (hidden by default)
-?>
+// Modal in Footer (Only for single product pages)
+add_action('wp_footer', function () {
+    if (!is_product()) return; ?>
     <div id="plantground-image-modal" class="plantground-modal" style="display:none;">
         <span class="plantground-modal-close">&times;</span>
         <button class="plantground-modal-nav plantground-modal-prev">&#8249;</button>
-        <img id="plantground-modal-image" src="" alt="">
+        <div class="plantground-modal-content">
+            <img id="plantground-modal-image" src="" alt="">
+        </div>
         <button class="plantground-modal-nav plantground-modal-next">&#8250;</button>
     </div>
-<?php
-}
-
-// Remove tabs, show description directly under summary
-remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
-add_action('woocommerce_single_product_summary', 'plantground_show_description_directly', 25);
+<?php });
 
 function plantground_show_description_directly()
 {
     global $post;
     if ($post->post_content) {
-        echo '<div class="product-long-description">';
-        echo apply_filters('the_content', $post->post_content);
-        echo '</div>';
+        echo '<div class="product-long-description">' . apply_filters('the_content', $post->post_content) . '</div>';
     }
 }
