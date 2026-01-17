@@ -29,7 +29,7 @@ $hero-height-desktop: 300px;
   display: block;
   letter-spacing: 0.05rem; // Just enough to make it feel airy
   line-height: 1.1; // Keeps the three words vertically tight
-  @include type; // Inherits your specific typeface from your mixin
+  @include type;
   font-size: 1.88rem !important;
   padding-left: 1.25rem !important;
   padding-top: 88px !important; // Flexbox handles the vertical positioning now

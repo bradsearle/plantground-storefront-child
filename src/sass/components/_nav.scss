@@ -83,6 +83,7 @@ nav.hidden {
 
 .nav__info-bar {
   width: 100%;
+  display: none !important;
   height: 22px;
   // background-color: darken($brand-green, 5%);
   // background-color: #006a3e;

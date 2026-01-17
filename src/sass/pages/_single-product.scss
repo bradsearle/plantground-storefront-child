@@ -5,7 +5,6 @@
 // === 1. GLOBAL RESET & SHARP EDGES
 // ====================================================================================
 
-// Ensures all images across the product page have 0 border-radius
 img,
 .wp-post-image,
 .plantground-gallery-image,
@@ -15,7 +14,6 @@ img,
   border-radius: 0 !important;
 }
 
-// Global container margin to clear the sticky nav
 .single-product__container {
   margin-top: 200px !important;
 }
@@ -23,6 +21,10 @@ img,
 // ====================================================================================
 // === 2. SINGLE PRODUCT LAYOUT (Desktop)
 // ====================================================================================
+
+.product_title {
+  @include type;
+}
 
 .single-product {
   div.product {
@@ -44,10 +46,8 @@ img,
     p.price,
     span.price,
     p.price .amount {
-      font-size: 1.25rem !important;
+      @include type;
       margin: 0 !important;
-      color: #333 !important;
-      font-weight: 600 !important;
       display: block;
 
       .woocommerce-Price-currencySymbol {
@@ -65,23 +65,21 @@ img,
       margin-bottom: 1.5rem;
 
       h1 {
-        font-size: 2rem;
+        @include type;
         margin-bottom: 5px;
-        text-transform: uppercase;
       }
 
       .price {
-        font-size: 1.5rem !important;
-        color: #666;
+        @include type;
       }
     }
 
-    // --- GALLERY GRID (Desktop 3/2 Landscape) ---
+    // --- GALLERY GRID ---
     .plantground-product-gallery {
       flex: 0 0 55%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 0.25rem;
 
       .plantground-gallery-image {
         width: 100%;
@@ -104,8 +102,8 @@ img,
       flex-direction: column;
 
       .product-long-description {
+        @include type;
         margin-top: 1rem;
-        line-height: 1.6;
       }
     }
 
@@ -116,6 +114,10 @@ img,
       margin-top: 5rem;
       border-top: 1px solid #eee;
       padding-top: 3rem;
+
+      h2 {
+        @include type;
+      }
     }
   }
 
@@ -127,37 +129,33 @@ img,
       flex-direction: column !important;
       gap: 0 !important;
 
-      // 1. Title/Price at top
       .pg-mobile-product-header {
         display: block !important;
         order: 1 !important;
         padding: 0 1.25rem 1.5rem;
 
         h1 {
-          font-size: 1.75rem;
-          line-height: 1.1;
+          @include type;
         }
       }
 
-      // 2. Images stacked with taller ratios
       .plantground-product-gallery {
         order: 2 !important;
         display: flex !important;
         flex-direction: column;
-        gap: 0; // Flush images
+
         width: 100%;
 
         .plantground-gallery-image {
           width: 100% !important;
-          aspect-ratio: 1 / 1 !important; // Square
+          aspect-ratio: 1 / 1 !important;
 
           &:first-child {
-            aspect-ratio: 4 / 5 !important; // Tall Hero
+            aspect-ratio: 4 / 5 !important;
           }
         }
       }
 
-      // 3. Summary Area
       .summary.entry-summary {
         order: 3 !important;
         padding: 2rem 1.25rem;
@@ -167,26 +165,21 @@ img,
           display: none !important;
         }
 
-        // --- THE CART FORM ---
         form.cart {
+          // Standard/Docked State
           display: flex;
           justify-content: center;
-          margin: 2rem 0;
 
-          // Standard docked state
           button.single_add_to_cart_button {
+            @include type;
             width: 300px !important;
             height: 55px;
             background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
             color: #fff;
             border: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: none; // Snap logic, no transition
           }
 
-          // THE FIXED "FLUSH OVER GALLERY" STATE (Triggered via JS)
+          // Fixed State
           &.is-fixed-mobile {
             position: fixed;
             bottom: 0;
@@ -194,35 +187,42 @@ img,
             width: 100%;
             margin: 0;
             padding: 0;
-            background: transparent;
             z-index: 9999;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
 
             .quantity {
-              display: none !important; // Remove quantity while fixed
+              display: none !important;
             }
 
             button.single_add_to_cart_button {
+              @include type;
               width: 100% !important;
-              max-width: 100%;
-              height: 65px; // Slightly taller for mobile thumb
-              box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1); // Soft lift over images
+              max-width: 100% !important;
+              height: 65px;
+              margin: 0 !important;
+              text-align: center !important;
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+              box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+              background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
             }
           }
         }
       }
 
-      // 4. Related Products
-      .upsells.products,
       .related.products {
         order: 4 !important;
-        padding: 3rem 1.25rem 5rem; // Extra bottom padding for button clearance
+        padding: 3rem 1.25rem 5rem;
       }
     }
   }
 }
 
 // ====================================================================================
-// === 4. MODAL SYSTEM (Dark Theme)
+// === 4. MODAL SYSTEM
 // ====================================================================================
 
 .plantground-modal {
