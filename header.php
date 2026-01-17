@@ -28,7 +28,7 @@
     <!-- Preloader Overlay -->
     <div id="pg-preloader" class="pg-preloader">
       <div class="pg-preloader__inner">
-        <div class="pg-preloader__logo ">Plantground</div>
+        <div class="pg-preloader__logo ">plantground</div>
         <!-- <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-fff.svg"
           alt="Plantground Logo"
           class="pg-preloader__logo" /> -->

@@ -108,7 +108,7 @@ img,
           aspect-ratio: 16 / 9;
         }
         &:hover {
-          opacity: 0.8;
+          // opacity: 0.8;
           transform: none !important;
         }
       }
@@ -235,4 +235,40 @@ img,
 
 body.modal-open {
   overflow: hidden;
+}
+
+// --- MOBILE RESPONSIVE ---
+@media (max-width: 1024px) {
+  div.product {
+    display: flex !important; // Ensure flex is active
+    flex-direction: column !important;
+
+    .pg-mobile-product-header {
+      display: block;
+      order: 1; // 1. Title and Price
+    }
+
+    .plantground-product-gallery {
+      display: grid; // Keep your grid internal layout
+      order: 2; // 2. The Images
+      flex: 0 0 100%;
+    }
+
+    .summary.entry-summary {
+      order: 3; // 3. Add to Cart & Description
+      flex: 0 0 100%;
+      .product_title,
+      .price {
+        display: none !important; // Hide redundant desktop titles
+      }
+    }
+
+    // This targets the Related Products / Upsells
+    .upsells.products,
+    .related.products {
+      order: 4; // 4. Related products move to the bottom
+      margin-top: 3rem;
+      padding-top: 2rem;
+    }
+  }
 }

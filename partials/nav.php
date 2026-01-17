@@ -27,7 +27,7 @@
       <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
       <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
         <div class="nav-logo__inner nav-logo__img">
-          Plantground
+          plantground
           <!-- <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
           alt="Plantground Logo"

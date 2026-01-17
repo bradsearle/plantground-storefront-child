@@ -2,7 +2,7 @@
 @use '../abstracts/mixins' as *;
 
 // Fixed Heights for stability (Replaces vh)
-$hero-height-mobile: 120px;
+$hero-height-mobile: 220px;
 $hero-height-tablet: 420px;
 $hero-height-desktop: 300px;
 
@@ -32,7 +32,7 @@ $hero-height-desktop: 300px;
   @include type; // Inherits your specific typeface from your mixin
   font-size: 1.88rem !important;
   padding-left: 1.25rem !important;
-  padding-top: 0 !important; // Flexbox handles the vertical positioning now
+  padding-top: 88px !important; // Flexbox handles the vertical positioning now
   margin: 0;
   // REMOVED uppercase line - it will now follow exactly how you type it in HTML
   z-index: 20;
