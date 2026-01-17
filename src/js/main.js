@@ -1,11 +1,7 @@
 // /assets/js/main.js
 
 import '../sass/main.scss';
-
-// 1. Side-effect import (This runs the menu code immediately)
-import './fullscreen-menu.js';
-
-// 2. Named imports for your other features
+import './fullscreen-menu.js'; // ← no destructuring, no function call
 import { gsap } from 'gsap';
 import { initFilters } from './filters.js';
 import { initPreloader } from './preloader.js';
@@ -14,9 +10,14 @@ import infoBar from './info-bar.js';
 import { initNavScroll } from './nav.js';
 import { initCustomSelect } from './custom-select.js';
 import { initCartCount } from './cart-count.js';
+
+// ✅ Only ONE import for the gallery modal
 import { initProductGalleryModal } from './product-gallery-modal.js';
 
-// 3. Initialize everything
+// ... other imports ...
+import { initFullscreenMenu } from './fullscreen-menu.js';
+
+// Run DOM-dependent features
 function initApp() {
   initFilters();
   removeStickyBar();
@@ -26,8 +27,7 @@ function initApp() {
   initCustomSelect();
   initCartCount();
 
-  // This starts the modal logic we built
-  initProductGalleryModal();
+  initProductGalleryModal(); // ← runs on all pages, but safely exits if no gallery
 }
 
 if (document.readyState === 'loading') {
