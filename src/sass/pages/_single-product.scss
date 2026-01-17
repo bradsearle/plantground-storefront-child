@@ -290,3 +290,15 @@ img,
 body.modal-open {
   overflow: hidden;
 }
+
+@media (max-width: 768px) {
+  .product_title {
+    font-size: 1.8em;
+  }
+  p.price,
+  span.price,
+  p.price .amount {
+    font-size: 0.888em;
+    font-weight: bold;
+  }
+}
