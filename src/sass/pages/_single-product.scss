@@ -31,9 +31,8 @@ img,
     flex-wrap: wrap !important;
     flex-direction: row;
     gap: 3rem;
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 20px;
 
     > * {
       float: none !important;
@@ -92,7 +91,7 @@ img,
       flex: 0 0 55%;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      gap: 6px;
 
       .plantground-gallery-image {
         width: 100%;
