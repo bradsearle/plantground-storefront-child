@@ -15,6 +15,9 @@
 /* ============================================== */
 
 /* Main Fixed Container (The actual fixed navigation bar) */
+#menu-toggle {
+  display: none;
+}
 .nav__flex {
   position: fixed;
   backdrop-filter: blur(30px);
@@ -60,9 +63,6 @@ nav.hidden {
 }
 
 /* Mobile menu toggle container (Hidden on desktop) */
-.nav__menu {
-  display: none;
-}
 
 /* === Nav Grid and Logo (Desktop) === */
 .nav__grid {
@@ -86,7 +86,11 @@ nav.hidden {
   height: 22px;
   // background-color: darken($brand-green, 5%);
   // background-color: #006a3e;
-  background-color: #000;
+  // Fallback for old browsers
+  background-color: #2e4d3e;
+
+  // The actual lush gradient
+  background: linear-gradient(90deg, #23955c 0%, #83a697 100%);
   color: #fff !important;
   font-family: 'Space Mono', monospace;
   font-size: 0.6875rem;
@@ -128,17 +132,6 @@ nav.hidden {
 .ship-date {
   color: #ff0 !important;
 }
-
-/* ============================================== */
-/* 3. COMPONENT: ACTIONS (Logo & Cart) */
-/* ============================================== */
-
-// .nav__actions {
-//   display: flex;
-//   align-items: center;
-//   gap: 16px;
-//   position: relative;
-// }
 
 .nav__logo {
   font-weight: 700;
@@ -193,36 +186,43 @@ nav.hidden {
 }
 
 /* ============================================== */
-/* 4. COMPONENT: MOBILE MENU TOGGLE BUTTON */
-/* ============================================== */
-
-.menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-
-  outline: none;
-  box-shadow: none;
-
-  position: relative;
-  width: 24px;
-  height: 24px;
-  color: #000;
-}
-
-.menu-toggle__icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-}
-
-/* ============================================== */
 /* 5. MEDIA QUERIES (Mobile Overrides) */
 /* ============================================== */
 
 @media (max-width: 768px) {
+  /* ============================================== */
+  /* 4. COMPONENT: MOBILE MENU TOGGLE BUTTON */
+  /* ============================================== */
+  #menu-toggle {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    outline: none;
+    box-shadow: none;
+
+    position: relative;
+    width: 24px;
+    height: 24px;
+    color: #000;
+  }
+
+  .menu-toggle__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+  }
+
+  // .nav__logo-desktop {
+  //   display: none;
+  // }
   .nav__cart-copy {
     display: none;
   }
@@ -253,8 +253,8 @@ nav.hidden {
     display: none;
   }
   .nav__info-bar {
-    font-size: 0.8875rem;
-    height: 32px;
+    font-size: 0.8275rem;
+    height: 26px;
   }
   .nav__grid {
     display: flex;
@@ -274,6 +274,7 @@ nav.hidden {
     margin: auto;
     transform: none;
     opacity: 1 !important;
+    margin-left: 8px;
 
     a,
     a:visited {

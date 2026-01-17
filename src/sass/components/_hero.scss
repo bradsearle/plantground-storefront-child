@@ -1,135 +1,92 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-$hero-height-mobile: 30vh;
-$hero-height-desktop: 30vh;
+// Fixed Heights for stability (Replaces vh)
+$hero-height-mobile: 120px;
+$hero-height-tablet: 420px;
+$hero-height-desktop: 300px;
+
 .shop__btn {
   display: none;
 }
 
 .custom-container {
-  padding: 0;
-  // display: none !important;
   width: 100%;
-  margin: 0;
+  // 200px space between the info bar and the H1
+  margin: 100px 0 0 0 !important;
   position: relative;
-  display: flow-root;
+  // Flex centering ensures the title is always centered in the hero-banner height
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
   @include container;
-  padding: 0 0;
-  //   background-color: #00a562;
-  // @include grid;
+  padding: 0;
   height: $hero-height-mobile;
-  min-height: 22rem;
-}
-.hero__title {
-  display: block;
-  font-size: 1.88rem !important;
-  @include type;
-  padding-left: 1.25rem !important;
-  padding-top: 200px;
+  min-height: $hero-height-mobile;
 }
 
-.hero__btn {
-  @include btn-rnd;
-  background-color: #000;
-  color: #fff;
-  border: 0;
-  position: relative;
-  z-index: 9999999999;
+.hero__title {
+  display: block;
+  letter-spacing: 0.05rem; // Just enough to make it feel airy
+  line-height: 1.1; // Keeps the three words vertically tight
+  @include type; // Inherits your specific typeface from your mixin
+  font-size: 1.88rem !important;
+  padding-left: 1.25rem !important;
+  padding-top: 0 !important; // Flexbox handles the vertical positioning now
+  margin: 0;
+  // REMOVED uppercase line - it will now follow exactly how you type it in HTML
+  z-index: 20;
 }
-.hero__copy {
-  grid-column: span 3;
-  align-items: center;
-  display: flex;
-  padding-top: 9.5rem;
-  padding-right: 22px;
-}
-.hero__copy-second {
-  grid-column: span 6;
-  align-items: center;
-  display: flex;
-  padding-top: 9.5rem;
-}
+
 .hero-banner {
   position: relative;
   width: 100%;
   overflow: hidden;
   margin-top: -1px;
-  padding-top: 15rem;
-  padding-left: 0rem;
   grid-column: span 3;
 
-  // Indented Bottom Border
   &::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 20px;
-    right: 20px;
+
     height: 1px;
-    // background-color: #ebe7e7;-120
-    left: 1.25rem;
-    right: 1.25rem;
+    background-color: #ebe7e7;
     z-index: 10;
   }
 
-  // Mobile: already uses $hero-height-mobile
-
-  // Tablet to large desktop: responsive height between 768px and 1400px
+  // Tablet to Desktop: Linear Shrink (420px down to 300px)
   @media (min-width: 768px) and (max-width: 1400px) {
-    // Linear interpolation: 420px at 768px → 620px at 1400px
-    height: calc(420px + (420 - 420) * ((100vw - 768px) / (1400 - 768)));
-
-    // Optional: ensure it doesn’t go below 420px or above 620px (safety)
-    // (calc above should stay in range, but this is extra protection)
-    min-height: $hero-height-mobile;
-    max-height: $hero-height-desktop;
+    height: calc(
+      #{$hero-height-tablet} + (#{$hero-height-desktop} - #{$hero-height-tablet}) *
+        ((100vw - 768px) / (1400 - 768))
+    );
 
     &::after {
-      left: 1.25rem;
-      right: 1.25rem;
     }
   }
 
-  // Large desktop (>1400px): fixed height
+  // Desktop Lock
   @media (min-width: 1401px) {
     height: $hero-height-desktop;
-
-    &::after {
-      left: 1.25rem;
-      right: 1.25rem;
-    }
-  }
-}
-@media (max-width: 1200px) {
-  .hero__copy {
-    display: inline-flex;
-  }
-  .custom-container {
-    display: inline-flex;
-  }
-  .hero__copy-second {
-    display: inline-flex;
   }
 }
 
+// Parallax Images
 .parallax-img {
   position: absolute;
-  /* Change from top: 50% to bottom: 0 */
   bottom: 0;
   top: auto;
   left: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Reset transform to only handle horizontal centering */
   transform: translateX(-50%);
   will-change: transform;
 }
 
 .parallax-img.mobile-img {
   display: block;
-
   @media (min-width: 768px) {
     display: none;
   }
@@ -137,61 +94,27 @@ $hero-height-desktop: 30vh;
 
 .parallax-img.desktop-img {
   display: none;
-
   @media (min-width: 768px) {
     display: block;
   }
 }
 
+// Mobile Overrides
 @media (max-width: 768px) {
+  .custom-container {
+    // Shorter margin for mobile so the user sees content sooner
+    margin-top: 100px !important;
+    height: $hero-height-mobile;
+    display: flex !important;
+    padding: 0;
+  }
+
   .hero__title {
-    // display: none !important;
-  }
-  .hero__btn {
-    @include btn-rnd;
-    background-color: #000;
-    color: #fff;
-    border: 0;
-    margin: auto;
-    margin-top: 15.9rem; // Your 200px offset (calculated as 200/16)
-    z-index: 9999;
-    display: flex !important;
+    font-size: 1.58rem !important;
   }
 
-  .shop__btn {
-    @include btn-rnd;
-    margin: auto;
-    z-index: 9999;
-    display: flex !important;
-  }
   .hero-banner {
-    padding-top: 9.5rem;
-    align-items: center;
-    padding-left: 0;
-  }
-  .hero__copy {
-    padding-top: 9.5rem;
-    padding-left: 0;
-  }
-  .custom-container {
-    margin-bottom: 0 !important;
-  }
-}
-
-@media (max-width: 667px) {
-  .hero__copy {
-    padding-top: 14.2rem;
-    padding-left: 0;
-  }
-  .custom-container {
-    display: block;
-    height: auto;
-  }
-  .hero-banner {
+    height: $hero-height-mobile;
     padding-top: 0;
-  }
-  .hero__copy-second {
-    padding-top: 0;
-    margin-top: -22px;
   }
 }

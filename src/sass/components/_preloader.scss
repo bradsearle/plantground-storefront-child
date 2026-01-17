@@ -19,6 +19,7 @@
 
 .pg-preloader__logo {
   max-width: 260px;
+
   display: block;
   opacity: 0; // start hidden
   transform: translateY(0); // GSAP will slide this upward
@@ -63,5 +64,6 @@ body.pg-content-hidden .nav__info-bar {
 @media (max-width: 768px) {
   .pg-preloader__logo {
     width: 130px;
+    margin-left: 8px;
   }
 }

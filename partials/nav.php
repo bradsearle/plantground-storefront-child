@@ -25,18 +25,19 @@
 
       <!-- Fullscreen overlay (initially hidden) -->
       <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
-
-    </div>
-
-    <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
-      <div class="nav-logo__inner nav-logo__img">
-        Plantground
-        <!-- <img
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo">
+        <div class="nav-logo__inner nav-logo__img">
+          Plantground
+          <!-- <img
           src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-000.svg"
           alt="Plantground Logo"
           class="nav-logo__img" /> -->
-      </div>
-    </a>
+        </div>
+      </a>
+
+    </div>
+
+
 
     <?php
     $count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
