@@ -3,6 +3,14 @@
 .home h1.entry-title .woocommerce-products-header__title {
   display: none !important;
 }
+img,
+.wp-post-image,
+.plantground-gallery-image,
+.plantground-product-gallery img,
+.product__container img,
+.woocommerce-product-gallery__image img {
+  border-radius: 0 !important;
+}
 
 .storefront-product-pagination {
   display: none !important;

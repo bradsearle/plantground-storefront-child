@@ -2,7 +2,25 @@
 @use '../abstracts/mixins' as *;
 
 // ====================================================================================
-// === 1. SINGLE PRODUCT LAYOUT
+// === 1. GLOBAL SHARP EDGES & SINGLE PRODUCT WRAPPER
+// ====================================================================================
+
+// Global reset to ensure no images have rounded corners
+img,
+.wp-post-image,
+.plantground-gallery-image,
+.plantground-product-gallery img,
+.product__container img,
+.woocommerce-product-gallery__image img {
+  border-radius: 0 !important;
+}
+
+.single-product__container {
+  margin-top: 200px !important;
+}
+
+// ====================================================================================
+// === 2. SINGLE PRODUCT LAYOUT
 // ====================================================================================
 
 .single-product {
@@ -22,9 +40,36 @@
       min-width: 0;
     }
 
-    // MOBILE HEADER
+    // --- GLOBAL PRICE OVERRIDE (Desktop Summary) ---
+    p.price,
+    span.price,
+    p.price .amount {
+      font-size: 1.25rem !important;
+      margin: 0 !important;
+      color: #333 !important;
+      font-weight: 600 !important;
+      display: block;
+
+      .woocommerce-Price-currencySymbol {
+        font-size: 0.8em;
+        vertical-align: top;
+        margin-right: 2px;
+      }
+
+      ins {
+        text-decoration: none;
+        color: var(--color-primary, #00a562);
+      }
+      del {
+        opacity: 0.5;
+        font-size: 0.9em;
+        margin-right: 8px;
+      }
+    }
+
+    // --- MOBILE HEADER ---
     .pg-mobile-product-header {
-      display: none;
+      display: none; // Hidden on Desktop
       flex: 0 0 100%;
       text-align: left;
       margin-bottom: 1.5rem;
@@ -33,13 +78,16 @@
         font-size: 2rem;
         margin-bottom: 5px;
       }
+
+      // Inherits from global price above, specific mobile color tweak
       .price {
-        font-size: 1.5rem;
+        font-size: 1.5rem !important;
         color: #666;
+        margin: 0 !important;
       }
     }
 
-    // GALLERY GRID
+    // --- GALLERY GRID (3/2 Landscape) ---
     .plantground-product-gallery {
       flex: 0 0 55%;
       display: grid;
@@ -48,12 +96,13 @@
 
       .plantground-gallery-image {
         width: 100%;
+        border: 0;
         height: 100%;
         object-fit: cover;
-        aspect-ratio: 1 / 1;
-        border-radius: 4px;
+        aspect-ratio: 3 / 2; // Modern Landscape
+        border-radius: 0 !important;
         cursor: zoom-in;
-        transition: opacity 0.2s ease; // Only fade, no scaling
+        transition: opacity 0.2s ease;
 
         &:first-child {
           grid-column: span 2;
@@ -61,17 +110,17 @@
         }
         &:hover {
           opacity: 0.8;
-          transform: none !important; // Absolute kill on GSAP/CSS scaling
+          transform: none !important;
         }
       }
     }
 
-    // SUMMARY CONTENT
+    // --- SUMMARY CONTENT ---
     .summary.entry-summary {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      // gap: 1.5rem;
 
       .product-long-description {
         margin-top: 1rem;
@@ -79,7 +128,7 @@
       }
     }
 
-    // RELATED PRODUCTS
+    // --- RELATED PRODUCTS ---
     .upsells.products,
     .related.products {
       flex: 0 0 100% !important;
@@ -89,6 +138,7 @@
     }
   }
 
+  // --- MOBILE RESPONSIVE ---
   @media (max-width: 1024px) {
     div.product {
       flex-direction: column !important;
@@ -113,7 +163,7 @@
 }
 
 // ====================================================================================
-// === 2. MODAL SYSTEM (Dark Theme)
+// === 3. MODAL SYSTEM (Dark Theme)
 // ====================================================================================
 
 .plantground-modal {
@@ -122,7 +172,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.95); // Dark background, no white
+  background: rgba(0, 0, 0, 0.95);
   display: none;
   align-items: center;
   justify-content: center;
@@ -130,7 +180,7 @@
   cursor: zoom-out;
 
   .plantground-modal-content {
-    background: transparent !important; // Kill any white containers
+    background: transparent !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -145,6 +195,7 @@
     object-fit: contain;
     background: transparent !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   &-close {

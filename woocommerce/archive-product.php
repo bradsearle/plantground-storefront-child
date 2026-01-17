@@ -19,12 +19,7 @@ do_action('woocommerce_before_main_content');
 
 <div class="site-main">
   <div class="custom-container">
-    <div class="hero__copy">
-      <h1 class=" hero__title">Succulent botanicals.</h1>
-    </div>
-    <div class="hero__copy-second">
-      <h2 class="hero__title">Find your little green.</h2>
-    </div>
+    <h1 class="hero__title">Cactus. Succulents. Originals.</h1>
   </div>
 
   <?php if (is_shop() || is_product_category()) : ?>

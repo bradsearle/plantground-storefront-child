@@ -12,21 +12,21 @@ $hero-height-desktop: 30vh;
   // display: none !important;
   width: 100%;
   margin: 0;
+  position: relative;
   display: flow-root;
   @include container;
   padding: 0 0;
   //   background-color: #00a562;
-  @include grid;
+  // @include grid;
   height: $hero-height-mobile;
   min-height: 22rem;
 }
 .hero__title {
   display: block;
-  font-weight: 400;
   font-size: 1.88rem !important;
   @include type;
-  font-weight: 700;
-  padding-left: 0.25rem !important;
+  padding-left: 1.25rem !important;
+  padding-top: 200px;
 }
 
 .hero__btn {
