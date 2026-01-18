@@ -275,12 +275,18 @@ function plantground_apply_single_product_changes()
     // 3. Remove Tabs, show description directly
     remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
     add_action('woocommerce_single_product_summary', 'plantground_show_description_directly', 25);
+
+    // 4. NEW: Filter the default title/price to allow mobile hiding
+    add_filter('woocommerce_product_title_class', function ($class) {
+        return $class . ' desktop-only-title';
+    });
 }
 
-// Mobile Header HTML
+// Updated Mobile Header HTML with a helper class
 function plantground_mobile_header_html()
 {
     global $product;
+    // We wrap this in a unique class so we can hide it on Desktop
     echo '<div class="pg-mobile-product-header">';
     echo '<h1 class="product_title">' . get_the_title() . '</h1>';
     echo '<p class="price">' . $product->get_price_html() . '</p>';

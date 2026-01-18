@@ -112,7 +112,7 @@ img,
         cursor: zoom-in;
         &:first-child {
           grid-column: span 2;
-          aspect-ratio: 16 / 9; // Cinematic wide on Desktop
+          aspect-ratio: 16 / 9;
         }
       }
     }
@@ -232,25 +232,17 @@ img,
         .plantground-gallery-image {
           width: 100%;
           display: block;
-          // Standard gallery images on mobile
           aspect-ratio: 1 / 1 !important;
 
           &:first-child {
-            // Hero image: Portrait to fill phone screen real estate
             aspect-ratio: 4 / 5 !important;
           }
         }
       }
 
-      .upsells.products,
-      .related.products {
-        order: 3 !important;
-        margin-top: 2rem;
-        padding: 2rem 1.25rem;
-      }
-
+      // MOVED: Summary now comes BEFORE related products
       .summary.entry-summary {
-        order: 4 !important;
+        order: 3 !important;
         margin-left: 0;
         padding: 2rem 1.25rem;
         width: 100% !important;
@@ -270,7 +262,6 @@ img,
             order: 2;
           }
 
-          // === FIXED STATE - MOBILE BOTTOM BAR ===
           &.is-fixed-mobile {
             position: fixed !important;
             bottom: 0 !important;
@@ -301,6 +292,15 @@ img,
             }
           }
         }
+      }
+
+      // MOVED: Related products now come AFTER the summary
+      .upsells.products,
+      .related.products {
+        order: 4 !important;
+        margin-top: 0; // Tighter fit under CTA
+        padding: 2rem 1.25rem;
+        border-top: 1px solid #eee;
       }
     }
   }
@@ -335,10 +335,44 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
+  .single-product div.product .summary.entry-summary form.cart {
+    margin-top: -22px;
+  }
+  .quantity {
+    margin-bottom: 6px !important;
+  }
   .single-product__container {
-    margin-top: 50px !important;
+    margin-top: 0px !important;
   }
   .product_title {
     font-size: 1.8em;
+  }
+}
+
+// ====================================================================================
+// === HEADER VISIBILITY SWITCH
+// ====================================================================================
+
+// Desktop View (Above 1024px)
+@media (min-width: 1025px) {
+  .pg-mobile-product-header {
+    display: none !important; // Hide the custom mobile header on desktop
+  }
+}
+
+// Mobile View (Below 1024px)
+@media (max-width: 1024px) {
+  .pg-mobile-product-header {
+    display: block !important; // Show the custom mobile header
+    margin-bottom: 1.5rem;
+  }
+
+  // Hide the default WooCommerce Title and Price inside the summary
+  .summary.entry-summary {
+    .product_title,
+    .price,
+    p.price {
+      display: none !important;
+    }
   }
 }
