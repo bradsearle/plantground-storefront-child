@@ -2,9 +2,9 @@
 @use '../abstracts/mixins' as *;
 
 // Fixed Heights for stability (Replaces vh)
-$hero-height-mobile: 220px;
+$hero-height-mobile: 120px;
 $hero-height-tablet: 420px;
-$hero-height-desktop: 300px;
+$hero-height-desktop: 220px;
 
 .shop__btn {
   display: none;
@@ -21,8 +21,8 @@ $hero-height-desktop: 300px;
   justify-content: flex-start;
   @include container;
   padding: 0;
-  height: $hero-height-mobile;
-  min-height: $hero-height-mobile;
+  height: $hero-height-desktop;
+  min-height: $hero-height-desktop;
 }
 
 .hero__title {
@@ -103,7 +103,7 @@ $hero-height-desktop: 300px;
 @media (max-width: 768px) {
   .custom-container {
     // Shorter margin for mobile so the user sees content sooner
-    margin-top: 100px !important;
+    margin-top: 22px !important;
     height: $hero-height-mobile;
     display: flex !important;
     padding: 0;
@@ -111,6 +111,7 @@ $hero-height-desktop: 300px;
 
   .hero__title {
     font-size: 1.28rem !important;
+    padding-top: 145px !important;
   }
 
   .hero-banner {

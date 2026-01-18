@@ -33,7 +33,6 @@ img,
     display: flex !important;
     flex-wrap: wrap !important;
     flex-direction: row;
-    // gap: 3rem;
     max-width: 1600px;
     margin: 0 auto;
 
@@ -76,12 +75,16 @@ img,
 
     // --- GALLERY GRID ---
     .plantground-product-gallery {
-      flex: 0 0 55%;
+      // Prevents container from stretching vertically if Summary is tall
+      align-content: start;
+      // Limits width so gap doesn't look "lost" on ultra-wide screens
+      flex: 0 0 clamp(500px, 55%, 850px);
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.25rem;
 
       .plantground-gallery-image {
+        display: block; // Removes baseline white-space at bottom of images
         width: 100%;
         object-fit: cover;
         aspect-ratio: 3 / 2;
@@ -100,7 +103,7 @@ img,
       flex: 1;
       display: flex;
       flex-direction: column;
-      margin-left: 1.375rem;
+      margin-left: 1.375rem; // Your 22px margin
 
       .product-long-description {
         @include type;
@@ -144,7 +147,7 @@ img,
         order: 2 !important;
         display: flex !important;
         flex-direction: column;
-
+        gap: 0.25rem;
         width: 100%;
 
         .plantground-gallery-image {
@@ -159,7 +162,8 @@ img,
 
       .summary.entry-summary {
         order: 3 !important;
-        // padding: 2rem 1.25rem;
+        margin-left: 0;
+        padding: 2rem 1.25rem;
 
         .product_title,
         .price {
@@ -167,7 +171,6 @@ img,
         }
 
         form.cart {
-          // Standard/Docked State
           display: flex;
           justify-content: center;
 
@@ -180,7 +183,6 @@ img,
             border: none;
           }
 
-          // Fixed State
           &.is-fixed-mobile {
             position: fixed;
             bottom: 0;
