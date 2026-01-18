@@ -12,7 +12,7 @@
   background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
   color: #fff !important;
   border: none;
-  border-radius: 999px !important; // 100% Rounded Corners
+  border-radius: 999px !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,9 +24,11 @@
     opacity: 0.9;
   }
 }
+
 .added_to_cart.wc-forward {
   display: none !important;
 }
+
 // ====================================================================================
 // === 1. GLOBAL RESET & SHARP EDGES
 // ====================================================================================
@@ -41,7 +43,6 @@ img,
 }
 
 .single-product__container {
-  // margin-top: 200px !important;
   margin-top: 90px !important;
 }
 
@@ -69,7 +70,6 @@ img,
       min-width: 0;
     }
 
-    // --- PRICE STYLING ---
     p.price,
     span.price,
     p.price .amount {
@@ -83,7 +83,6 @@ img,
       }
     }
 
-    // --- MOBILE HEADER ---
     .pg-mobile-product-header {
       display: none;
       flex: 0 0 100%;
@@ -98,7 +97,6 @@ img,
       }
     }
 
-    // --- GALLERY GRID (Locked 66%) ---
     .plantground-product-gallery {
       align-content: start;
       flex: 0 0 62% !important;
@@ -119,7 +117,6 @@ img,
       }
     }
 
-    // --- SUMMARY CONTENT ---
     .summary.entry-summary {
       flex: 1;
       display: flex;
@@ -132,35 +129,69 @@ img,
         margin-top: 1rem;
       }
 
-      // --- CART FORM (DESKTOP) ---
       form.cart {
         display: flex !important;
-        flex-direction: row-reverse !important; // Qty on Right
-        justify-content: flex-end;
+        flex-direction: row !important;
+        justify-content: flex-start;
         align-items: center;
-        gap: 0 !important;
+        gap: 15px !important;
         margin-top: 2rem;
         max-width: 450px;
 
         .quantity {
+          display: flex !important;
+          align-items: center;
+          justify-content: space-between;
+          border: 1px solid #ddd;
+          border-radius: 999px;
+          padding: 0 15px;
+          height: 55px;
+          background: transparent !important;
           margin: 0 !important;
+          overflow: hidden;
+
+          button.minus,
+          button.plus {
+            background: transparent !important;
+            border: none !important;
+            font-size: 1.4rem;
+            color: #000;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              opacity: 0.5;
+            }
+          }
+
           input.qty {
-            width: 60px;
-            height: 55px;
+            width: 40px !important;
+            height: 100% !important;
+            border: none !important;
+            background: transparent !important;
             text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            @include type;
+            font-size: 1rem;
+            appearance: textfield;
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              appearance: none;
+              margin: 0;
+            }
           }
         }
 
         button.single_add_to_cart_button {
-          @include plantground__cta; // Applied here
+          @include plantground__cta;
           margin: 0 !important;
+          flex: 1;
         }
       }
     }
 
-    // --- RELATED PRODUCTS ---
     .upsells.products,
     .related.products {
       flex: 0 0 100% !important;
@@ -194,87 +225,74 @@ img,
         flex: 0 0 100% !important;
         display: flex !important;
         flex-direction: column;
-        .plantground-gallery-image {
-          width: 100% !important;
-          aspect-ratio: 1 / 1 !important;
-          &:first-child {
-            aspect-ratio: 4 / 5 !important;
-          }
-        }
+      }
+
+      .upsells.products,
+      .related.products {
+        order: 3 !important;
+        margin-top: 2rem;
+        padding: 2rem 1.25rem;
       }
 
       .summary.entry-summary {
-        order: 3 !important;
+        order: 4 !important;
         margin-left: 0;
         padding: 2rem 1.25rem;
         width: 100% !important;
-        .product_title,
-        .price {
-          display: none !important;
-        }
 
         form.cart {
-          display: flex !important;
           flex-direction: column !important;
-          align-items: center !important;
           gap: 1.5rem;
           max-width: 100%;
 
           .quantity {
-            margin: 0 !important;
+            display: flex !important;
             order: 1;
-            input.qty {
-              width: 70px !important;
-              height: 45px;
-            }
+            width: 140px;
           }
 
           button.single_add_to_cart_button {
-            @include plantground__cta; // Applied here (Standard Mobile Button)
             order: 2;
           }
 
-          // --- FIXED MOBILE BAR (SKIPS THE MIXIN) ---
+          // === FIXED STATE - FULL WIDTH FIX ===
           &.is-fixed-mobile {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 99;
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important; // Force alignment to both edges
+            width: 100vw !important; // Ensure it spans the viewport
+            z-index: 9999 !important;
+            background: #fff !important;
+            display: flex !important;
             flex-direction: row !important;
-            padding: 0;
-            margin: 0;
+            padding: 0 !important;
+            margin: 0 !important;
+            gap: 0 !important; // REMOVE GAP TO KILL WHITE SPACE
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
 
             .quantity {
               display: none !important;
             }
 
             button.single_add_to_cart_button {
-              // We do NOT use the mixin here to keep it flush and simple
+              display: flex !important;
               width: 100% !important;
-              max-width: 100% !important;
-              height: 65px;
-              border: none;
-              border-radius: 0 !important; // Flush edge
-              background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
-              color: #fff !important;
+              height: 70px !important;
+              border-radius: 0 !important;
+              flex: 1 !important;
               margin: 0 !important;
-              @include type;
+              padding: 0 !important;
             }
           }
         }
-      }
-
-      .related.products {
-        order: 4 !important;
-        flex: 0 0 100% !important;
       }
     }
   }
 }
 
 // ====================================================================================
-// === 4. MODAL SYSTEM
+// === 4. MODAL & GLOBAL
 // ====================================================================================
 .plantground-modal {
   position: fixed;
@@ -287,11 +305,6 @@ img,
   align-items: center;
   justify-content: center;
   z-index: 999999;
-  img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-  }
   &-close {
     position: absolute;
     top: 30px;
@@ -299,27 +312,6 @@ img,
     color: white;
     font-size: 40px;
     cursor: pointer;
-  }
-  &-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    color: white;
-    border: none;
-    font-size: 50px;
-    padding: 20px;
-    cursor: pointer;
-    opacity: 0.5;
-    &:hover {
-      opacity: 1;
-    }
-  }
-  &-prev {
-    left: 20px;
-  }
-  &-next {
-    right: 20px;
   }
 }
 
@@ -333,11 +325,5 @@ body.modal-open {
   }
   .product_title {
     font-size: 1.8em;
-  }
-  p.price,
-  span.price,
-  p.price .amount {
-    font-size: 0.888em;
-    font-weight: bold;
   }
 }

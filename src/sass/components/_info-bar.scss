@@ -3,28 +3,19 @@
 
 .nav__info-bar {
   @include type;
-  margin-top: 0px;
   width: 100%;
-  height: 90px;
-  background-color: #f7f7f7;
-  color: #585858 !important;
-  //   font-family: 'Space Mono', monospace;
-  font-size: 0.8875rem;
-  //   text-transform: uppercase;
-
-  // These 3 lines center any direct children
+  height: 32px;
+  background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
+  font-size: 0.7875rem;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  position: relative; // Required so absolute messages stay inside here
+  position: relative;
   z-index: 1001;
-  transition: transform 0.3s ease;
-
+  //   text-transform: uppercase;
+  color: #f7f7f7 !important;
   &__message {
-    // REMOVED: transform: translate(-50%, -50%);
-
-    position: absolute; // Allows messages to sit on top of each other
+    position: absolute;
     opacity: 0;
     transition: opacity 0.7s ease-in-out;
     white-space: nowrap;
@@ -36,13 +27,10 @@
       pointer-events: auto;
       z-index: 10;
     }
-
-    &.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    // No need for a separate .hidden opacity 0 if base is 0
   }
 }
 
 .ship-date {
+  color: yellow !important;
 }

@@ -356,28 +356,3 @@ function pg_related_products_args($args)
 
 // Remove stock status display (e.g., "15 in stock") from single product pages
 add_filter('woocommerce_get_stock_html', '__return_empty_string', 10, 2);
-
-
-
-
-
-/**
- * Inject Info Bar before the single product container
- */
-function plantground_inject_info_bar()
-{
-    // Only show on single product pages
-    if (! is_product()) return;
-?>
-    <div class="nav__info-bar">
-        <span class="nav__info-bar__message visible" id="message-1">
-            Free shipping over $80
-        </span>
-        <span class="nav__info-bar__message hidden" id="message-2">
-            Orders in by Sunday ship <span class="ship-date">July 1</span>
-        </span>
-    </div>
-<?php
-}
-// Priority 5 ensures it loads before the main product wrappers
-add_action('woocommerce_before_single_product', 'plantground_inject_info_bar', 5);

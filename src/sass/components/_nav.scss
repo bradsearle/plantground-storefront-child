@@ -20,20 +20,23 @@
 }
 .nav__flex {
   position: fixed;
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  background-color: rgba(255, 255, 255, 0.5);
-
-  z-index: 43;
-  top: 0;
+  top: 40px !important; // Locked
   left: 0;
-  // background-color: #00a562;
   width: 100%;
-  /* NOTE: Z-index needs to be addressed for fullscreen menu */
   z-index: 1000;
-  transform: translateY(0);
-  transition: transform 0.5s ease;
+  will-change: transform;
+  transition: none !important;
+  transition: none !important; // Prevent CSS from fighting GSAP
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+
+  // When we scroll up, GSAP will add this class via JS or we just handle it via GSAP transforms
+  &.is-sticky {
+    position: fixed;
+    top: 0;
+  }
 }
+
 .nav__flex-container {
   @include container;
 }

@@ -1,10 +1,16 @@
 <!-- Info bar (scrolls away naturally for now') -->
 
+<div class="nav__info-bar">
+  <span class="nav__info-bar__message visible" id="message-1">
+    Free shipping over $80
+  </span>
+  <span class="nav__info-bar__message hidden" id="message-2">
+    Orders in by Sunday ship <span class="ship-date">July 1</span>
+  </span>
+</div>
+
 <nav class="nav__flex">
   <div class="nav__wrap  nav__flex-container">
-
-
-
     <div class="nav__menu">
       <!-- Menu trigger (your SVG inside a button for accessibility) -->
       <button id="menu-toggle" aria-label="Open menu">
