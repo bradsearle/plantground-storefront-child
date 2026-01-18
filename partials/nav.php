@@ -47,6 +47,9 @@
 
     </div> -->
     <div class="nav__right">
+      <div class="nav__cart-copy"><a href="<?php echo esc_url(get_permalink(get_option('woocommerce_myaccount_page_id'))); ?>">
+          Account
+        </a></div>
       <div class="nav__cart-copy">Cart</div>
       <a href="#"
         class="cart-link cfw-side-cart-open-trigger"
