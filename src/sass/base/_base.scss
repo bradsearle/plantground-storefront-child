@@ -52,3 +52,19 @@ input::placeholder,
 textarea::placeholder {
   color: inherit !important;
 }
+
+// Force the "Hand" (pointer) on all interactive elements
+a,
+button,
+.button,
+input[type='submit'],
+.woocommerce-LoopProduct-link,
+.plantground-modal-nav,
+.plantground-modal-close {
+  cursor: pointer !important;
+}
+
+// Keep your specific gallery zoom
+.plantground-gallery-image {
+  cursor: zoom-in !important;
+}
