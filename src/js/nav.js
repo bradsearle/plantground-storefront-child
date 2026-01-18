@@ -21,7 +21,7 @@ export function initNavScroll() {
         gsap.to(nav, {
           y: -scrollPos,
           duration: 0.1, // Slight soften so it doesn't "vibrate" at the top
-          ease: 'none',
+          ease: 'power1.out',
           overwrite: true,
         });
       }

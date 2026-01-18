@@ -1,25 +1,46 @@
-// assets/js/qty.js
-export function initQtyButtons() {
-  document.addEventListener('click', function (e) {
-    const target = e.target;
-    if (target.classList.contains('plus') || target.classList.contains('minus')) {
-      const wrapper = target.closest('.quantity');
-      const input = wrapper.querySelector('input.qty');
-      if (!input) return;
+/**
+ * Quantity Selector Component
+ */
+export const initQtyButtons = () => {
+  const quantityGroups = document.querySelectorAll('.quantity');
 
-      let val = parseFloat(input.value) || 0;
-      const step = parseFloat(input.step) || 1;
-      const min = parseFloat(input.min) || 1;
-      const max = parseFloat(input.max);
+  quantityGroups.forEach((group) => {
+    // Avoid double buttons
+    if (group.querySelector('.minus')) return;
 
-      if (target.classList.contains('plus')) {
-        input.value = max && val >= max ? max : val + step;
-      } else {
-        input.value = val <= min ? min : val - step;
+    const input = group.querySelector('input.qty');
+    if (!input) return;
+
+    // Create buttons
+    const minusBtn = document.createElement('button');
+    const plusBtn = document.createElement('button');
+
+    minusBtn.type = plusBtn.type = 'button';
+    minusBtn.className = 'minus';
+    plusBtn.className = 'plus';
+
+    minusBtn.innerHTML = '−';
+    plusBtn.innerHTML = '+';
+
+    // Injection
+    group.insertBefore(minusBtn, input);
+    group.appendChild(plusBtn);
+
+    // Click Logic
+    minusBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const val = parseInt(input.value) || 1;
+      if (val > 1) {
+        input.value = val - 1;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
       }
+    });
 
-      // Important: Tell WooCommerce the value changed
+    plusBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const val = parseInt(input.value) || 1;
+      input.value = val + 1;
       input.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+    });
   });
-}
+};
