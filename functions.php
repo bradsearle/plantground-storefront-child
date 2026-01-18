@@ -341,3 +341,14 @@ function pg_inject_custom_partial()
     // This points to: wp-content/themes/your-theme/partials/my-custom-template.php
     get_template_part('partials/my-custom-template');
 }
+// 1. Re-hook Related Products (since tabs were removed)
+add_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+
+// 2. Set Related Products to 4 columns / 4 total
+add_filter('woocommerce_output_related_products_args', 'pg_related_products_args', 20);
+function pg_related_products_args($args)
+{
+    $args['posts_per_page'] = 4;
+    $args['columns'] = 4;
+    return $args;
+}
