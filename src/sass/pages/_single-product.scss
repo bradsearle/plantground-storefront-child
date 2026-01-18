@@ -57,7 +57,7 @@ img,
       }
     }
 
-    // --- MOBILE HEADER (Hidden on Desktop) ---
+    // --- MOBILE HEADER ---
     .pg-mobile-product-header {
       display: none;
       flex: 0 0 100%;
@@ -68,25 +68,21 @@ img,
         @include type;
         margin-bottom: 5px;
       }
-
       .price {
         @include type;
       }
     }
 
-    // --- GALLERY GRID ---
+    // --- GALLERY GRID (Locked 66%) ---
     .plantground-product-gallery {
-      // Prevents container from stretching vertically if Summary is tall
       align-content: start;
-      // Limits width so gap doesn't look "lost" on ultra-wide screens
-      flex: 0 0 66% !important; // This locks it to exactly 66% width
+      flex: 0 0 66% !important;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-
       gap: 0.25rem;
 
       .plantground-gallery-image {
-        display: block; // Removes baseline white-space at bottom of images
+        display: block;
         width: 100%;
         object-fit: cover;
         aspect-ratio: 3 / 2;
@@ -112,12 +108,44 @@ img,
         @include type;
         margin-top: 1rem;
       }
+
+      // --- CART FORM (DESKTOP) ---
+      form.cart {
+        display: flex !important;
+        flex-direction: row-reverse !important; // Pushes Quantity to the RIGHT
+        justify-content: flex-end; // Aligns the whole group to the left side of the summary
+        align-items: center;
+        gap: 15px;
+        margin-top: 2rem;
+
+        .quantity {
+          margin: 0 !important;
+          input.qty {
+            width: 60px;
+            height: 55px;
+            text-align: center;
+            border: 1px solid #ddd;
+          }
+        }
+
+        button.single_add_to_cart_button {
+          @include type;
+          width: 300px !important;
+          height: 55px;
+          background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
+          color: #fff !important;
+          border: none;
+          margin: 0 !important;
+        }
+      }
     }
 
     // --- RELATED PRODUCTS ---
     .upsells.products,
     .related.products {
       flex: 0 0 100% !important;
+      width: 100% !important;
+      clear: both !important;
       margin-top: 5rem;
       border-top: 1px solid #eee;
       padding-top: 3rem;
@@ -129,34 +157,28 @@ img,
   }
 
   // ====================================================================================
-  // === 3. MOBILE RESPONSIVE (Flush Fixed Button Logic)
+  // === 3. MOBILE RESPONSIVE
   // ====================================================================================
   @media (max-width: 1024px) {
     div.product {
       flex-direction: column !important;
-      gap: 0 !important;
 
       .pg-mobile-product-header {
         display: block !important;
         order: 1 !important;
         padding: 0 1.25rem 1.5rem;
-
-        h1 {
-          @include type;
-        }
       }
 
       .plantground-product-gallery {
         order: 2 !important;
+        width: 100% !important;
+        flex: 0 0 100% !important;
         display: flex !important;
         flex-direction: column;
-        gap: 0.25rem;
-        width: 100%;
 
         .plantground-gallery-image {
           width: 100% !important;
           aspect-ratio: 1 / 1 !important;
-
           &:first-child {
             aspect-ratio: 4 / 5 !important;
           }
@@ -175,16 +197,24 @@ img,
         }
 
         form.cart {
-          display: flex;
-          justify-content: center;
+          display: flex !important;
+          flex-direction: column !important; // Stacks Quantity TOP, Button BOTTOM
+          align-items: center !important;
+          gap: 1.5rem;
+
+          .quantity {
+            margin: 0 !important;
+            order: 1; // Quantity first
+            input.qty {
+              width: 70px !important;
+              height: 45px;
+            }
+          }
 
           button.single_add_to_cart_button {
-            @include type;
+            order: 2; // Button second
             width: 300px !important;
             height: 55px;
-            background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
-            color: #fff !important;
-            border: none;
           }
 
           &.is-fixed-mobile {
@@ -192,30 +222,15 @@ img,
             bottom: 0;
             left: 0;
             width: 100%;
-            margin: 0;
-            padding: 0;
             z-index: 99;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-
+            flex-direction: row !important;
             .quantity {
               display: none !important;
             }
-
             button.single_add_to_cart_button {
-              @include type;
               width: 100% !important;
               max-width: 100% !important;
               height: 65px;
-              margin: 0 !important;
-              text-align: center !important;
-              display: flex !important;
-              justify-content: center !important;
-              align-items: center !important;
-              box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-              background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
-              color: #fff !important;
             }
           }
         }
@@ -223,7 +238,7 @@ img,
 
       .related.products {
         order: 4 !important;
-        padding: 0;
+        flex: 0 0 100% !important;
       }
     }
   }
@@ -232,7 +247,6 @@ img,
 // ====================================================================================
 // === 4. MODAL SYSTEM
 // ====================================================================================
-
 .plantground-modal {
   position: fixed;
   top: 0;
@@ -244,26 +258,11 @@ img,
   align-items: center;
   justify-content: center;
   z-index: 999999;
-  cursor: zoom-out;
-
-  .plantground-modal-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-  }
-
-  .related .products .single-product__container {
-    padding: 0 !important;
-  }
   img {
     max-width: 90vw;
     max-height: 90vh;
     object-fit: contain;
   }
-
   &-close {
     position: absolute;
     top: 30px;
@@ -272,7 +271,6 @@ img,
     font-size: 40px;
     cursor: pointer;
   }
-
   &-nav {
     position: absolute;
     top: 50%;
@@ -288,7 +286,6 @@ img,
       opacity: 1;
     }
   }
-
   &-prev {
     left: 20px;
   }
@@ -304,9 +301,6 @@ body.modal-open {
 @media (max-width: 768px) {
   .single-product__container {
     margin-top: 170px !important;
-  }
-  .related .products .single-product__container {
-    margin-top: 0px !important;
   }
   .product_title {
     font-size: 1.8em;
