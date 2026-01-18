@@ -4,7 +4,7 @@
 // Fixed Heights for stability (Replaces vh)
 $hero-height-mobile: 120px;
 $hero-height-tablet: 420px;
-$hero-height-desktop: 220px;
+$hero-height-desktop: 100px;
 
 .shop__btn {
   display: none;
@@ -111,7 +111,7 @@ $hero-height-desktop: 220px;
 
   .hero__title {
     font-size: 1.28rem !important;
-    padding-top: 145px !important;
+    padding-top: 0px !important;
   }
 
   .hero-banner {
