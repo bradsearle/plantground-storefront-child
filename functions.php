@@ -352,3 +352,7 @@ function pg_related_products_args($args)
     $args['columns'] = 4;
     return $args;
 }
+
+
+// Remove stock status display (e.g., "15 in stock") from single product pages
+add_filter('woocommerce_get_stock_html', '__return_empty_string', 10, 2);
