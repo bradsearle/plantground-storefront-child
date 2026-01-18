@@ -115,7 +115,7 @@ img,
         flex-direction: row-reverse !important; // Pushes Quantity to the RIGHT
         justify-content: flex-end; // Aligns the whole group to the left side of the summary
         align-items: center;
-        gap: 15px;
+        gap: 0px;
         margin-top: 2rem;
 
         .quantity {
@@ -200,7 +200,9 @@ img,
           display: flex !important;
           flex-direction: column !important; // Stacks Quantity TOP, Button BOTTOM
           align-items: center !important;
-          gap: 1.5rem;
+          gap: 0;
+          margin: 0;
+          padding: 0;
 
           .quantity {
             margin: 0 !important;
