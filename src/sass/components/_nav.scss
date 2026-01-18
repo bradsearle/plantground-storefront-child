@@ -77,63 +77,6 @@ nav.hidden {
   padding: 22px;
 }
 
-/* ============================================== */
-/* 2. COMPONENT: INFO BAR */
-/* ============================================== */
-
-.nav__info-bar {
-  width: 100%;
-  display: none !important;
-  height: 22px;
-  // background-color: darken($brand-green, 5%);
-  // background-color: #006a3e;
-  // Fallback for old browsers
-  background-color: #2e4d3e;
-
-  // The actual lush gradient
-  background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
-  color: #fff !important;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-  pointer-events: auto;
-  transition: transform 0.3s ease;
-  transform: translateY(0);
-
-  &__message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.7s ease-in-out;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 1;
-
-    &.visible {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 10;
-    }
-
-    &.hidden {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-  }
-}
-
-/* === Ship Date Styling === */
-.ship-date {
-  color: #ff0 !important;
-}
-
 .nav__logo {
   font-weight: 700;
   color: #000 !important;
@@ -253,10 +196,7 @@ nav.hidden {
   .nav__cart-title {
     display: none;
   }
-  .nav__info-bar {
-    font-size: 0.8275rem;
-    height: 26px;
-  }
+
   .nav__grid {
     display: flex;
     justify-content: space-between;

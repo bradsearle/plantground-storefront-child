@@ -24,7 +24,9 @@
     opacity: 0.9;
   }
 }
-
+.added_to_cart.wc-forward {
+  display: none !important;
+}
 // ====================================================================================
 // === 1. GLOBAL RESET & SHARP EDGES
 // ====================================================================================
@@ -39,7 +41,8 @@ img,
 }
 
 .single-product__container {
-  margin-top: 200px !important;
+  // margin-top: 200px !important;
+  margin-top: 90px !important;
 }
 
 // ====================================================================================
