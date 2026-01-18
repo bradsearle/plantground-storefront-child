@@ -103,7 +103,8 @@ img,
       flex: 1;
       display: flex;
       flex-direction: column;
-      margin-left: 1.375rem; // Your 22px margin
+      margin-left: 1.775rem;
+      margin-right: 1.775rem !important;
 
       .product-long-description {
         @include type;
