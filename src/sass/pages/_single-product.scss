@@ -2,6 +2,30 @@
 @use '../abstracts/mixins' as *;
 
 // ====================================================================================
+// === MIXINS
+// ====================================================================================
+
+@mixin plantground__cta {
+  @include type;
+  width: 100% !important;
+  height: 55px;
+  background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
+  color: #fff !important;
+  border: none;
+  border-radius: 999px !important; // 100% Rounded Corners
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+// ====================================================================================
 // === 1. GLOBAL RESET & SHARP EDGES
 // ====================================================================================
 
@@ -49,7 +73,6 @@ img,
       @include type;
       margin: 0 !important;
       display: block;
-
       .woocommerce-Price-currencySymbol {
         font-size: 0.8em;
         vertical-align: top;
@@ -63,7 +86,6 @@ img,
       flex: 0 0 100%;
       text-align: left;
       margin-bottom: 1.5rem;
-
       h1 {
         @include type;
         margin-bottom: 5px;
@@ -87,8 +109,6 @@ img,
         object-fit: cover;
         aspect-ratio: 3 / 2;
         cursor: zoom-in;
-        transition: opacity 0.2s ease;
-
         &:first-child {
           grid-column: span 2;
           aspect-ratio: 16 / 9;
@@ -112,11 +132,12 @@ img,
       // --- CART FORM (DESKTOP) ---
       form.cart {
         display: flex !important;
-        flex-direction: row-reverse !important; // Pushes Quantity to the RIGHT
-        justify-content: flex-end; // Aligns the whole group to the left side of the summary
+        flex-direction: row-reverse !important; // Qty on Right
+        justify-content: flex-end;
         align-items: center;
-        gap: 0px;
+        gap: 0 !important;
         margin-top: 2rem;
+        max-width: 450px;
 
         .quantity {
           margin: 0 !important;
@@ -125,16 +146,12 @@ img,
             height: 55px;
             text-align: center;
             border: 1px solid #ddd;
+            border-radius: 8px;
           }
         }
 
         button.single_add_to_cart_button {
-          @include type;
-          width: 300px !important;
-          height: 55px;
-          background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
-          color: #fff !important;
-          border: none;
+          @include plantground__cta; // Applied here
           margin: 0 !important;
         }
       }
@@ -149,7 +166,6 @@ img,
       margin-top: 5rem;
       border-top: 1px solid #eee;
       padding-top: 3rem;
-
       h2 {
         @include type;
       }
@@ -175,7 +191,6 @@ img,
         flex: 0 0 100% !important;
         display: flex !important;
         flex-direction: column;
-
         .plantground-gallery-image {
           width: 100% !important;
           aspect-ratio: 1 / 1 !important;
@@ -190,7 +205,6 @@ img,
         margin-left: 0;
         padding: 2rem 1.25rem;
         width: 100% !important;
-
         .product_title,
         .price {
           display: none !important;
@@ -198,15 +212,14 @@ img,
 
         form.cart {
           display: flex !important;
-          flex-direction: column !important; // Stacks Quantity TOP, Button BOTTOM
+          flex-direction: column !important;
           align-items: center !important;
-          gap: 0;
-          margin: 0;
-          padding: 0;
+          gap: 1.5rem;
+          max-width: 100%;
 
           .quantity {
             margin: 0 !important;
-            order: 1; // Quantity first
+            order: 1;
             input.qty {
               width: 70px !important;
               height: 45px;
@@ -214,11 +227,11 @@ img,
           }
 
           button.single_add_to_cart_button {
-            order: 2; // Button second
-            width: 300px !important;
-            height: 55px;
+            @include plantground__cta; // Applied here (Standard Mobile Button)
+            order: 2;
           }
 
+          // --- FIXED MOBILE BAR (SKIPS THE MIXIN) ---
           &.is-fixed-mobile {
             position: fixed;
             bottom: 0;
@@ -226,13 +239,24 @@ img,
             width: 100%;
             z-index: 99;
             flex-direction: row !important;
+            padding: 0;
+            margin: 0;
+
             .quantity {
               display: none !important;
             }
+
             button.single_add_to_cart_button {
+              // We do NOT use the mixin here to keep it flush and simple
               width: 100% !important;
               max-width: 100% !important;
               height: 65px;
+              border: none;
+              border-radius: 0 !important; // Flush edge
+              background: linear-gradient(90deg, #0f1714 0%, #1c3d32 100%);
+              color: #fff !important;
+              margin: 0 !important;
+              @include type;
             }
           }
         }
