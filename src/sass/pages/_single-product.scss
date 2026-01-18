@@ -112,7 +112,7 @@ img,
         cursor: zoom-in;
         &:first-child {
           grid-column: span 2;
-          aspect-ratio: 16 / 9;
+          aspect-ratio: 16 / 9; // Cinematic wide on Desktop
         }
       }
     }
@@ -162,6 +162,7 @@ img,
             display: flex;
             justify-content: center;
             align-items: center;
+            outline: none;
             &:hover {
               opacity: 0.5;
             }
@@ -176,6 +177,7 @@ img,
             @include type;
             font-size: 1rem;
             appearance: textfield;
+            outline: none;
             &::-webkit-outer-spin-button,
             &::-webkit-inner-spin-button {
               appearance: none;
@@ -225,6 +227,19 @@ img,
         flex: 0 0 100% !important;
         display: flex !important;
         flex-direction: column;
+        gap: 0.25rem;
+
+        .plantground-gallery-image {
+          width: 100%;
+          display: block;
+          // Standard gallery images on mobile
+          aspect-ratio: 1 / 1 !important;
+
+          &:first-child {
+            // Hero image: Portrait to fill phone screen real estate
+            aspect-ratio: 4 / 5 !important;
+          }
+        }
       }
 
       .upsells.products,
@@ -255,20 +270,20 @@ img,
             order: 2;
           }
 
-          // === FIXED STATE - FULL WIDTH FIX ===
+          // === FIXED STATE - MOBILE BOTTOM BAR ===
           &.is-fixed-mobile {
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
-            right: 0 !important; // Force alignment to both edges
-            width: 100vw !important; // Ensure it spans the viewport
+            right: 0 !important;
+            width: 100vw !important;
             z-index: 9999 !important;
             background: #fff !important;
             display: flex !important;
             flex-direction: row !important;
             padding: 0 !important;
             margin: 0 !important;
-            gap: 0 !important; // REMOVE GAP TO KILL WHITE SPACE
+            gap: 0 !important;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
 
             .quantity {
