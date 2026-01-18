@@ -101,7 +101,7 @@ img,
     // --- GALLERY GRID (Locked 66%) ---
     .plantground-product-gallery {
       align-content: start;
-      flex: 0 0 66% !important;
+      flex: 0 0 62% !important;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.25rem;
@@ -329,7 +329,7 @@ body.modal-open {
 
 @media (max-width: 768px) {
   .single-product__container {
-    margin-top: 170px !important;
+    margin-top: 50px !important;
   }
   .product_title {
     font-size: 1.8em;
