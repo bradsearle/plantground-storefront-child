@@ -59,17 +59,24 @@
   border: 1px solid #dddcdc;
   cursor: pointer;
   padding: 5px 12px;
-  border-radius: 50px; /* Creates the pill shape */
+  border-radius: 50px;
   font-size: 1rem;
   font-weight: 500;
-  color: #000 !important; /* Text color */
-  min-height: 28px; /* Ensures good touch target */
+  color: #000 !important;
+  min-height: 28px;
   box-sizing: border-box;
+
+  // ADD THIS LINE HERE
+  outline: none !important;
+
   &.is-active,
   &:focus,
   &:active {
     background-color: #fff !important;
     color: #000;
+    // AND ADD IT HERE TO OVERRIDE CHROME'S DEFAULT FOCUS STATE
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 

@@ -104,11 +104,11 @@
 // "Show Filters" button — ALWAYS VISIBLE, RIGHT-ALIGNED
 .mobile-filter-toggle {
   @include btn-rnd;
-  display: block;
-  margin-left: auto; // right-align within flex parent
-  display: flex;
-  margin-left: auto;
+  display: flex; // Use flex for the icon/text alignment
+  margin-left: auto; // Right-aligns it perfectly
   align-items: center;
+  gap: 8px; // Adds a nice bit of space between the text and the SVG
+  cursor: pointer; // Ensures it feels like a button
 }
 
 .mobile-filter-toggle:hover {

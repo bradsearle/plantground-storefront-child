@@ -362,3 +362,24 @@ function pg_related_products_args($args)
 
 // Remove stock status display (e.g., "15 in stock") from single product pages
 add_filter('woocommerce_get_stock_html', '__return_empty_string', 10, 2);
+
+
+
+
+
+// Display ACF Pet Safe field on single product page
+add_action('woocommerce_single_product_summary', 'plantground_display_pet_safe_info', 12);
+
+function plantground_display_pet_safe_info()
+{
+    global $post;
+
+    // Fetch the field from the current product ID
+    $pet_safe_status = get_field('pet_safe', $post->ID);
+
+    if ($pet_safe_status) {
+        echo '<div class="product-pet-safety">';
+        echo '  <span class="safety-text">' . esc_html($pet_safe_status) . '</span>';
+        echo '</div>';
+    }
+}
