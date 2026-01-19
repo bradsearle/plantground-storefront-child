@@ -387,6 +387,25 @@ function plantground_display_pet_safe_info()
         echo '</div>';
     }
 }
+// Display ACF 
+add_action('woocommerce_single_product_summary', 'plantground_display_product_shipping', 22);
+
+function plantground_display_product_shipping()
+{
+    global $product;
+
+    if (! is_a($product, 'WC_Product')) {
+        return;
+    }
+
+    $zone = get_field('product_shipping', $product->get_id());
+
+    if ($zone) {
+        echo '<div class="product-acf">';
+        echo '  <span class="product-acf-copy">' . esc_html($zone) . '</span>';
+        echo '</div>';
+    }
+}
 
 // Display ACF Hardiness Zone under Pet Safe info (Priority 22)
 add_action('woocommerce_single_product_summary', 'plantground_display_hardiness_zone', 22);
@@ -400,26 +419,6 @@ function plantground_display_hardiness_zone()
     }
 
     $zone = get_field('hardiness_zone', $product->get_id());
-
-    if ($zone) {
-        echo '<div class="product-acf">';
-        echo '  <span class="product-acf-copy">' . esc_html($zone) . '</span>';
-        echo '</div>';
-    }
-}
-
-// Display ACF 
-add_action('woocommerce_single_product_summary', 'plantground_display_product_shipping', 22);
-
-function plantground_display_product_shipping()
-{
-    global $product;
-
-    if (! is_a($product, 'WC_Product')) {
-        return;
-    }
-
-    $zone = get_field('product_shipping', $product->get_id());
 
     if ($zone) {
         echo '<div class="product-acf">';
