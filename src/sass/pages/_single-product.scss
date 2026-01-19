@@ -29,27 +29,22 @@
   display: none !important;
 }
 
-.product-pet-safety {
-  display: flex;
+.product-acf {
+  margin-top: 15px; // Space it out from the description text
+  margin-bottom: 10px;
+  display: inline-flex; // Keeps the background tight to the text
   align-items: center;
-  gap: 8px;
-  margin: 10px 0;
-  padding: 8px 12px;
-  background-color: #f9f9f9; // Subtle background
-  border-radius: 8px;
-  width: fit-content;
+  padding: 4px 12px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
 
-  .safety-icon {
-    font-size: 1.1rem;
-  }
-
-  .safety-text {
+  .product-acf-copy {
     @include type;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #1c3d32; // Your theme green
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1c3d32;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
   }
 }
 
@@ -359,6 +354,10 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
+  .single-product div.product .upsells.products,
+  .single-product div.product .related.products {
+    padding: 0 !important;
+  }
   .single-product div.product .summary.entry-summary form.cart {
     margin-top: -22px;
   }

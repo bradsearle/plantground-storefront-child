@@ -367,19 +367,63 @@ add_filter('woocommerce_get_stock_html', '__return_empty_string', 10, 2);
 
 
 
-// Display ACF Pet Safe field on single product page
-add_action('woocommerce_single_product_summary', 'plantground_display_pet_safe_info', 12);
+// Display ACF Pet Safe field under Short Description (Priority 21)
+add_action('woocommerce_single_product_summary', 'plantground_display_pet_safe_info', 21);
 
 function plantground_display_pet_safe_info()
 {
-    global $post;
+    global $product;
 
-    // Fetch the field from the current product ID
-    $pet_safe_status = get_field('pet_safe', $post->ID);
+    if (! is_a($product, 'WC_Product')) {
+        return;
+    }
+
+    // Fetch the field using the product ID
+    $pet_safe_status = get_field('pet_safe', $product->get_id());
 
     if ($pet_safe_status) {
-        echo '<div class="product-pet-safety">';
-        echo '  <span class="safety-text">' . esc_html($pet_safe_status) . '</span>';
+        echo '<div class="product-acf">';
+        echo '  <span class="product-acf-copy">' . esc_html($pet_safe_status) . '</span>';
+        echo '</div>';
+    }
+}
+
+// Display ACF Hardiness Zone under Pet Safe info (Priority 22)
+add_action('woocommerce_single_product_summary', 'plantground_display_hardiness_zone', 22);
+
+function plantground_display_hardiness_zone()
+{
+    global $product;
+
+    if (! is_a($product, 'WC_Product')) {
+        return;
+    }
+
+    $zone = get_field('hardiness_zone', $product->get_id());
+
+    if ($zone) {
+        echo '<div class="product-acf">';
+        echo '  <span class="product-acf-copy">' . esc_html($zone) . '</span>';
+        echo '</div>';
+    }
+}
+
+// Display ACF 
+add_action('woocommerce_single_product_summary', 'plantground_display_product_shipping', 22);
+
+function plantground_display_product_shipping()
+{
+    global $product;
+
+    if (! is_a($product, 'WC_Product')) {
+        return;
+    }
+
+    $zone = get_field('product_shipping', $product->get_id());
+
+    if ($zone) {
+        echo '<div class="product-acf">';
+        echo '  <span class="product-acf-copy">' . esc_html($zone) . '</span>';
         echo '</div>';
     }
 }
