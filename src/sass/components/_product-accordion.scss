@@ -1,0 +1,79 @@
+.prod-accordion {
+  background: #fff;
+  border-top: 1px solid #000;
+  width: 100%;
+
+  &__item {
+    border-bottom: 1px solid #000;
+  }
+
+  &__header {
+    width: 100%;
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff !important; // Force white background
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    transition: none !important; // Disable any theme transitions
+
+    // Disable any background color change on hover/active/focus
+    &:hover,
+    &:active,
+    &:focus {
+      background: #fff !important;
+      color: inherit; // Keeps text color from changing if theme tries to
+    }
+
+    // Ensure children don't interfere with the click area
+    & > * {
+      pointer-events: none;
+    }
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    /* GSAP handles the rotation, but we define the transition for the class toggle */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+  }
+
+  &__content {
+    height: 0;
+    overflow: hidden;
+    will-change: height;
+  }
+
+  &__inner {
+    padding: 0 0 40px 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #000;
+    opacity: 0; // Starts hidden for the GSAP fade-in
+    will-change: transform, opacity;
+  }
+
+  // Handle the arrow flip via the parent class
+  &__item.is-active {
+    .prod-accordion__icon {
+      transform: rotate(180deg);
+    }
+  }
+}

@@ -344,8 +344,8 @@ add_action('woocommerce_single_product_summary', 'pg_inject_custom_partial', 25)
 
 function pg_inject_custom_partial()
 {
-    // This points to: wp-content/themes/your-theme/partials/my-custom-template.php
-    get_template_part('partials/my-custom-template');
+    // This points to: wp-content/themes/your-theme/partials/product-accordion.php
+    get_template_part('partials/product-accordion');
 }
 // 1. Re-hook Related Products (since tabs were removed)
 add_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);

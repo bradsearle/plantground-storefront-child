@@ -11,6 +11,8 @@ import { initCustomSelect } from './custom-select.js';
 import { initCartCount } from './cart-count.js';
 import { initProductGalleryModal } from './product-gallery-modal.js';
 import { initQtyButtons } from './qty.js';
+// ADDED:
+import { initProductAccordion } from './product-accordion.js';
 
 function initMobileCartStick() {
   const cartForm = document.querySelector('form.cart');
@@ -40,6 +42,8 @@ function initApp() {
   initProductGalleryModal();
   initMobileCartStick();
   initQtyButtons();
+  // ADDED:
+  initProductAccordion();
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
