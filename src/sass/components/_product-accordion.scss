@@ -19,18 +19,25 @@
     text-align: left;
     outline: none;
     transition: none !important; // Disable any theme transitions
+    background-color: #ffffff !important;
+    transition: none !important;
 
-    // Disable any background color change on hover/active/focus
     &:hover,
-    &:active,
-    &:focus {
-      background: #fff !important;
-      color: inherit; // Keeps text color from changing if theme tries to
+    &:focus,
+    &:active {
+      background-color: #ffffff !important;
+      color: inherit !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
 
     // Ensure children don't interfere with the click area
     & > * {
       pointer-events: none;
+    }
+    span,
+    svg {
+      pointer-events: none; // Makes the whole bar act as one solid hit area
     }
   }
 
