@@ -1,28 +1,28 @@
-// /assets/js/product-accordion.js
 import { gsap } from 'gsap';
 
 export function initProductAccordion() {
   const accordionHeaders = document.querySelectorAll('.prod-accordion__header');
 
   accordionHeaders.forEach((header) => {
-    let isAnimating = false; // Prevent double-click glitches
+    let isAnimating = false;
 
+    const item = header.parentElement;
+    const content = item.querySelector('.prod-accordion__content');
+    const inner = item.querySelector('.prod-accordion__inner');
+    const backToTop = inner.querySelector('.accordion-back-to-top');
+
+    // --- 1. The Toggle Logic ---
     header.addEventListener('click', (e) => {
       e.preventDefault();
       if (isAnimating) return;
 
-      const item = header.parentElement;
-      const content = item.querySelector('.prod-accordion__content');
-      const inner = item.querySelector('.prod-accordion__inner');
       const isActive = item.classList.contains('is-active');
-
       isAnimating = true;
 
       if (!isActive) {
         // OPENING
         item.classList.add('is-active');
 
-        // 1. Height Animation
         gsap.to(content, {
           height: inner.scrollHeight,
           duration: 0.7,
@@ -33,7 +33,6 @@ export function initProductAccordion() {
           },
         });
 
-        // 2. Premium Fade/Slide Animation
         gsap.fromTo(
           inner,
           { opacity: 0, y: 15 },
@@ -49,7 +48,6 @@ export function initProductAccordion() {
         // CLOSING
         item.classList.remove('is-active');
 
-        // 1. Fast Fade Out
         gsap.to(inner, {
           opacity: 0,
           y: 10,
@@ -57,7 +55,6 @@ export function initProductAccordion() {
           ease: 'power2.in',
         });
 
-        // 2. Slide Up
         gsap.fromTo(
           content,
           { height: content.offsetHeight },
@@ -72,5 +69,22 @@ export function initProductAccordion() {
         );
       }
     });
+
+    // --- 2. The Back to Top Logic ---
+    if (backToTop) {
+      backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Calculate position: header top - offset for sticky nav (e.g. 80px)
+        const headerOffset = 80;
+        const elementPosition = header.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      });
+    }
   });
 }

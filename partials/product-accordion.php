@@ -11,6 +11,12 @@
         <div class="prod-accordion__content">
             <div class="prod-accordion__inner">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. [Insert 400 words here...]</p>
+                <a href="#" class="accordion-back-to-top">
+                    Back to top
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" fill="none" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
@@ -27,6 +33,12 @@
         <div class="prod-accordion__content">
             <div class="prod-accordion__inner">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. [Insert 400 words here...]</p>
+                <a href="#" class="accordion-back-to-top">
+                    Back to top
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" fill="none" stroke-width="2" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
