@@ -33,7 +33,7 @@
   display: flex !important;
 }
 
-// Filter toggle switch styles (unchanged)
+// Filter toggle switch styles
 .toggle-switch {
   display: flex;
   align-items: center;
@@ -45,9 +45,11 @@
   width: 0;
   height: 0;
 }
+
 #filter-text {
   margin-right: 0.42rem;
 }
+
 .slider {
   position: relative;
   display: inline-block;
@@ -97,6 +99,7 @@
     justify-content: flex-start;
   }
 }
+
 .mobile-filter__container {
   @include container;
 }
@@ -104,20 +107,33 @@
 // "Show Filters" button — ALWAYS VISIBLE, RIGHT-ALIGNED
 .mobile-filter-toggle {
   @include btn-rnd;
-  display: flex; // Use flex for the icon/text alignment
-  margin-left: auto; // Right-aligns it perfectly
-  align-items: center;
-  gap: 8px; // Adds a nice bit of space between the text and the SVG
-  cursor: pointer; // Ensures it feels like a button
+  display: flex !important; // Forces flex for alignment
+  margin-left: auto;
+  align-items: center !important;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none !important; // Kills theme underline
+  // border-bottom: none !important; // Kills theme border
+  outline: none !important;
+
+  svg {
+    display: block;
+    flex-shrink: 0;
+    margin-left: 8px;
+    text-decoration: none !important;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none !important;
+    // border-bottom: none !important;
+    background-color: #fff !important;
+    color: #000 !important;
+  }
 }
 
-.mobile-filter-toggle:hover {
-  color: #000;
-  border-color: #000;
-  background-color: #fff;
-}
-
-// Shop controls wrapper: flex column on mobile, row on desktop
+// Shop controls wrapper
 .shop-controls {
   position: relative;
   margin-bottom: 0;
@@ -145,7 +161,9 @@
 // Sort & count
 .shop-controls__right {
   @include type;
-  gap: 5px;
+  gap: 15px; // Slight increase for breathing room
+  display: flex;
+  align-items: center;
 }
 
 .woocommerce-result-count {
@@ -153,6 +171,7 @@
   color: #6c757d;
   margin: 0;
   padding: 0 !important;
+  @include type;
 }
 
 // Container
@@ -163,43 +182,17 @@
 }
 
 // ==========================================================================
-// HERO & PRODUCT GRID (unchanged)
+// HERO & PRODUCT GRID
 // ==========================================================================
 
-.hero {
-  position: relative;
-  height: 100vh;
-  padding: 4rem;
-  background: #fff;
-  overflow: visible;
+.hero__title {
+  font-size: 7.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  @include type;
 
-  &__text {
-    position: relative;
-  }
-
-  &__title {
-    font-size: 7.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    display: flex;
-    gap: 1.5rem;
-  }
-
-  &__word {
-    transform: translateY(100%);
-    opacity: 0;
-    will-change: transform, opacity;
-  }
-
-  &__mask-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 8rem;
-    background: #fff;
-    z-index: 10;
-    pointer-events: none;
+  @media (max-width: 800px) {
+    font-size: 3.5rem;
   }
 }
 
@@ -221,7 +214,21 @@
   }
 }
 
-// Ensure the gallery container allows absolute positioning
+// Hiring Portal specific overrides to ensure it mirrors archive exactly
+.hiring-portal-container {
+  .shop-header {
+    @include container;
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  // Ensure standard page links in the message still work but buttons stay clean
+  .custom-container a:not(.mobile-filter-toggle) {
+    text-decoration: underline;
+  }
+}
+
+// Badge logic for Gallery
 .woocommerce-product-gallery {
   position: relative;
 
@@ -229,23 +236,18 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    z-index: 99; // Ensure it sits above the image/zoom
-
-    // Pill Design
+    z-index: 99;
     background-color: #000;
     color: #fff;
     padding: 5px 14px;
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-
-    // Typography
-    @include type; // Using your site's mixin
+    @include type;
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-
-    pointer-events: none; // Allows users to click "through" the badge to the image
+    pointer-events: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
   }
 }
